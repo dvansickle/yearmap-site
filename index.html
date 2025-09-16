@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>YearMap — A Neatnik‑style year‑at‑a‑glance calendar for Chrome</title>
+  <meta name="description" content="YearMap is a Chrome extension that brings the beloved Neatnik year‑at‑a‑glance calendar to your browser. Plan with color‑coded ranges, take notes, and export everything to Google, Apple, or Outlook via ICS — with onboarding, keyboard shortcuts, and pro‑feature previews." />
+  <link rel="canonical" href="https://yearmap.app/" />
+
+  <!-- Open Graph / Twitter -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="YearMap — Plan your year at a glance" />
+  <meta property="og:description" content="Interactive Neatnik‑style calendar with color‑coded ranges, notes, and universal ICS export." />
+  <meta property="og:image" content="https://yearmap.app/og-image.png" />
+  <meta property="og:url" content="https://yearmap.app/" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <!-- Favicon (replace with your own) -->
+  <link rel="icon" href="/favicon.ico" />
+
+  <!-- Fonts: Oswald + Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Oswald:wght@400;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg: #0b0c10; /* near-black */
+      --card: #121319;
+      --text: #e6e7ea;
+      --muted: #a6a9b6;
+      --brand: #4da3ff;
+      --brand-700:#1f6fe6;
+      --accent:#6ee7b7;
+      --ring: rgba(77,163,255,.35);
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+      --radius: 18px;
+    }
+    *,*::before,*::after{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; background: radial-gradient(1200px 600px at 80% -10%, rgba(77,163,255,.16), transparent 60%),
+      radial-gradient(900px 500px at 10% 10%, rgba(110,231,183,.12), transparent 60%), var(--bg);
+      color:var(--text); font: 16px/1.6 Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
+    }
+    a{color:var(--brand); text-decoration:none}
+    a:hover{color:var(--brand-700)}
+    .container{max-width:1100px; margin:0 auto; padding:0 20px}
+    header{position:sticky; top:0; backdrop-filter:saturate(160%) blur(8px); background:rgba(11,12,16,.6); border-bottom:1px solid rgba(255,255,255,.06); z-index:20}
+    .nav{display:flex; align-items:center; justify-content:space-between; padding:14px 0}
+    .brand{display:flex; align-items:center; gap:12px; font-weight:700}
+    .logo{width:28px; height:28px; border-radius:8px; background:
+      linear-gradient(135deg, var(--brand), #82c1ff),
+      linear-gradient(0deg, #fff, #fff);
+      box-shadow: inset 0 0 0 2px rgba(255,255,255,.15), 0 8px 20px rgba(77,163,255,.35);
+      position:relative; isolation:isolate;
+    }
+    .logo::after{content:""; position:absolute; inset:5px; border-radius:6px; background:linear-gradient(180deg, rgba(255,255,255,.35), rgba(255,255,255,0)); mix-blend:overlay}
+    .brand span{font-family:Oswald, Inter, sans-serif; letter-spacing:.5px}
+    .nav a.btn{margin-left:10px}
+
+    .btn{appearance:none; border:none; cursor:pointer; font-weight:600; padding:12px 16px; border-radius:12px; transition:.2s transform, .2s box-shadow; display:inline-flex; align-items:center; gap:10px}
+    .btn:hover{transform:translateY(-1px)}
+    .btn:focus{outline:none; box-shadow:0 0 0 6px var(--ring)}
+    .btn.primary{background:linear-gradient(180deg, var(--brand), var(--brand-700)); color:white; box-shadow:0 12px 30px rgba(77,163,255,.35)}
+    .btn.ghost{background:transparent; border:1px solid rgba(255,255,255,.14); color:var(--text)}
+
+    .hero{padding:72px 0 40px}
+    .hero .grid{display:grid; grid-template-columns: 1.1fr .9fr; gap:40px}
+    .eyebrow{display:inline-block; padding:6px 10px; border-radius:999px; border:1px solid rgba(255,255,255,.15); color:var(--muted); font-size:12px; letter-spacing:.25px}
+    h1{font-family:Oswald, Inter, sans-serif; font-size:52px; line-height:1.1; margin:14px 0 12px}
+    .lead{font-size:18px; color:#d5d7de; margin-bottom:22px}
+    .badges{display:flex; flex-wrap:wrap; gap:10px; margin-top:10px}
+    .badge{font-size:12px; color:#d9eaff; background:rgba(77,163,255,.12); border:1px solid rgba(77,163,255,.25); padding:6px 10px; border-radius:999px}
+
+    .card{background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02)); border:1px solid rgba(255,255,255,.08); border-radius:var(--radius); box-shadow:var(--shadow)}
+    .screen{aspect-ratio: 16 / 10; width:100%; background:radial-gradient(1200px 400px at 100% 0, rgba(77,163,255,.18), transparent 50%), radial-gradient(800px 300px at 0% 100%, rgba(110,231,183,.16), transparent 55%), #0e0f15; border:1px solid rgba(255,255,255,.08); border-radius:16px; position:relative; overflow:hidden}
+    .screen::after{content:"YearMap Calendar Preview"; position:absolute; right:12px; bottom:10px; color:var(--muted); font-size:12px; letter-spacing:.2px}
+    .screen .placeholder{position:absolute; inset:14px; border-radius:10px; border:1px dashed rgba(255,255,255,.15); display:grid; place-items:center; color:var(--muted)}
+
+    .section{padding:56px 0}
+    .section h2{font-family:Oswald, Inter, sans-serif; font-size:34px; letter-spacing:.2px; margin:0 0 14px}
+    .muted{color:var(--muted)}
+
+    .features{display:grid; grid-template-columns: repeat(3, 1fr); gap:18px}
+    .feature{padding:18px; border-radius:14px; background:linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02)); border:1px solid rgba(255,255,255,.08)}
+    .feature h3{margin:10px 0 6px; font-size:18px}
+    .icon{width:22px; height:22px}
+
+    .how{display:grid; grid-template-columns:repeat(3,1fr); gap:18px; margin-top:12px}
+    .step{padding:18px; border-radius:14px; border:1px solid rgba(255,255,255,.08); background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02))}
+    .step b{display:block; font-family:Oswald; letter-spacing:.2px; margin-bottom:6px}
+
+    .cta{display:flex; flex-wrap:wrap; gap:12px; margin-top:18px}
+
+    .grid-2{display:grid; grid-template-columns:1fr 1fr; gap:20px}
+
+    .card .list{margin:0; padding-left:18px}
+
+    .waitlist{display:flex; gap:10px; margin-top:10px}
+    .waitlist input{flex:1; background:#0e0f15; border:1px solid rgba(255,255,255,.15); border-radius:12px; padding:12px 14px; color:var(--text)}
+    .waitlist button{white-space:nowrap}
+
+    .footer{border-top:1px solid rgba(255,255,255,.08); margin-top:40px; padding:28px 0; color:var(--muted); font-size:14px}
+    .links{display:flex; gap:14px; flex-wrap:wrap}
+
+    @media (max-width: 960px){
+      .hero .grid{grid-template-columns:1fr;}
+      .features{grid-template-columns:1fr 1fr}
+      .how{grid-template-columns:1fr 1fr}
+      .grid-2{grid-template-columns:1fr}
+    }
+    @media (max-width: 640px){
+      h1{font-size:40px}
+      .features,.how{grid-template-columns:1fr}
+    }
+  </style>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "YearMap",
+    "applicationCategory": "BrowserExtension",
+    "operatingSystem": "Chrome",
+    "description": "Neatnik‑style year‑at‑a‑glance calendar in your new tab with color‑coded ranges, notes, onboarding, and universal ICS export.",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+    "publisher": {"@type":"Organization","name":"YearMap"},
+    "featureList": [
+      "12‑column vertical Neatnik layout",
+      "Click‑and‑drag date selection",
+      "Color‑coded categories & notes",
+      "Weekday‑aligned optional layout",
+      "Weekend highlighting toggle",
+      "Universal ICS export",
+      "First‑run onboarding & keyboard shortcuts"
+    ]
+  }
+  </script>
+</head>
+<body>
+  <header>
+    <div class="container nav">
+      <div class="brand"><div class="logo" aria-hidden="true"></div><span>YearMap</span></div>
+      <nav class="links">
+        <a href="#features">Features</a>
+        <a href="#how">How it works</a>
+        <a href="#privacy">Privacy</a>
+        <a href="#faq">FAQ</a>
+        <a class="btn ghost" href="#github" id="gh">View on GitHub</a>
+        <a class="btn primary" href="#install" id="install">Add to Chrome</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container grid">
+        <div>
+          <span class="eyebrow">Neatnik‑style • ICS export • Onboarding</span>
+          <h1>Plan your year at a glance</h1>
+          <p class="lead">YearMap brings the beloved <a href="https://neatnik.net/calendar/" target="_blank" rel="noreferrer noopener">Neatnik</a> layout to Chrome with smooth range selection, color‑coded categories, notes, and <b>universal ICS export</b>. Keep the analog clarity — gain digital superpowers.</p>
+          <div class="cta">
+            <a class="btn primary" href="#install" id="install-hero">➕ Add to Chrome</a>
+            <a class="btn ghost" href="#demo">Open calendar preview</a>
+          </div>
+          <div class="badges">
+            <span class="badge">12‑column vertical layout</span>
+            <span class="badge">Weekday‑aligned option</span>
+            <span class="badge">Keyboard shortcuts</span>
+            <span class="badge">Notes on ranges</span>
+            <span class="badge">ICS export</span>
+          </div>
+        </div>
+        <div>
+          <div class="screen">
+            <div class="placeholder">Drop a screenshot here (1200×750) or keep as is</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="features">
+      <div class="container">
+        <h2>Everything you need — nothing you don't</h2>
+        <p class="muted">A faithful, fast calendar for visual planning with modern workflow integrations.</p>
+        <div class="features" style="margin-top:14px">
+          <div class="feature">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="4" width="18" height="16" rx="3"/><path d="M3 9h18"/></svg>
+            <h3>Authentic layout</h3>
+            <p>Exact 12‑column vertical view with Oswald/Inter typography and optional weekday alignment.</p>
+          </div>
+          <div class="feature">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 7h16M4 12h10M4 17h7"/></svg>
+            <h3>Interactive planning</h3>
+            <p>Click‑and‑drag to create ranges. Assign colors and notes. Undo deletions with a shortcut.</p>
+          </div>
+          <div class="feature">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg>
+            <h3>Categories & notes</h3>
+            <p>Create up to 5 categories with 15 colors. Right‑click to add notes, shown on hover.</p>
+          </div>
+          <div class="feature">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 4h16v8H4z"/><path d="M8 17h8M12 12v9"/></svg>
+            <h3>ICS export</h3>
+            <p>Export all ranges, categories, and notes to Google, Outlook, or Apple Calendar.</p>
+          </div>
+          <div class="feature">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+            <h3>Onboarding & shortcuts</h3>
+            <p>First‑run tour plus a built‑in keyboard cheat‑sheet for a smooth start.</p>
+          </div>
+          <div class="feature">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M5 12l5 5L20 7"/></svg>
+            <h3>Privacy‑first</h3>
+            <p>Runs entirely in your browser with Chrome storage sync. No accounts. No tracking.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="how">
+      <div class="container">
+        <h2>How it works</h2>
+        <div class="how">
+          <div class="step"><b>1) Create & select</b> Click‑and‑drag across days to make a range. Weekends can be shaded.</div>
+          <div class="step"><b>2) Categorize & note</b> Assign a color‑coded category and add an optional note.</div>
+          <div class="step"><b>3) Export</b> One click generates an ICS you can import into any calendar app.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container grid-2">
+        <div class="card" style="padding:18px">
+          <h2>Universal ICS export</h2>
+          <p class="muted">Preserves category names, date ranges, and notes as event details. Proper all‑day boundaries for clean display.</p>
+          <ul class="list">
+            <li>Google / Outlook / Apple Calendar compatible</li>
+            <li>Handles empty calendars gracefully</li>
+            <li>Future‑proof foundation for CSV and multi‑year export</li>
+          </ul>
+          <div class="cta"><a class="btn ghost" href="#docs">See import steps</a></div>
+        </div>
+        <div class="card" style="padding:18px">
+          <h2>Pro features (preview)</h2>
+          <p class="muted">Cloud sync, multiple calendars, and analytics are on the roadmap. Join the early access list.</p>
+          <form class="waitlist" id="waitlist">
+            <input type="email" name="email" placeholder="you@domain.com" aria-label="Email" required>
+            <button class="btn primary" type="submit">Join waitlist</button>
+          </form>
+          <small id="waitlist-msg" class="muted"></small>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="privacy">
+      <div class="container card" style="padding:18px">
+        <h2>Privacy</h2>
+        <p>YearMap runs entirely within your Chrome profile. Data is stored using Chrome storage (with optional sync across your devices). We do not collect analytics or sell/share personal data. ICS export files are generated locally in your browser.</p>
+      </div>
+    </section>
+
+    <section class="section" id="faq">
+      <div class="container">
+        <h2>FAQ</h2>
+        <div class="grid-2">
+          <div class="card" style="padding:18px">
+            <h3>Does it replace my new tab?</h3>
+            <p>You can choose: use YearMap in every new tab or open it on demand via the extension icon.</p>
+          </div>
+          <div class="card" style="padding:18px">
+            <h3>Can I align weekdays vertically?</h3>
+            <p>Yes. Toggle the weekday‑aligned layout in Settings. Changes apply instantly.</p>
+          </div>
+          <div class="card" style="padding:18px">
+            <h3>How do notes work?</h3>
+            <p>Right‑click a range to edit a note. Notes auto‑save and appear in hover tooltips and ICS event descriptions.</p>
+          </div>
+          <div class="card" style="padding:18px">
+            <h3>What about deletions?</h3>
+            <p>Hold <b>Shift</b> and click any day in a range to remove it. Use <b>Ctrl/Cmd+Z</b> within 30s to undo.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container" style="display:flex; align-items:center; justify-content:space-between; gap:14px; flex-wrap:wrap">
+      <div>© <span id="year"></span> YearMap • MIT Licensed • Built with love for Neatnik</div>
+      <div class="links">
+        <a href="#install">Install</a>
+        <a href="#github">GitHub</a>
+        <a href="#docs">Docs</a>
+        <a href="#support">Support</a>
+        <a href="#privacy">Privacy</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Replace these with real links before deploying
+    const LINKS = {
+      install: "https://chromewebstore.google.com/detail/your-yearmap-id", // TODO
+      github: "https://github.com/yourname/yearmap", // TODO
+      docs: "https://github.com/yourname/yearmap#readme", // TODO
+      support: "mailto:support@yearmap.app" // TODO
+    };
+
+    // Wire up links
+    const y = document.getElementById('year'); if (y) y.textContent = new Date().getFullYear();
+    const installLinks = [document.getElementById('install'), document.getElementById('install-hero')].filter(Boolean);
+    installLinks.forEach(el => el.href = LINKS.install);
+    const gh = document.getElementById('gh'); if (gh) gh.href = LINKS.github;
+    document.querySelectorAll('a[href="#docs"]').forEach(a => a.href = LINKS.docs);
+    document.querySelectorAll('a[href="#github"]').forEach(a => a.href = LINKS.github);
+
+    // Simple waitlist submission (replace with your provider endpoint)
+    const form = document.getElementById('waitlist');
+    if (form) {
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const email = new FormData(form).get('email');
+        const msg = document.getElementById('waitlist-msg');
+        try {
+          // Example: POST to Buttondown, Mailchimp, or your serverless endpoint.
+          // await fetch('https://your-endpoint.example/join', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({email, source:'yearmap-landing'})});
+          msg.textContent = 'Thanks! Check your inbox to confirm.';
+          form.reset();
+        } catch(err){
+          msg.textContent = 'Sorry, something went wrong. Please try again later.';
+        }
+      });
+    }
+
+    // Optional: swap placeholder preview with dropped image
+    const screen = document.querySelector('.screen');
+    if (screen) {
+      screen.addEventListener('dragover', (e)=>{ e.preventDefault(); screen.style.outline='2px dashed rgba(255,255,255,.25)';});
+      screen.addEventListener('dragleave', ()=>{ screen.style.outline='none';});
+      screen.addEventListener('drop', (e)=>{
+        e.preventDefault(); screen.style.outline='none';
+        const file = e.dataTransfer.files[0];
+        if (!file || !file.type.startsWith('image/')) return;
+        const img = document.createElement('img');
+        img.alt = 'YearMap screenshot'; img.style.width='100%'; img.style.height='100%'; img.style.objectFit='cover';
+        img.src = URL.createObjectURL(file);
+        const ph = screen.querySelector('.placeholder'); if (ph) ph.remove();
+        screen.appendChild(img);
+      });
+    }
+  </script>
+</body>
+</html>
