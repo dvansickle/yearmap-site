@@ -4,6 +4,16 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>YearMap — A Neatnik‑style year‑at‑a‑glance calendar for Chrome</title>
+  
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-290HM1TX70"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-290HM1TX70');
+  </script>
   <meta name="description" content="YearMap is a Chrome extension that brings the beloved Neatnik year‑at‑a‑glance calendar to your browser. Plan with color‑coded ranges, take notes, and export everything to Google, Apple, or Outlook via ICS — with onboarding, keyboard shortcuts, and pro‑feature previews." />
   <link rel="canonical" href="https://yearmap.app/" />
 
@@ -137,6 +147,16 @@
       border:1px solid var(--border);
       position:relative;
       overflow:hidden;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+    .calendar-preview img{
+      max-width:100%;
+      max-height:100%;
+      width:auto;
+      height:auto;
+      object-fit:contain;
     }
     .calendar-preview::after{
       content:"YEARMAP 2025";
@@ -147,6 +167,7 @@
       font-size:12px;
       text-transform:uppercase;
       letter-spacing:1px;
+      pointer-events:none;
     }
 
     .section{
@@ -308,7 +329,7 @@
         </div>
         <div>
           <div class="calendar-preview">
-            <img src="https://yearmap.app/assets/yearmap_full.png" alt="YearMap Calendar Screenshot" style="width:100%; height:100%; object-fit:cover;" />
+            <img src="https://yearmap.app/assets/yearmap_full.png" alt="YearMap Calendar Screenshot" />
           </div>
         </div>
       </div>
