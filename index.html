@@ -115,11 +115,26 @@
     .btn:hover{opacity:0.8}
 
     .hero{
-      padding:60px 0;
+      padding:80px 0;
       border-bottom:1px solid var(--border);
       position:relative;
       overflow:hidden;
+      background:url('https://yearmap.app/assets/yearmap_full.png') center center/cover no-repeat;
     }
+    
+    /* Fade overlay for text readability */
+    .hero::before{
+      content:"";
+      position:absolute;
+      top:0;
+      left:0;
+      right:0;
+      bottom:0;
+      background:linear-gradient(to right, var(--bg) 0%, var(--bg) 45%, rgba(255,255,255,0.85) 60%, transparent 80%);
+      pointer-events:none;
+      z-index:1;
+    }
+    
     .hero-grid{
       display:grid; 
       grid-template-columns: 1fr 1fr; 
@@ -127,6 +142,12 @@
       align-items:center;
       position:relative;
       z-index:2;
+      min-height:500px;
+    }
+    
+    .hero-content{
+      position:relative;
+      z-index:3;
     }
     
     h1{
@@ -145,33 +166,12 @@
     }
     
     .calendar-preview{
-      width:100%;
-      height:500px;
-      background:var(--bg);
-      border:1px solid var(--border);
       position:relative;
-      overflow:hidden;
+      z-index:3;
+      height:500px;
       display:flex;
       align-items:center;
       justify-content:center;
-    }
-    .calendar-preview img{
-      width:100%;
-      height:100%;
-      object-fit:cover;
-      opacity:1;
-    }
-    
-    /* Fade overlay effect */
-    .calendar-overlay{
-      position:absolute;
-      top:0;
-      left:0;
-      right:0;
-      bottom:0;
-      background:linear-gradient(to right, var(--bg) 0%, var(--bg) 30%, transparent 70%, transparent 100%);
-      pointer-events:none;
-      z-index:1;
     }
     
     .calendar-preview::after{
@@ -184,7 +184,7 @@
       text-transform:uppercase;
       letter-spacing:1px;
       pointer-events:none;
-      z-index:3;
+      z-index:4;
     }
 
     .section{
@@ -339,16 +339,13 @@
   <main>
     <section class="hero">
       <div class="container hero-grid">
-        <div>
+        <div class="hero-content">
           <h1>Plan your year at a glance</h1>
           <p class="lead">YearMap brings the beloved <a href="https://neatnik.net/calendar/" target="_blank" rel="noreferrer noopener">Neatnik</a> layout to Chrome with smooth range selection, color‑coded categories, notes, and universal ICS export. Keep the analog clarity — gain digital superpowers.</p>
           <a class="btn" href="#install" id="install-hero">Add to Chrome</a>
         </div>
-        <div>
-          <div class="calendar-preview">
-            <img src="https://yearmap.app/assets/yearmap_full.png" alt="YearMap Calendar Screenshot" />
-            <div class="calendar-overlay"></div>
-          </div>
+        <div class="calendar-preview">
+          <!-- Calendar background image is now applied to the entire hero section -->
         </div>
       </div>
     </section>
