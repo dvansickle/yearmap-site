@@ -14,13 +14,13 @@
 
     gtag('config', 'G-290HM1TX70');
   </script>
-  <meta name="description" content="YearMap is a Chrome extension that brings the beloved Neatnik year‑at‑a‑glance calendar to your browser. Plan with color‑coded ranges, take notes, and export everything to Google, Apple, or Outlook via ICS — with onboarding, keyboard shortcuts, and pro‑feature previews." />
+  <meta name="description" content="YearMap is a Chrome extension that brings the beloved Neatnik year‑at‑a‑glance calendar to your browser. Plan with layered category lanes, range notes, category day totals, and local ICS export for Google, Apple, or Outlook." />
   <link rel="canonical" href="https://yearmap.app/" />
 
   <!-- Open Graph / Twitter -->
   <meta property="og:type" content="website" />
   <meta property="og:title" content="YearMap — Plan your year at a glance" />
-  <meta property="og:description" content="Interactive Neatnik‑style calendar with color‑coded ranges, notes, and universal ICS export." />
+  <meta property="og:description" content="Interactive Neatnik‑style calendar with layered category lanes, notes, day totals, and local ICS export." />
   <meta property="og:image" content="https://yearmap.app/assets/yearmap_full.png" />
   <meta property="og:url" content="https://yearmap.app/" />
   <meta name="twitter:card" content="summary_large_image" />
@@ -306,13 +306,15 @@
     "name": "YearMap",
     "applicationCategory": "BrowserExtension",
     "operatingSystem": "Chrome",
-    "description": "Neatnik‑style year‑at‑a‑glance calendar in your new tab with color‑coded ranges, notes, onboarding, and universal ICS export.",
+    "description": "Neatnik‑style year‑at‑a‑glance calendar in your new tab with layered category lanes, notes, category day totals, and local ICS export.",
     "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
     "publisher": {"@type":"Organization","name":"YearMap"},
     "featureList": [
       "12‑column vertical Neatnik layout",
       "Click‑and‑drag date selection",
-      "Color‑coded categories & notes",
+      "Layered category lanes",
+      "Range notes by category",
+      "Category day totals",
       "Weekday‑aligned optional layout",
       "Weekend highlighting toggle",
       "Universal ICS export",
@@ -342,7 +344,7 @@
       <div class="container hero-grid">
         <div class="hero-content">
           <h1>Plan your year at a glance</h1>
-          <p class="lead">YearMap brings the beloved <a href="https://neatnik.net/calendar/" target="_blank" rel="noreferrer noopener">Neatnik</a> layout to Chrome with smooth range selection, color‑coded categories, notes, and universal ICS export. Keep the analog clarity — gain digital superpowers.</p>
+          <p class="lead">YearMap brings the beloved <a href="https://neatnik.net/calendar/" target="_blank" rel="noreferrer noopener">Neatnik</a> layout to Chrome with smooth range selection, layered category lanes, notes, and local ICS export. Keep the analog clarity — gain just enough digital structure.</p>
           <a class="btn" href="#early-access" id="install-hero">Get Early Access</a>
         </div>
         <div class="calendar-preview">
@@ -361,15 +363,15 @@
           </div>
           <div class="feature">
             <h3>Interactive planning</h3>
-            <p>Click‑and‑drag to create ranges. Assign colors and notes. Undo deletions with a shortcut.</p>
+            <p>Click‑and‑drag to create ranges, assign them to category lanes, and undo recent changes with a shortcut.</p>
           </div>
           <div class="feature">
             <h3>Categories & notes</h3>
-            <p>Create up to 5 categories with 15 colors. Right‑click to add notes, shown on hover.</p>
+            <p>Create up to 5 categories with matching day lanes, lane-specific notes, and optional day totals in the sidebar.</p>
           </div>
           <div class="feature">
             <h3>ICS export</h3>
-            <p>Export all ranges, categories, and notes to Google, Outlook, or Apple Calendar.</p>
+            <p>Export ranges, categories, and notes to Google, Outlook, or Apple Calendar as tidy all-day events.</p>
           </div>
           <div class="feature">
             <h3>Onboarding & shortcuts</h3>
@@ -377,7 +379,7 @@
           </div>
           <div class="feature">
             <h3>Privacy‑first</h3>
-            <p>Runs entirely in your browser with Chrome storage sync. No accounts. No tracking.</p>
+            <p>Runs entirely in your browser with Chrome storage sync. No accounts. No extension tracking.</p>
           </div>
         </div>
       </div>
@@ -389,11 +391,11 @@
         <div class="how">
           <div class="step">
             <b>Mark Your Dates</b>
-            <p>Click and drag to select one or more days on the calendar. Highlight weekends, vacation blocks, projects, or any custom range.</p>
+            <p>Click and drag to select one or more days on the calendar. Mark travel, projects, habits, or any custom span.</p>
           </div>
           <div class="step">
             <b>Add Meaning</b>
-            <p>Assign a color-coded category and include a short note to keep track of what each block represents.</p>
+            <p>Assign the range to a category lane. A single day can hold multiple categories, each with its own color and optional note.</p>
           </div>
           <div class="step">
             <b>Export &amp; Sync</b>
@@ -420,7 +422,7 @@
           <ul>
             <li>Multiple boards (work, family, travel)</li>
             <li>Quick share (read-only link) for teammates or family</li>
-            <li>Calendar analytics (days by category, totals, streaks)</li>
+            <li>More calendar insights, including streaks and year-over-year patterns</li>
           </ul>
           <form class="waitlist" id="waitlist" method="POST">
             <input type="email" name="email" placeholder="you@domain.com" aria-label="Email" required>
@@ -453,7 +455,7 @@
           </div>
           <div>
             <h3>How do notes work?</h3>
-            <p class="muted">Right‑click a range to edit a note. Notes auto‑save and appear in hover tooltips and ICS event descriptions.</p>
+            <p class="muted">Right‑click a range lane to edit its note. Notes auto‑save and appear in the sidebar preview, hover tooltips, and ICS event descriptions.</p>
           </div>
           <div>
             <h3>What about deletions?</h3>
@@ -466,7 +468,7 @@
 
   <footer class="footer">
     <div class="container" style="display:flex; align-items:center; justify-content:space-between; gap:14px; flex-wrap:wrap">
-      <div>© <span id="year"></span> YearMap • MIT Licensed • Built with love for Neatnik</div>
+      <div>© <span id="year"></span> YearMap • Inspired by Neatnik</div>
       <div class="footer-links">
         <a href="#early-access">Get early access</a>
         <a href="/support/">Support</a>
