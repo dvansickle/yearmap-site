@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>YearMap — A Neatnik‑style year‑at‑a‑glance calendar for Chrome</title>
-  
+
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-290HM1TX70"></script>
   <script>
@@ -48,42 +48,42 @@
     html,body{height:100%}
     html{scroll-behavior:smooth}
     body{
-      margin:0; 
+      margin:0;
       background:var(--bg);
-      color:var(--text); 
-      font: 14px/1.4 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      -webkit-font-smoothing:antialiased; 
+      color:var(--text);
+      font: 16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      -webkit-font-smoothing:antialiased;
       -moz-osx-font-smoothing:grayscale;
     }
     a{color:var(--text); text-decoration:none; border-bottom:1px solid transparent}
     a:hover{border-bottom-color:var(--text)}
     .container{max-width:1200px; margin:0 auto; padding:0 20px}
-    
+
     header{
-      position:sticky; 
-      top:0; 
-      background:var(--bg); 
-      border-bottom:1px solid var(--border); 
+      position:sticky;
+      top:0;
+      background:var(--bg);
+      border-bottom:1px solid var(--border);
       z-index:20;
     }
     .nav{
-      display:flex; 
-      align-items:center; 
-      justify-content:space-between; 
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
       padding:16px 0;
     }
     .brand{
-      display:flex; 
-      align-items:center; 
-      gap:8px; 
+      display:flex;
+      align-items:center;
+      gap:8px;
       font-weight:700;
-      font-size:18px;
+      font-size:20px;
       text-transform:uppercase;
       letter-spacing:1px;
     }
     .logo{
-      width:24px; 
-      height:24px; 
+      width:24px;
+      height:24px;
       background:var(--text);
       position:relative;
     }
@@ -93,24 +93,24 @@
       inset:4px;
       background:var(--bg);
     }
-    
+
     .nav-links{
       display:flex;
       gap:24px;
-      font-size:14px;
+      font-size:15px;
       text-transform:uppercase;
       letter-spacing:0.5px;
     }
-    
+
     .btn{
-      appearance:none; 
-      border:none; 
-      cursor:pointer; 
-      font-weight:400; 
-      padding:8px 16px; 
+      appearance:none;
+      border:none;
+      cursor:pointer;
+      font-weight:400;
+      padding:8px 16px;
       background:var(--text);
       color:var(--bg);
-      font-size:14px;
+      font-size:15px;
       text-transform:uppercase;
       letter-spacing:0.5px;
       transition:opacity 0.2s;
@@ -124,7 +124,7 @@
       overflow:hidden;
       background:url('https://yearmap.app/assets/yearmap_full.png') right center/contain no-repeat;
     }
-    
+
     /* Fade overlay for text readability */
     .hero::before{
       content:"";
@@ -137,37 +137,37 @@
       pointer-events:none;
       z-index:1;
     }
-    
+
     .hero-grid{
-      display:grid; 
-      grid-template-columns: 1fr 1fr; 
+      display:grid;
+      grid-template-columns: 1fr 1fr;
       gap:60px;
       align-items:center;
       position:relative;
       z-index:2;
       min-height:500px;
     }
-    
+
     .hero-content{
       position:relative;
       z-index:3;
     }
-    
+
     h1{
-      font-size:48px; 
-      line-height:1.1; 
+      font-size:48px;
+      line-height:1.1;
       margin:0 0 16px;
       font-weight:400;
       text-transform:uppercase;
       letter-spacing:1px;
     }
     .lead{
-      font-size:16px; 
-      color:var(--muted); 
+      font-size:18px;
+      color:var(--muted);
       margin-bottom:32px;
       line-height:1.5;
     }
-    
+
     .calendar-preview{
       position:relative;
       z-index:3;
@@ -176,7 +176,7 @@
       align-items:center;
       justify-content:center;
     }
-    
+
     .section{
       padding:60px 0;
       border-bottom:1px solid var(--border);
@@ -184,9 +184,9 @@
     .section:last-child{
       border-bottom:none;
     }
-    
+
     h2{
-      font-size:24px; 
+      font-size:28px;
       margin:0 0 32px;
       font-weight:400;
       text-transform:uppercase;
@@ -195,22 +195,22 @@
     .muted{color:var(--muted)}
 
     .features{
-      display:grid; 
-      grid-template-columns: repeat(3, 1fr); 
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
       gap:32px;
     }
     .feature{
       padding:0;
     }
     .feature h3{
-      margin:0 0 8px; 
-      font-size:14px;
+      margin:0 0 8px;
+      font-size:16px;
       font-weight:400;
       text-transform:uppercase;
       letter-spacing:0.5px;
     }
     .feature p{
-      font-size:14px;
+      font-size:16px;
       color:var(--muted);
       line-height:1.5;
     }
@@ -236,11 +236,11 @@
     }
     .screenshot-caption{
       border-top:1px solid var(--border);
-      padding:14px 16px;
+      padding:18px 20px;
     }
     .screenshot-caption h3{
       margin:0 0 4px;
-      font-size:14px;
+      font-size:16px;
       font-weight:400;
       text-transform:uppercase;
       letter-spacing:0.5px;
@@ -248,67 +248,67 @@
     .screenshot-caption p{
       margin:0;
       color:var(--muted);
-      font-size:14px;
+      font-size:16px;
       line-height:1.5;
     }
 
     .how{
       display:grid;
-      grid-template-columns:repeat(3,1fr); 
+      grid-template-columns:repeat(3,1fr);
       gap:32px;
     }
     .step{
       padding:0;
     }
     .step b{
-      display:block; 
-      font-weight:400; 
+      display:block;
+      font-weight:400;
       margin-bottom:8px;
       text-transform:uppercase;
       letter-spacing:0.5px;
-      font-size:14px;
+      font-size:16px;
     }
     .step p{
-      font-size:14px;
+      font-size:16px;
       color:var(--muted);
       line-height:1.5;
     }
 
     .grid-2{
       display:grid;
-      grid-template-columns:1fr 1fr; 
+      grid-template-columns:1fr 1fr;
       gap:40px;
     }
 
     .waitlist{
-      display:flex; 
-      gap:12px; 
+      display:flex;
+      gap:12px;
       margin-top:16px;
     }
     .waitlist input{
-      flex:1; 
-      background:var(--bg); 
-      border:1px solid var(--border); 
-      padding:8px 12px; 
+      flex:1;
+      background:var(--bg);
+      border:1px solid var(--border);
+      padding:10px 12px;
       color:var(--text);
-      font-size:14px;
+      font-size:16px;
     }
     .waitlist button{
       white-space:nowrap;
     }
 
     .footer{
-      border-top:1px solid var(--border); 
-      margin-top:60px; 
-      padding:32px 0; 
-      color:var(--muted); 
-      font-size:12px;
+      border-top:1px solid var(--border);
+      margin-top:60px;
+      padding:32px 0;
+      color:var(--muted);
+      font-size:14px;
       text-transform:uppercase;
       letter-spacing:0.5px;
     }
     .footer-links{
-      display:flex; 
-      gap:24px; 
+      display:flex;
+      gap:24px;
       flex-wrap:wrap;
     }
 
