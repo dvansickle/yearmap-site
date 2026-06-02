@@ -213,6 +213,43 @@
       line-height:1.5;
     }
 
+    .screenshots{
+      display:grid;
+      grid-template-columns:1.35fr 1fr;
+      gap:24px;
+      align-items:start;
+    }
+    .screenshot-card{
+      margin:0;
+      border:1px solid var(--border);
+      background:var(--bg);
+    }
+    .screenshot-card.large{
+      grid-row:span 2;
+    }
+    .screenshot-card img{
+      display:block;
+      width:100%;
+      height:auto;
+    }
+    .screenshot-caption{
+      border-top:1px solid var(--border);
+      padding:14px 16px;
+    }
+    .screenshot-caption h3{
+      margin:0 0 4px;
+      font-size:14px;
+      font-weight:400;
+      text-transform:uppercase;
+      letter-spacing:0.5px;
+    }
+    .screenshot-caption p{
+      margin:0;
+      color:var(--muted);
+      font-size:14px;
+      line-height:1.5;
+    }
+
     .how{
       display:grid;
       grid-template-columns:repeat(3,1fr); 
@@ -276,6 +313,8 @@
     @media (max-width: 960px){
       .hero-grid{grid-template-columns:1fr;}
       .features{grid-template-columns:1fr 1fr}
+      .screenshots{grid-template-columns:1fr}
+      .screenshot-card.large{grid-row:auto}
       .how{grid-template-columns:1fr 1fr}
       .grid-2{grid-template-columns:1fr}
     }
@@ -368,6 +407,35 @@
             <h3>Privacy‑first</h3>
             <p>Runs entirely in your browser with Chrome storage sync. No accounts. No extension tracking.</p>
           </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="screenshots">
+      <div class="container">
+        <h2>See it in use</h2>
+        <div class="screenshots">
+          <figure class="screenshot-card large">
+            <img src="/assets/yearmap-interface.png" alt="YearMap calendar with categories, lane totals, and range notes" loading="lazy">
+            <figcaption class="screenshot-caption">
+              <h3>Plan in lanes</h3>
+              <p>Category lanes let the same day hold travel, school, sports, or any other plan side by side.</p>
+            </figcaption>
+          </figure>
+          <figure class="screenshot-card">
+            <img src="/assets/yearmap-commands.png" alt="YearMap command help panel showing selection, assignment, deletion, undo, and note commands" loading="lazy">
+            <figcaption class="screenshot-caption">
+              <h3>Command help</h3>
+              <p>Common actions stay close by, including range deletion, undo, and note editing.</p>
+            </figcaption>
+          </figure>
+          <figure class="screenshot-card">
+            <img src="/assets/yearmap-settings.png" alt="YearMap settings popup with weekend highlighting, weekday alignment, category totals, and export controls" loading="lazy">
+            <figcaption class="screenshot-caption">
+              <h3>Settings and export</h3>
+              <p>Tune the calendar display, show category totals, and export your ranges when you need them elsewhere.</p>
+            </figcaption>
+          </figure>
         </div>
       </div>
     </section>
