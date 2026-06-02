@@ -120,7 +120,7 @@
       border-bottom:1px solid var(--border);
       position:relative;
       overflow:hidden;
-      background:url('https://yearmap.app/assets/yearmap_full.png') center center/cover no-repeat;
+      background:url('https://yearmap.app/assets/yearmap_full.png') right center/contain no-repeat;
     }
     
     /* Fade overlay for text readability */
@@ -175,19 +175,6 @@
       justify-content:center;
     }
     
-    .calendar-preview::after{
-      content:"YEARMAP 2025";
-      position:absolute;
-      bottom:16px;
-      right:16px;
-      color:var(--muted);
-      font-size:12px;
-      text-transform:uppercase;
-      letter-spacing:1px;
-      pointer-events:none;
-      z-index:4;
-    }
-
     .section{
       padding:60px 0;
       border-bottom:1px solid var(--border);
