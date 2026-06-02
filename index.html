@@ -25,8 +25,10 @@
   <meta property="og:url" content="https://yearmap.app/" />
   <meta name="twitter:card" content="summary_large_image" />
 
-  <!-- Favicon (replace with your own) -->
   <link rel="icon" href="/favicon.ico" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/icon16.png" />
+  <link rel="icon" type="image/png" sizes="48x48" href="/assets/icon48.png" />
+  <link rel="apple-touch-icon" sizes="128x128" href="/assets/icon128.png" />
 
   <!-- Fonts: Oswald + Inter -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -215,8 +217,8 @@
 
     .screenshots{
       display:grid;
-      grid-template-columns:1.35fr 1fr;
-      gap:24px;
+      grid-template-columns:repeat(2, minmax(0, 1fr));
+      gap:28px;
       align-items:start;
     }
     .screenshot-card{
@@ -225,7 +227,7 @@
       background:var(--bg);
     }
     .screenshot-card.large{
-      grid-row:span 2;
+      grid-column:1 / -1;
     }
     .screenshot-card img{
       display:block;
@@ -314,7 +316,7 @@
       .hero-grid{grid-template-columns:1fr;}
       .features{grid-template-columns:1fr 1fr}
       .screenshots{grid-template-columns:1fr}
-      .screenshot-card.large{grid-row:auto}
+      .screenshot-card.large{grid-column:auto}
       .how{grid-template-columns:1fr 1fr}
       .grid-2{grid-template-columns:1fr}
     }
