@@ -100,6 +100,8 @@
       font-size:15px;
       text-transform:uppercase;
       letter-spacing:0.5px;
+      align-items:center;
+      white-space:nowrap;
     }
 
     .btn{
@@ -123,6 +125,45 @@
       position:relative;
       overflow:hidden;
       background:url('https://yearmap.app/assets/yearmap_full.png') right center/contain no-repeat;
+    }
+
+    .hero-motion{
+      position:absolute;
+      top:110px;
+      right:clamp(20px, 5vw, 88px);
+      width:min(46vw, 680px);
+      height:420px;
+      z-index:1;
+      pointer-events:none;
+    }
+    .hero-lane{
+      position:absolute;
+      height:16px;
+      border-radius:2px;
+      opacity:0;
+      transform:scaleX(0);
+      transform-origin:left center;
+      filter:saturate(1.05);
+      animation:paint-lane 7.5s ease-in-out infinite;
+    }
+    .hero-lane.red{background:#ef6f6c; left:61%; top:220px; width:9%; animation-delay:0.1s}
+    .hero-lane.teal{background:#63c7bd; left:73%; top:274px; width:13%; animation-delay:1.3s}
+    .hero-lane.blue{background:#5b9bd8; left:49%; top:142px; width:8%; animation-delay:2.5s}
+    .hero-lane.gold{background:#eba33a; left:82%; top:104px; width:7%; animation-delay:3.7s}
+    .hero-note{
+      position:absolute;
+      left:54%;
+      top:86px;
+      padding:6px 10px;
+      border:1px solid #b8b8b8;
+      border-radius:3px;
+      background:rgba(255,255,255,0.94);
+      color:var(--text);
+      font-size:14px;
+      box-shadow:0 2px 8px rgba(0,0,0,0.08);
+      opacity:0;
+      transform:translateY(6px);
+      animation:note-pop 7.5s ease-in-out infinite 4.8s;
     }
 
     /* Fade overlay for text readability */
@@ -213,6 +254,107 @@
       font-size:16px;
       color:var(--muted);
       line-height:1.5;
+    }
+
+    .motion-grid{
+      display:grid;
+      grid-template-columns:repeat(2, minmax(0, 1fr));
+      gap:28px;
+    }
+    .motion-card{
+      border:1px solid var(--border);
+      background:var(--bg);
+    }
+    .motion-demo{
+      min-height:330px;
+      padding:28px;
+      border-bottom:1px solid var(--border);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      overflow:hidden;
+    }
+    .mini-yearmap{
+      width:100%;
+      max-width:500px;
+      display:grid;
+      grid-template-columns:repeat(4, 1fr);
+      gap:16px;
+      color:var(--text);
+    }
+    .mini-month{
+      min-height:214px;
+    }
+    .mini-month-title{
+      font-family:"Oswald", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size:18px;
+      text-transform:uppercase;
+      text-align:center;
+      border-bottom:1px solid #8a8a8a;
+      margin-bottom:8px;
+      padding-bottom:4px;
+    }
+    .mini-day{
+      position:relative;
+      height:15px;
+      border-bottom:1px solid #8a8a8a;
+      font-size:8px;
+      line-height:15px;
+      padding-left:4px;
+    }
+    .mini-day.weekend{
+      background:rgba(0,0,0,0.04);
+      animation:weekend-glow 3.8s ease-in-out infinite;
+    }
+    .mini-day .lane{
+      position:absolute;
+      top:1px;
+      bottom:1px;
+      width:18px;
+      right:10px;
+      border-radius:1px;
+    }
+    .mini-day .lane.teal{background:#63c7bd}
+    .mini-day .lane.blue{background:#5b9bd8}
+    .mini-day .lane.gold{background:#eba33a}
+    .mini-day .lane.red{background:#ef6f6c}
+    .align-demo .mini-month{
+      animation:weekday-align 5s ease-in-out infinite;
+    }
+    .align-demo .mini-month:nth-child(2){animation-delay:0.12s}
+    .align-demo .mini-month:nth-child(3){animation-delay:0.24s}
+    .align-demo .mini-month:nth-child(4){animation-delay:0.36s}
+    .align-demo .mini-month:nth-child(1) .mini-day:first-of-type{margin-top:0}
+    .align-demo .mini-month:nth-child(2) .mini-day:first-of-type{margin-top:30px}
+    .align-demo .mini-month:nth-child(3) .mini-day:first-of-type{margin-top:15px}
+    .align-demo .mini-month:nth-child(4) .mini-day:first-of-type{margin-top:45px}
+
+    @keyframes paint-lane{
+      0%, 12%{opacity:0; transform:scaleX(0)}
+      22%, 72%{opacity:0.88; transform:scaleX(1)}
+      86%, 100%{opacity:0; transform:scaleX(1)}
+    }
+    @keyframes note-pop{
+      0%, 12%{opacity:0; transform:translateY(6px)}
+      24%, 62%{opacity:1; transform:translateY(0)}
+      78%, 100%{opacity:0; transform:translateY(-3px)}
+    }
+    @keyframes weekend-glow{
+      0%, 22%{background:rgba(0,0,0,0.04)}
+      42%, 72%{background:rgba(0,0,0,0.12)}
+      100%{background:rgba(0,0,0,0.04)}
+    }
+    @keyframes weekday-align{
+      0%, 24%{transform:translateY(0)}
+      45%, 78%{transform:translateY(-18px)}
+      100%{transform:translateY(0)}
+    }
+
+    @media (prefers-reduced-motion: reduce){
+      .hero-lane,.hero-note,.mini-day.weekend,.align-demo .mini-month{animation:none}
+      .hero-lane{opacity:0.8; transform:scaleX(1)}
+      .hero-note{opacity:1; transform:none}
+      .mini-day.weekend{background:rgba(0,0,0,0.12)}
     }
 
     .screenshots{
@@ -315,15 +457,21 @@
     @media (max-width: 960px){
       .hero-grid{grid-template-columns:1fr;}
       .features{grid-template-columns:1fr 1fr}
+      .motion-grid{grid-template-columns:1fr}
+      .hero-motion{opacity:0.35; width:80vw; right:20px; top:300px}
       .screenshots{grid-template-columns:1fr}
       .screenshot-card.large{grid-column:auto}
       .how{grid-template-columns:1fr 1fr}
       .grid-2{grid-template-columns:1fr}
     }
+    @media (max-width: 820px){
+      .nav-links{display:none}
+    }
     @media (max-width: 640px){
       h1{font-size:36px}
       .features,.how{grid-template-columns:1fr}
-      .nav-links{display:none}
+      .mini-yearmap{grid-template-columns:repeat(2, 1fr)}
+      .hero-motion{display:none}
     }
   </style>
 
@@ -357,6 +505,7 @@
       <div class="brand"><div class="logo" aria-hidden="true"></div><span>YearMap</span></div>
       <nav class="nav-links">
         <a href="#features">Features</a>
+        <a href="#motion">In Motion</a>
         <a href="#how">How it works</a>
         <a href="/privacy/">Privacy</a>
         <a href="#faq">FAQ</a>
@@ -369,6 +518,13 @@
 
   <main>
     <section class="hero">
+      <div class="hero-motion" aria-hidden="true">
+        <span class="hero-lane red"></span>
+        <span class="hero-lane teal"></span>
+        <span class="hero-lane blue"></span>
+        <span class="hero-lane gold"></span>
+        <span class="hero-note">Family vacation</span>
+      </div>
       <div class="container hero-grid">
         <div class="hero-content">
           <h1>Plan your year at a glance</h1>
@@ -409,6 +565,155 @@
             <h3>Privacy‑first</h3>
             <p>Runs entirely in your browser with Chrome storage sync. No accounts. No extension tracking.</p>
           </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="motion">
+      <div class="container">
+        <h2>See the calendar respond</h2>
+        <div class="motion-grid">
+          <figure class="motion-card">
+            <div class="motion-demo weekend-demo" aria-label="Weekend highlighting animation">
+              <div class="mini-yearmap" aria-hidden="true">
+                <div class="mini-month">
+                  <div class="mini-month-title">May</div>
+                  <div class="mini-day">1 F</div>
+                  <div class="mini-day weekend">2 S</div>
+                  <div class="mini-day weekend">3 S</div>
+                  <div class="mini-day">4 M</div>
+                  <div class="mini-day">5 T</div>
+                  <div class="mini-day">6 W</div>
+                  <div class="mini-day">7 T<span class="lane teal"></span></div>
+                  <div class="mini-day">8 F<span class="lane teal"></span></div>
+                  <div class="mini-day weekend">9 S<span class="lane teal"></span></div>
+                  <div class="mini-day weekend">10 S<span class="lane teal"></span></div>
+                  <div class="mini-day">11 M</div>
+                  <div class="mini-day">12 T</div>
+                </div>
+                <div class="mini-month">
+                  <div class="mini-month-title">Jun</div>
+                  <div class="mini-day">1 M</div>
+                  <div class="mini-day">2 T</div>
+                  <div class="mini-day">3 W</div>
+                  <div class="mini-day">4 T</div>
+                  <div class="mini-day">5 F</div>
+                  <div class="mini-day weekend">6 S</div>
+                  <div class="mini-day weekend">7 S</div>
+                  <div class="mini-day">8 M<span class="lane blue"></span></div>
+                  <div class="mini-day">9 T</div>
+                  <div class="mini-day">10 W</div>
+                  <div class="mini-day">11 T</div>
+                  <div class="mini-day">12 F</div>
+                </div>
+                <div class="mini-month">
+                  <div class="mini-month-title">Jul</div>
+                  <div class="mini-day">1 W</div>
+                  <div class="mini-day">2 T</div>
+                  <div class="mini-day">3 F</div>
+                  <div class="mini-day weekend">4 S</div>
+                  <div class="mini-day weekend">5 S</div>
+                  <div class="mini-day">6 M</div>
+                  <div class="mini-day">7 T</div>
+                  <div class="mini-day">8 W</div>
+                  <div class="mini-day">9 T<span class="lane gold"></span></div>
+                  <div class="mini-day">10 F<span class="lane gold"></span></div>
+                  <div class="mini-day weekend">11 S<span class="lane gold"></span></div>
+                  <div class="mini-day weekend">12 S</div>
+                </div>
+                <div class="mini-month">
+                  <div class="mini-month-title">Aug</div>
+                  <div class="mini-day weekend">1 S</div>
+                  <div class="mini-day weekend">2 S</div>
+                  <div class="mini-day">3 M</div>
+                  <div class="mini-day">4 T</div>
+                  <div class="mini-day">5 W</div>
+                  <div class="mini-day">6 T</div>
+                  <div class="mini-day">7 F</div>
+                  <div class="mini-day weekend">8 S</div>
+                  <div class="mini-day weekend">9 S</div>
+                  <div class="mini-day">10 M<span class="lane red"></span></div>
+                  <div class="mini-day">11 T<span class="lane red"></span></div>
+                  <div class="mini-day">12 W</div>
+                </div>
+              </div>
+            </div>
+            <figcaption class="screenshot-caption">
+              <h3>Highlight weekends</h3>
+              <p>Turn weekend shading on or off instantly, while category lanes stay readable inside the same dates.</p>
+            </figcaption>
+          </figure>
+
+          <figure class="motion-card">
+            <div class="motion-demo align-demo" aria-label="Weekday alignment animation">
+              <div class="mini-yearmap" aria-hidden="true">
+                <div class="mini-month">
+                  <div class="mini-month-title">Sep</div>
+                  <div class="mini-day">1 T</div>
+                  <div class="mini-day">2 W</div>
+                  <div class="mini-day">3 T</div>
+                  <div class="mini-day">4 F</div>
+                  <div class="mini-day weekend">5 S</div>
+                  <div class="mini-day weekend">6 S</div>
+                  <div class="mini-day">7 M</div>
+                  <div class="mini-day">8 T<span class="lane blue"></span></div>
+                  <div class="mini-day">9 W</div>
+                  <div class="mini-day">10 T</div>
+                  <div class="mini-day">11 F</div>
+                  <div class="mini-day weekend">12 S</div>
+                </div>
+                <div class="mini-month">
+                  <div class="mini-month-title">Oct</div>
+                  <div class="mini-day">1 T</div>
+                  <div class="mini-day">2 F</div>
+                  <div class="mini-day weekend">3 S</div>
+                  <div class="mini-day weekend">4 S</div>
+                  <div class="mini-day">5 M</div>
+                  <div class="mini-day">6 T</div>
+                  <div class="mini-day">7 W</div>
+                  <div class="mini-day">8 T</div>
+                  <div class="mini-day">9 F</div>
+                  <div class="mini-day weekend">10 S</div>
+                  <div class="mini-day weekend">11 S</div>
+                  <div class="mini-day">12 M</div>
+                </div>
+                <div class="mini-month">
+                  <div class="mini-month-title">Nov</div>
+                  <div class="mini-day weekend">1 S</div>
+                  <div class="mini-day">2 M</div>
+                  <div class="mini-day">3 T</div>
+                  <div class="mini-day">4 W</div>
+                  <div class="mini-day">5 T</div>
+                  <div class="mini-day">6 F</div>
+                  <div class="mini-day weekend">7 S<span class="lane gold"></span></div>
+                  <div class="mini-day weekend">8 S</div>
+                  <div class="mini-day">9 M<span class="lane red"></span></div>
+                  <div class="mini-day">10 T<span class="lane red"></span></div>
+                  <div class="mini-day">11 W<span class="lane red"></span></div>
+                  <div class="mini-day">12 T</div>
+                </div>
+                <div class="mini-month">
+                  <div class="mini-month-title">Dec</div>
+                  <div class="mini-day">1 T</div>
+                  <div class="mini-day">2 W</div>
+                  <div class="mini-day">3 T</div>
+                  <div class="mini-day">4 F</div>
+                  <div class="mini-day weekend">5 S</div>
+                  <div class="mini-day weekend">6 S</div>
+                  <div class="mini-day">7 M</div>
+                  <div class="mini-day">8 T</div>
+                  <div class="mini-day">9 W</div>
+                  <div class="mini-day">10 T<span class="lane teal"></span></div>
+                  <div class="mini-day">11 F<span class="lane teal"></span></div>
+                  <div class="mini-day weekend">12 S<span class="lane teal"></span></div>
+                </div>
+              </div>
+            </div>
+            <figcaption class="screenshot-caption">
+              <h3>Align weekdays</h3>
+              <p>Snap months into weekday alignment when you want patterns across the year to line up vertically.</p>
+            </figcaption>
+          </figure>
         </div>
       </div>
     </section>
