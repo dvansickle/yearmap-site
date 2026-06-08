@@ -20,9 +20,30 @@
     .wrap { max-width:860px; margin:0 auto; padding:28px; }
     a { color:#1769aa; }
     h1 { margin-top:0; }
+    .site-header { background:#fff; border-bottom:1px solid #e6e1d7; }
+    .site-nav { max-width:860px; margin:0 auto; padding:16px 28px; display:flex; align-items:center; justify-content:space-between; gap:20px; }
+    .home-link { display:flex; align-items:center; gap:10px; color:#2a2a2a; font-weight:700; text-decoration:none; }
+    .home-link img { width:32px; height:32px; }
+    .page-links { display:flex; gap:18px; flex-wrap:wrap; }
+    .page-links a { color:#555; text-decoration:none; }
+    .page-links a:hover, .page-links a[aria-current="page"] { color:#2a2a2a; text-decoration:underline; }
+    @media (max-width:560px) {
+      .site-nav { align-items:flex-start; flex-direction:column; gap:10px; }
+      .page-links { gap:14px; }
+    }
   </style>
 </head>
 <body>
+  <header class="site-header">
+    <nav class="site-nav" aria-label="Site navigation">
+      <a class="home-link" href="/"><img src="/assets/logo256.png" alt=""><span>YearMap</span></a>
+      <div class="page-links">
+        <a href="/support/">Support</a>
+        <a href="/privacy/">Privacy</a>
+        <a href="/terms/" aria-current="page">Terms</a>
+      </div>
+    </nav>
+  </header>
   <div class="wrap">
     <h1>Terms of Use</h1>
     <p><strong>Effective Date:</strong> June 2026</p>
