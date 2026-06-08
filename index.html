@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>YearMap — A Neatnik‑style year‑at‑a‑glance calendar for Chrome</title>
+  <title>YearMap — Plan your year at a glance in Chrome</title>
 
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-290HM1TX70"></script>
@@ -14,7 +14,7 @@
 
     gtag('config', 'G-290HM1TX70');
   </script>
-  <meta name="description" content="YearMap is a Chrome extension that brings the beloved Neatnik year‑at‑a‑glance calendar to your browser. Plan with layered category lanes, range notes, category day totals, and local ICS export for Google, Apple, or Outlook." />
+  <meta name="description" content="Install YearMap for Chrome and plan the whole year on one screen with category lanes, range notes, day totals, and local ICS export." />
   <link rel="canonical" href="https://yearmap.app/" />
 
   <!-- Open Graph / Twitter -->
@@ -276,23 +276,6 @@
       gap:40px;
     }
 
-    .waitlist{
-      display:flex;
-      gap:12px;
-      margin-top:16px;
-    }
-    .waitlist input{
-      flex:1;
-      background:var(--bg);
-      border:1px solid var(--border);
-      padding:10px 12px;
-      color:var(--text);
-      font-size:16px;
-    }
-    .waitlist button{
-      white-space:nowrap;
-    }
-
     .footer{
       border-top:1px solid var(--border);
       margin-top:60px;
@@ -330,6 +313,8 @@
     "name": "YearMap",
     "applicationCategory": "BrowserExtension",
     "operatingSystem": "Chrome",
+    "url": "https://yearmap.app/",
+    "downloadUrl": "https://chromewebstore.google.com/detail/yearmap/mhjlipallhabmljhgibfiadncacficao",
     "description": "Neatnik‑style year‑at‑a‑glance calendar in your new tab with layered category lanes, notes, category day totals, and local ICS export.",
     "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
     "publisher": {"@type":"Organization","name":"YearMap"},
@@ -358,7 +343,7 @@
         <a href="#faq">FAQ</a>
       </nav>
       <div>
-        <a class="btn" href="#early-access" id="install">Get Early Access</a>
+        <a class="btn" href="https://chromewebstore.google.com/detail/yearmap/mhjlipallhabmljhgibfiadncacficao" target="_blank" rel="noopener noreferrer">Add to Chrome</a>
       </div>
     </div>
   </header>
@@ -369,7 +354,7 @@
         <div class="hero-content">
           <h1>Plan your year at a glance</h1>
           <p class="lead">YearMap brings the beloved <a href="https://neatnik.net/calendar/" target="_blank" rel="noreferrer noopener">Neatnik</a> layout to Chrome with smooth range selection, layered category lanes, notes, and local ICS export. Keep the analog clarity — gain just enough digital structure.</p>
-          <a class="btn" href="#early-access" id="install-hero">Get Early Access</a>
+          <a class="btn" href="https://chromewebstore.google.com/detail/yearmap/mhjlipallhabmljhgibfiadncacficao" target="_blank" rel="noopener noreferrer">Add to Chrome — It’s free</a>
         </div>
         <div class="calendar-preview">
           <!-- Calendar background image is now applied to the entire hero section -->
@@ -458,7 +443,7 @@
       </div>
     </section>
 
-    <section class="section" id="early-access">
+    <section class="section" id="get-yearmap">
       <div class="container grid-2">
         <div>
           <h2>Export to your calendar</h2>
@@ -470,19 +455,14 @@
           </ul>
         </div>
         <div>
-          <h2>Coming to the Chrome Web Store</h2>
-          <p class="muted">YearMap will be available on the Chrome Web Store soon. Complete the form below to register for early access — we’ll notify you as soon as it’s listed so you can install with one click.</p>
+          <h2>Available now for Chrome</h2>
+          <p class="muted">Install YearMap from the Chrome Web Store and start planning immediately. It’s free, requires no account, and keeps your calendar data in Chrome storage.</p>
           <ul>
-            <li>Multiple boards (work, family, travel)</li>
-            <li>Quick share (read-only link) for teammates or family</li>
-            <li>More calendar insights, including streaks and year-over-year patterns</li>
+            <li>See the entire year on one screen</li>
+            <li>Plan with up to five color-coded categories</li>
+            <li>Add notes and export ranges to your calendar</li>
           </ul>
-          <form class="waitlist" id="waitlist" method="POST">
-            <input type="email" name="email" placeholder="you@domain.com" aria-label="Email" required>
-            <input type="hidden" name="_subject" value="YearMap early access signup">
-            <button class="btn" type="submit">Register for early access</button>
-          </form>
-          <small id="waitlist-msg" class="muted"></small>
+          <p><a class="btn" href="https://chromewebstore.google.com/detail/yearmap/mhjlipallhabmljhgibfiadncacficao" target="_blank" rel="noopener noreferrer">Install YearMap</a></p>
         </div>
       </div>
     </section>
@@ -490,7 +470,7 @@
     <section class="section" id="privacy">
       <div class="container">
         <h2>Privacy</h2>
-        <p class="muted">YearMap runs entirely within your Chrome profile. Data is stored using Chrome storage (with optional sync across your devices). We do not collect analytics or sell/share personal data. ICS export files are generated locally in your browser.</p>
+        <p class="muted">YearMap runs entirely within your Chrome profile. Data is stored using Chrome storage (with optional sync across your devices). The extension contains no analytics and does not sell or share personal data. ICS export files are generated locally in your browser.</p>
       </div>
     </section>
 
@@ -523,7 +503,7 @@
     <div class="container" style="display:flex; align-items:center; justify-content:space-between; gap:14px; flex-wrap:wrap">
       <div>© <span id="year"></span> YearMap • Inspired by Neatnik</div>
       <div class="footer-links">
-        <a href="#early-access">Get early access</a>
+        <a href="https://chromewebstore.google.com/detail/yearmap/mhjlipallhabmljhgibfiadncacficao" target="_blank" rel="noopener noreferrer">Install YearMap</a>
         <a href="/support/">Support</a>
         <a href="/privacy/">Privacy</a>
         <a href="/terms/">Terms</a>
@@ -532,69 +512,7 @@
   </footer>
 
   <script>
-    // Replace these with real links before deploying
-    const LINKS = {
-      install: "https://chromewebstore.google.com/detail/your-yearmap-id", // TODO
-      github: "https://github.com/yourname/yearmap", // TODO
-      docs: "https://github.com/yourname/yearmap#readme", // TODO
-      support: "mailto:support@yearmap.app" // TODO
-    };
-
-    // Wire up links (install buttons scroll to early-access; set LINKS.install when live on Chrome Web Store)
     const y = document.getElementById('year'); if (y) y.textContent = new Date().getFullYear();
-    // Install links stay as #early-access for now so "Get Early Access" scrolls to waitlist
-    // installLinks.forEach(el => el.href = LINKS.install);
-    const gh = document.getElementById('gh'); if (gh) gh.href = LINKS.github;
-    document.querySelectorAll('a[href="#docs"]').forEach(a => a.href = LINKS.docs);
-    document.querySelectorAll('a[href="#github"]').forEach(a => a.href = LINKS.github);
-
-    // Early-access waitlist: submits to Formspree (form ID from formspree.io)
-    const FORMPREE_FORM_ID = 'xlgwnyaj';
-    const form = document.getElementById('waitlist');
-    if (form) {
-      form.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const email = new FormData(form).get('email');
-        const msg = document.getElementById('waitlist-msg');
-        if (!FORMPREE_FORM_ID || FORMPREE_FORM_ID === 'YOUR_FORMSPREE_ID') {
-          msg.textContent = 'Form not configured yet. Please email support@yearmap.app to join early access.';
-          return;
-        }
-        msg.textContent = 'Sending…';
-        try {
-          const res = await fetch(`https://formspree.io/f/${FORMPREE_FORM_ID}`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ email, _subject: 'YearMap early access signup' })
-          });
-          if (res.ok) {
-            msg.textContent = "Thanks! You're registered for early access. We'll notify you when YearMap is on the Chrome Web Store.";
-            form.reset();
-          } else {
-            msg.textContent = 'Something went wrong. Please try again or email support@yearmap.app.';
-          }
-        } catch (err) {
-          msg.textContent = 'Something went wrong. Please try again or email support@yearmap.app.';
-        }
-      });
-    }
-
-    // Optional: swap placeholder preview with dropped image
-    const calendarPreview = document.querySelector('.calendar-preview');
-    if (calendarPreview) {
-      calendarPreview.addEventListener('dragover', (e)=>{ e.preventDefault(); calendarPreview.style.outline='2px dashed var(--border)';});
-      calendarPreview.addEventListener('dragleave', ()=>{ calendarPreview.style.outline='none';});
-      calendarPreview.addEventListener('drop', (e)=>{
-        e.preventDefault(); calendarPreview.style.outline='none';
-        const file = e.dataTransfer.files[0];
-        if (!file || !file.type.startsWith('image/')) return;
-        const img = document.createElement('img');
-        img.alt = 'YearMap screenshot'; img.style.width='100%'; img.style.height='100%'; img.style.objectFit='cover';
-        img.src = URL.createObjectURL(file);
-        calendarPreview.innerHTML = '';
-        calendarPreview.appendChild(img);
-      });
-    }
   </script>
 </body>
 </html>
