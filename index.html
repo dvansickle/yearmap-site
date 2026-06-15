@@ -114,11 +114,23 @@
     .btn:hover{opacity:0.8}
 
     .hero{
-      padding:80px 0;
+      min-height:640px;
+      padding:88px 0 72px;
       border-bottom:1px solid var(--border);
       position:relative;
       overflow:hidden;
-      background:url('https://yearmap.app/assets/yearmap_full.png') right center/contain no-repeat;
+      display:flex;
+      align-items:center;
+      background:var(--bg);
+    }
+    .hero-video{
+      position:absolute;
+      inset:0;
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      object-position:center;
+      z-index:0;
     }
 
     /* Fade overlay for text readability */
@@ -129,24 +141,24 @@
       left:0;
       right:0;
       bottom:0;
-      background:linear-gradient(to right, var(--bg) 0%, var(--bg) 45%, rgba(255,255,255,0.85) 60%, transparent 80%);
+      background:
+        linear-gradient(to right, var(--bg) 0%, rgba(255,255,255,0.98) 34%, rgba(255,255,255,0.84) 49%, rgba(255,255,255,0.12) 78%),
+        linear-gradient(to bottom, rgba(255,255,255,0.2), transparent 28%, transparent 72%, rgba(255,255,255,0.2));
       pointer-events:none;
       z-index:1;
     }
 
     .hero-grid{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap:60px;
-      align-items:center;
       position:relative;
       z-index:2;
-      min-height:500px;
+      width:100%;
     }
 
     .hero-content{
       position:relative;
       z-index:3;
+      max-width:520px;
+      padding:36px 0;
     }
 
     h1{
@@ -162,15 +174,6 @@
       color:var(--muted);
       margin-bottom:32px;
       line-height:1.5;
-    }
-
-    .calendar-preview{
-      position:relative;
-      z-index:3;
-      height:500px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
     }
 
     .section{
@@ -213,7 +216,7 @@
 
     .screenshots{
       display:grid;
-      grid-template-columns:repeat(2, minmax(0, 1fr));
+      grid-template-columns:repeat(3, minmax(0, 1fr));
       gap:28px;
       align-items:start;
     }
@@ -222,13 +225,13 @@
       border:1px solid var(--border);
       background:var(--bg);
     }
-    .screenshot-card.large{
-      grid-column:1 / -1;
-    }
     .screenshot-card img{
       display:block;
       width:100%;
-      height:auto;
+      height:440px;
+      object-fit:contain;
+      object-position:top center;
+      background:#fafafa;
     }
     .screenshot-caption{
       border-top:1px solid var(--border);
@@ -292,14 +295,19 @@
     }
 
     @media (max-width: 960px){
-      .hero-grid{grid-template-columns:1fr;}
       .features{grid-template-columns:1fr 1fr}
       .screenshots{grid-template-columns:1fr}
-      .screenshot-card.large{grid-column:auto}
+      .screenshot-card img{height:auto}
       .how{grid-template-columns:1fr 1fr}
       .grid-2{grid-template-columns:1fr}
     }
     @media (max-width: 640px){
+      .hero{min-height:620px; align-items:flex-end; padding:220px 0 48px}
+      .hero-video{object-position:72% center}
+      .hero::before{
+        background:linear-gradient(to bottom, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0.82) 40%, var(--bg) 64%);
+      }
+      .hero-content{max-width:none; padding:0}
       h1{font-size:36px}
       .features,.how{grid-template-columns:1fr}
       .nav-links{display:none}
@@ -350,14 +358,14 @@
 
   <main>
     <section class="hero">
+      <video class="hero-video" autoplay muted loop playsinline preload="metadata" poster="/assets/yearmap-demo-poster.png" aria-hidden="true">
+        <source src="/assets/yearmap-demo.mp4" type="video/mp4">
+      </video>
       <div class="container hero-grid">
         <div class="hero-content">
           <h1>Plan your year at a glance</h1>
           <p class="lead">YearMap brings the beloved <a href="https://neatnik.net/calendar/" target="_blank" rel="noreferrer noopener">Neatnik</a> layout to Chrome with smooth range selection, layered category lanes, notes, and local ICS export. Keep the analog clarity — gain just enough digital structure.</p>
           <a class="btn" href="https://chromewebstore.google.com/detail/yearmap/mhjlipallhabmljhgibfiadncacficao" target="_blank" rel="noopener noreferrer">Add to Chrome — It’s free</a>
-        </div>
-        <div class="calendar-preview">
-          <!-- Calendar background image is now applied to the entire hero section -->
         </div>
       </div>
     </section>
@@ -398,25 +406,25 @@
       <div class="container">
         <h2>See it in use</h2>
         <div class="screenshots">
-          <figure class="screenshot-card large">
-            <img src="/assets/yearmap-interface.png" alt="YearMap calendar with categories, lane totals, and range notes" loading="lazy">
+          <figure class="screenshot-card">
+            <img src="/assets/yearmap-range-details.png" alt="YearMap Range details editor with category, start and end dates, and note field" loading="lazy">
             <figcaption class="screenshot-caption">
-              <h3>Plan in lanes</h3>
-              <p>Category lanes let the same day hold travel, school, sports, or any other plan side by side.</p>
+              <h3>Edit range details</h3>
+              <p>Adjust a range’s dates and note together, then undo the edit if you change your mind.</p>
             </figcaption>
           </figure>
           <figure class="screenshot-card">
-            <img src="/assets/yearmap-commands.png" alt="YearMap command help panel showing selection, assignment, deletion, undo, and note commands" loading="lazy">
+            <img src="/assets/yearmap-commands.png" alt="YearMap command help panel showing selection, assignment, deletion, undo, and range editing commands" loading="lazy">
             <figcaption class="screenshot-caption">
               <h3>Command help</h3>
-              <p>Common actions stay close by, including range deletion, undo, and note editing.</p>
+              <p>Common actions stay close by, including range deletion, undo, and detail editing.</p>
             </figcaption>
           </figure>
           <figure class="screenshot-card">
-            <img src="/assets/yearmap-settings.png" alt="YearMap settings popup with weekend highlighting, weekday alignment, category totals, and export controls" loading="lazy">
+            <img src="/assets/yearmap-settings.png" alt="YearMap settings popup with weekend highlighting, weekday alignment, category totals, automatic note editing, and export controls" loading="lazy">
             <figcaption class="screenshot-caption">
               <h3>Settings and export</h3>
-              <p>Tune the calendar display, show category totals, and export your ranges when you need them elsewhere.</p>
+              <p>Tune the display and note workflow, show category totals, and export your ranges when you need them elsewhere.</p>
             </figcaption>
           </figure>
         </div>
@@ -433,7 +441,7 @@
           </div>
           <div class="step">
             <b>Add Meaning</b>
-            <p>Assign the range to a category lane. A single day can hold multiple categories, each with its own color and optional note.</p>
+            <p>Assign the range to a category lane, then add a note or adjust its dates in the Range details editor.</p>
           </div>
           <div class="step">
             <b>Export &amp; Sync</b>
@@ -488,11 +496,11 @@
           </div>
           <div>
             <h3>How do notes work?</h3>
-            <p class="muted">Right‑click a range lane to edit its note. Notes auto‑save and appear in the sidebar preview, hover tooltips, and ICS event descriptions.</p>
+            <p class="muted">Right‑click a range lane to edit its dates and note together. Saved notes appear in the sidebar preview, hover tooltips, and ICS event descriptions.</p>
           </div>
           <div>
             <h3>What about deletions?</h3>
-            <p class="muted">Hold Shift and click any day in a range to remove it. Use Ctrl/Cmd+Z within 30s to undo.</p>
+            <p class="muted">Hold Shift and click any day in a range to remove it. Use Ctrl/Cmd+Z within 30 seconds to undo an assignment, edit, or deletion.</p>
           </div>
         </div>
       </div>
