@@ -294,6 +294,11 @@
       display:grid;
       grid-template-columns:repeat(3, minmax(0, 1fr));
       gap:18px;
+      opacity:1;
+      transition:opacity 0.18s ease;
+    }
+    .testimonial-grid.is-changing{
+      opacity:0;
     }
     .testimonial-card{
       border:1px solid var(--line);
@@ -788,20 +793,50 @@
     const testimonialGrid = document.getElementById('testimonial-grid');
 
     if (testimonialGrid) {
-      const shuffled = [...testimonials].sort(() => Math.random() - 0.5).slice(0, 3);
-      testimonialGrid.innerHTML = shuffled.map((testimonial) => `
-        <article class="testimonial-card">
-          <blockquote>
-            <p class="testimonial-quote"></p>
-          </blockquote>
-          <p class="testimonial-author"></p>
-        </article>
-      `).join('');
+      let cursor = 0;
+      let orderedTestimonials = [...testimonials].sort(() => Math.random() - 0.5);
+      const shouldCycle = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-      testimonialGrid.querySelectorAll('.testimonial-card').forEach((card, index) => {
-        card.querySelector('.testimonial-quote').textContent = shuffled[index].quote;
-        card.querySelector('.testimonial-author').textContent = shuffled[index].author;
-      });
+      const nextTestimonials = () => {
+        if (cursor + 3 > orderedTestimonials.length) {
+          orderedTestimonials = [...testimonials].sort(() => Math.random() - 0.5);
+          cursor = 0;
+        }
+        const selected = orderedTestimonials.slice(cursor, cursor + 3);
+        cursor += 3;
+        return selected;
+      };
+
+      const renderTestimonials = (selected) => {
+        testimonialGrid.innerHTML = selected.map(() => `
+          <article class="testimonial-card">
+            <blockquote>
+              <p class="testimonial-quote"></p>
+            </blockquote>
+            <p class="testimonial-author"></p>
+          </article>
+        `).join('');
+
+        testimonialGrid.querySelectorAll('.testimonial-card').forEach((card, index) => {
+          card.querySelector('.testimonial-quote').textContent = selected[index].quote;
+          card.querySelector('.testimonial-author').textContent = selected[index].author;
+        });
+      };
+
+      const cycleTestimonials = () => {
+        if (!shouldCycle) return;
+        testimonialGrid.classList.add('is-changing');
+        window.setTimeout(() => {
+          renderTestimonials(nextTestimonials());
+          testimonialGrid.classList.remove('is-changing');
+          window.setTimeout(cycleTestimonials, 9000);
+        }, 180);
+      };
+
+      renderTestimonials(nextTestimonials());
+      if (shouldCycle) {
+        window.setTimeout(cycleTestimonials, 9000);
+      }
     }
   </script>
 </body>
