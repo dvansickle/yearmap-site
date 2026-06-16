@@ -219,6 +219,7 @@
     .section{
       border-bottom:1px solid var(--line);
       padding:76px 0;
+      scroll-margin-top:76px;
     }
     .section:last-child{border-bottom:none}
     h2{
@@ -274,28 +275,41 @@
 
     .proof{
       background:var(--surface);
+      padding:58px 0;
     }
     .proof-grid{
       display:grid;
-      grid-template-columns:minmax(0, 0.8fr) minmax(0, 1.2fr);
-      gap:42px;
-      align-items:center;
+      gap:28px;
     }
-    .testimonial-frame{
+    .proof-header{
+      align-items:end;
+      display:grid;
+      gap:20px;
+      grid-template-columns:minmax(0, 1fr) auto;
+    }
+    .proof-copy{max-width:760px}
+    .proof-header .section-intro{margin-bottom:0}
+    .proof-header .btn{justify-self:start}
+    .testimonial-grid{
+      display:grid;
+      grid-template-columns:repeat(3, minmax(0, 1fr));
+      gap:18px;
+    }
+    .testimonial-card{
       border:1px solid var(--line);
       border-radius:8px;
       background:#fff;
-      min-height:286px;
-      padding:30px;
+      min-height:270px;
+      padding:22px;
       display:flex;
       flex-direction:column;
       justify-content:space-between;
-      gap:24px;
+      gap:22px;
     }
-    .testimonial-frame blockquote{margin:0}
+    .testimonial-card blockquote{margin:0}
     .testimonial-quote{
       color:var(--text);
-      font-size:27px;
+      font-size:19px;
       line-height:1.35;
       margin:0;
     }
@@ -304,27 +318,8 @@
       font-size:15px;
       font-weight:600;
       letter-spacing:0.05em;
-      margin:0 0 14px;
+      margin:0;
       text-transform:uppercase;
-    }
-    .testimonial-controls{
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-    }
-    .testimonial-dot{
-      appearance:none;
-      background:transparent;
-      border:1px solid var(--muted);
-      border-radius:999px;
-      cursor:pointer;
-      height:11px;
-      padding:0;
-      width:11px;
-    }
-    .testimonial-dot[aria-current="true"]{
-      background:var(--text);
-      border-color:var(--text);
     }
 
     .screenshots{
@@ -442,8 +437,10 @@
       .screenshots,
       .how,
       .proof-grid,
+      .testimonial-grid,
       .split,
       .faq-grid{grid-template-columns:1fr}
+      .proof-header{grid-template-columns:1fr}
       .screenshot-card img{height:auto; object-fit:contain}
       .hero{min-height:660px}
       h1{font-size:58px}
@@ -470,9 +467,10 @@
       h2{font-size:36px}
       .lead{font-size:19px}
       .section{padding:58px 0}
+      .proof{padding:54px 0}
       .cta-row{align-items:stretch; flex-direction:column}
-      .testimonial-frame{padding:22px; min-height:auto}
-      .testimonial-quote{font-size:22px}
+      .testimonial-card{padding:22px; min-height:auto}
+      .testimonial-quote{font-size:19px}
     }
   </style>
 
@@ -580,20 +578,33 @@
 
     <section class="section proof" id="proof" aria-labelledby="proof-title">
       <div class="container proof-grid">
-        <div>
-          <p class="eyebrow">Early user notes</p>
-          <h2 id="proof-title">People are already finding their own reasons to keep it open.</h2>
-          <p class="section-intro">The common thread: seeing the whole year changes what people notice.</p>
+        <div class="proof-header">
+          <div class="proof-copy">
+            <p class="eyebrow">Early user notes</p>
+            <h2 id="proof-title">People are already finding their own reasons to keep it open.</h2>
+            <p class="section-intro">The common thread: seeing the whole year changes what people notice.</p>
+          </div>
           <a class="btn" href="https://chromewebstore.google.com/detail/yearmap/mhjlipallhabmljhgibfiadncacficao" target="_blank" rel="noopener noreferrer">Add to Chrome - Free, no account</a>
         </div>
-        <div class="testimonial-frame" aria-live="polite">
-          <blockquote>
-            <p class="testimonial-quote" id="testimonial-quote">ok the thing that actually got me was the day totals in the sidebar. didn't even notice the feature until I'd been using it a while and now I check it constantly.</p>
-          </blockquote>
-          <div>
-            <p class="testimonial-author" id="testimonial-author">Jenna L.</p>
-            <div class="testimonial-controls" id="testimonial-controls" aria-label="Choose testimonial"></div>
-          </div>
+        <div class="testimonial-grid" id="testimonial-grid" aria-label="User testimonials">
+          <article class="testimonial-card">
+            <blockquote>
+              <p class="testimonial-quote">ok the thing that actually got me was the day totals in the sidebar. didn't even notice the feature until I'd been using it a while and now I check it constantly.</p>
+            </blockquote>
+            <p class="testimonial-author">Jenna L.</p>
+          </article>
+          <article class="testimonial-card">
+            <blockquote>
+              <p class="testimonial-quote">I mostly use it to keep track of when I'm traveling for work vs. when my kids are off school. Being able to see both at once on one screen is the thing I didn't know I needed.</p>
+            </blockquote>
+            <p class="testimonial-author">Priya R.</p>
+          </article>
+          <article class="testimonial-card">
+            <blockquote>
+              <p class="testimonial-quote">Wanted something offline that wasn't going to harvest my calendar. This just sits in the browser and doesn't phone home, which is rare these days.</p>
+            </blockquote>
+            <p class="testimonial-author">Elena K.</p>
+          </article>
         </div>
       </div>
     </section>
@@ -774,46 +785,23 @@
       }
     ];
 
-    const quoteEl = document.getElementById('testimonial-quote');
-    const authorEl = document.getElementById('testimonial-author');
-    const controlsEl = document.getElementById('testimonial-controls');
+    const testimonialGrid = document.getElementById('testimonial-grid');
 
-    if (quoteEl && authorEl && controlsEl) {
-      let activeTestimonial = 0;
-      let testimonialTimer;
-      const shouldRotate = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (testimonialGrid) {
+      const shuffled = [...testimonials].sort(() => Math.random() - 0.5).slice(0, 3);
+      testimonialGrid.innerHTML = shuffled.map((testimonial) => `
+        <article class="testimonial-card">
+          <blockquote>
+            <p class="testimonial-quote"></p>
+          </blockquote>
+          <p class="testimonial-author"></p>
+        </article>
+      `).join('');
 
-      const showTestimonial = (index) => {
-        activeTestimonial = index;
-        quoteEl.textContent = testimonials[index].quote;
-        authorEl.textContent = testimonials[index].author;
-        controlsEl.querySelectorAll('button').forEach((button, buttonIndex) => {
-          button.setAttribute('aria-current', buttonIndex === index ? 'true' : 'false');
-        });
-      };
-
-      const queueNextTestimonial = () => {
-        window.clearInterval(testimonialTimer);
-        if (!shouldRotate) return;
-        testimonialTimer = window.setInterval(() => {
-          showTestimonial((activeTestimonial + 1) % testimonials.length);
-        }, 7000);
-      };
-
-      testimonials.forEach((testimonial, index) => {
-        const button = document.createElement('button');
-        button.type = 'button';
-        button.className = 'testimonial-dot';
-        button.setAttribute('aria-label', `Show testimonial from ${testimonial.author}`);
-        button.setAttribute('aria-current', index === 0 ? 'true' : 'false');
-        button.addEventListener('click', () => {
-          showTestimonial(index);
-          queueNextTestimonial();
-        });
-        controlsEl.appendChild(button);
+      testimonialGrid.querySelectorAll('.testimonial-card').forEach((card, index) => {
+        card.querySelector('.testimonial-quote').textContent = shuffled[index].quote;
+        card.querySelector('.testimonial-author').textContent = shuffled[index].author;
       });
-
-      queueNextTestimonial();
     }
   </script>
 </body>
