@@ -39,89 +39,112 @@
 
   <style>
     :root{
-      --bg: #ffffff;
-      --text: #2a2a2a;
-      --muted: #666666;
-      --border: #e0e0e0;
-      --accent: #007acc;
-      --grid-line: #f0f0f0;
+      --bg:#ffffff;
+      --surface:#f6f7f8;
+      --surface-strong:#eef3f5;
+      --text:#171717;
+      --muted:#646464;
+      --line:#d9dcdf;
+      --accent:#111111;
+      --teal:#5cc7bd;
+      --red:#ff6b6b;
+      --orange:#f5a623;
+      --blue:#4d9be6;
     }
     *,*::before,*::after{box-sizing:border-box}
-    html,body{height:100%}
     html{scroll-behavior:smooth}
     body{
       margin:0;
       background:var(--bg);
       color:var(--text);
-      font: 16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      font:17px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
       -webkit-font-smoothing:antialiased;
       -moz-osx-font-smoothing:grayscale;
     }
-    a{color:var(--text); text-decoration:none; border-bottom:1px solid transparent}
-    a:hover{border-bottom-color:var(--text)}
-    .container{max-width:1200px; margin:0 auto; padding:0 20px}
+    a{color:inherit; text-decoration:none}
+    a:hover{text-decoration:underline}
+    .container{max-width:1180px; margin:0 auto; padding:0 24px}
+    .eyebrow{
+      color:var(--muted);
+      font-size:13px;
+      font-weight:600;
+      letter-spacing:0.08em;
+      margin:0 0 12px;
+      text-transform:uppercase;
+    }
 
     header{
       position:sticky;
       top:0;
-      background:var(--bg);
-      border-bottom:1px solid var(--border);
-      z-index:20;
+      z-index:30;
+      border-bottom:1px solid var(--line);
+      background:rgba(255,255,255,0.92);
+      backdrop-filter:blur(14px);
     }
     .nav{
       display:flex;
       align-items:center;
       justify-content:space-between;
-      padding:16px 0;
+      gap:20px;
+      min-height:76px;
     }
     .brand{
       display:flex;
       align-items:center;
-      gap:8px;
-      font-weight:700;
-      font-size:20px;
-      text-transform:uppercase;
-      letter-spacing:1px;
+      gap:10px;
+      font-family:Oswald, Impact, sans-serif;
+      font-size:24px;
+      font-weight:600;
     }
     .logo{
-      width:40px;
-      height:40px;
+      width:36px;
+      height:36px;
       background:url('/assets/logo256.png') center/contain no-repeat;
       flex:0 0 auto;
     }
-
     .nav-links{
       display:flex;
+      align-items:center;
       gap:24px;
+      color:var(--muted);
       font-size:15px;
-      text-transform:uppercase;
-      letter-spacing:0.5px;
     }
-
+    .nav-links a:hover{color:var(--text)}
     .btn{
-      appearance:none;
-      border:none;
+      align-items:center;
+      background:var(--accent);
+      border:1px solid var(--accent);
+      border-radius:8px;
+      color:#fff;
       cursor:pointer;
-      font-weight:400;
-      padding:8px 16px;
-      background:var(--text);
-      color:var(--bg);
+      display:inline-flex;
       font-size:15px;
-      text-transform:uppercase;
-      letter-spacing:0.5px;
-      transition:opacity 0.2s;
+      font-weight:700;
+      justify-content:center;
+      min-height:44px;
+      padding:10px 16px;
+      text-decoration:none;
+      transition:background 0.15s ease, color 0.15s ease, transform 0.15s ease;
+      white-space:nowrap;
     }
-    .btn:hover{opacity:0.8}
+    .btn:hover{
+      background:#333;
+      text-decoration:none;
+      transform:translateY(-1px);
+    }
+    .btn.secondary{
+      background:#fff;
+      color:var(--text);
+    }
 
     .hero{
-      min-height:640px;
-      padding:88px 0 72px;
-      border-bottom:1px solid var(--border);
+      min-height:720px;
       position:relative;
       overflow:hidden;
       display:flex;
       align-items:center;
-      background:var(--bg);
+      border-bottom:1px solid var(--line);
+      background:#f8f9fa;
     }
     .hero-video{
       position:absolute;
@@ -132,185 +155,324 @@
       object-position:center;
       z-index:0;
     }
-
-    /* Fade overlay for text readability */
     .hero::before{
       content:"";
       position:absolute;
-      top:0;
-      left:0;
-      right:0;
-      bottom:0;
+      inset:0;
       background:
-        linear-gradient(to right, var(--bg) 0%, rgba(255,255,255,0.98) 34%, rgba(255,255,255,0.84) 49%, rgba(255,255,255,0.12) 78%),
-        linear-gradient(to bottom, rgba(255,255,255,0.2), transparent 28%, transparent 72%, rgba(255,255,255,0.2));
+        linear-gradient(to right, rgba(255,255,255,0.99) 0%, rgba(255,255,255,0.96) 35%, rgba(255,255,255,0.72) 53%, rgba(255,255,255,0.06) 82%),
+        linear-gradient(to bottom, rgba(255,255,255,0.25), rgba(255,255,255,0.08) 45%, rgba(255,255,255,0.28));
       pointer-events:none;
       z-index:1;
     }
-
-    .hero-grid{
+    .hero .container{
       position:relative;
       z-index:2;
       width:100%;
     }
-
     .hero-content{
-      position:relative;
-      z-index:3;
-      max-width:520px;
-      padding:36px 0;
+      max-width:590px;
+      padding:80px 0;
     }
-
     h1{
-      font-size:48px;
-      line-height:1.1;
-      margin:0 0 16px;
-      font-weight:400;
-      text-transform:uppercase;
-      letter-spacing:1px;
+      font-family:Oswald, Impact, sans-serif;
+      font-size:70px;
+      font-weight:600;
+      line-height:0.98;
+      margin:0 0 22px;
     }
     .lead{
-      font-size:18px;
+      color:#373737;
+      font-size:22px;
+      line-height:1.4;
+      margin:0 0 22px;
+      max-width:560px;
+    }
+    .hero-note{
       color:var(--muted);
-      margin-bottom:32px;
-      line-height:1.5;
+      font-size:16px;
+      margin:16px 0 0;
+      max-width:520px;
+    }
+    .cta-row{
+      display:flex;
+      align-items:center;
+      flex-wrap:wrap;
+      gap:12px;
+      margin-top:28px;
+    }
+    .trust-row{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin-top:22px;
+    }
+    .trust-pill{
+      border:1px solid var(--line);
+      border-radius:999px;
+      background:rgba(255,255,255,0.82);
+      color:var(--muted);
+      font-size:14px;
+      padding:6px 10px;
     }
 
     .section{
-      padding:60px 0;
-      border-bottom:1px solid var(--border);
+      border-bottom:1px solid var(--line);
+      padding:76px 0;
     }
-    .section:last-child{
-      border-bottom:none;
-    }
-
+    .section:last-child{border-bottom:none}
     h2{
-      font-size:28px;
-      margin:0 0 32px;
-      font-weight:400;
-      text-transform:uppercase;
-      letter-spacing:1px;
+      font-family:Oswald, Impact, sans-serif;
+      font-size:42px;
+      font-weight:600;
+      line-height:1.05;
+      margin:0 0 18px;
+    }
+    h3{
+      font-family:Oswald, Impact, sans-serif;
+      font-size:26px;
+      font-weight:600;
+      line-height:1.1;
+      margin:0 0 10px;
     }
     .muted{color:var(--muted)}
-
-    .features{
-      display:grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap:32px;
-    }
-    .feature{
-      padding:0;
-    }
-    .feature h3{
-      margin:0 0 8px;
-      font-size:16px;
-      font-weight:400;
-      text-transform:uppercase;
-      letter-spacing:0.5px;
-    }
-    .feature p{
-      font-size:16px;
+    .section-intro{
       color:var(--muted);
-      line-height:1.5;
+      font-size:19px;
+      max-width:720px;
+      margin:0 0 34px;
+    }
+
+    .value-grid{
+      display:grid;
+      grid-template-columns:repeat(3, minmax(0, 1fr));
+      gap:18px;
+    }
+    .value-card{
+      border:1px solid var(--line);
+      border-radius:8px;
+      background:#fff;
+      padding:24px;
+    }
+    .value-card p{color:var(--muted); margin:0}
+    .swatches{
+      display:flex;
+      gap:8px;
+      margin-bottom:20px;
+      min-height:30px;
+      align-items:flex-end;
+    }
+    .swatch{
+      display:block;
+      width:26px;
+      border-radius:4px;
+    }
+    .swatch.red{height:30px; background:var(--red)}
+    .swatch.teal{height:48px; background:var(--teal)}
+    .swatch.blue{height:25px; background:var(--blue)}
+    .swatch.orange{height:38px; background:var(--orange)}
+
+    .proof{
+      background:var(--surface);
+    }
+    .proof-grid{
+      display:grid;
+      grid-template-columns:minmax(0, 0.8fr) minmax(0, 1.2fr);
+      gap:42px;
+      align-items:center;
+    }
+    .testimonial-frame{
+      border:1px solid var(--line);
+      border-radius:8px;
+      background:#fff;
+      min-height:286px;
+      padding:30px;
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+      gap:24px;
+    }
+    .testimonial-frame blockquote{margin:0}
+    .testimonial-quote{
+      color:var(--text);
+      font-size:27px;
+      line-height:1.35;
+      margin:0;
+    }
+    .testimonial-author{
+      color:var(--muted);
+      font-size:15px;
+      font-weight:600;
+      letter-spacing:0.05em;
+      margin:0 0 14px;
+      text-transform:uppercase;
+    }
+    .testimonial-controls{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+    .testimonial-dot{
+      appearance:none;
+      background:transparent;
+      border:1px solid var(--muted);
+      border-radius:999px;
+      cursor:pointer;
+      height:11px;
+      padding:0;
+      width:11px;
+    }
+    .testimonial-dot[aria-current="true"]{
+      background:var(--text);
+      border-color:var(--text);
     }
 
     .screenshots{
       display:grid;
       grid-template-columns:repeat(3, minmax(0, 1fr));
-      gap:28px;
+      gap:22px;
       align-items:start;
     }
     .screenshot-card{
       margin:0;
-      border:1px solid var(--border);
-      background:var(--bg);
+      border:1px solid var(--line);
+      border-radius:8px;
+      background:#fff;
+      overflow:hidden;
     }
     .screenshot-card img{
       display:block;
       width:100%;
-      height:440px;
-      object-fit:contain;
+      height:430px;
+      object-fit:cover;
       object-position:top center;
-      background:#fafafa;
+      background:#f5f5f5;
     }
     .screenshot-caption{
-      border-top:1px solid var(--border);
-      padding:18px 20px;
+      border-top:1px solid var(--line);
+      padding:20px;
     }
-    .screenshot-caption h3{
-      margin:0 0 4px;
-      font-size:16px;
-      font-weight:400;
-      text-transform:uppercase;
-      letter-spacing:0.5px;
-    }
-    .screenshot-caption p{
-      margin:0;
-      color:var(--muted);
-      font-size:16px;
-      line-height:1.5;
-    }
+    .screenshot-caption h3{font-size:24px}
+    .screenshot-caption p{color:var(--muted); margin:0}
 
     .how{
       display:grid;
-      grid-template-columns:repeat(3,1fr);
-      gap:32px;
+      grid-template-columns:repeat(3, minmax(0, 1fr));
+      gap:18px;
+      counter-reset:steps;
     }
     .step{
-      padding:0;
+      border-top:3px solid var(--text);
+      padding-top:18px;
+      counter-increment:steps;
     }
     .step b{
       display:block;
-      font-weight:400;
-      margin-bottom:8px;
-      text-transform:uppercase;
-      letter-spacing:0.5px;
-      font-size:16px;
+      font-family:Oswald, Impact, sans-serif;
+      font-size:26px;
+      font-weight:600;
+      line-height:1.1;
+      margin-bottom:10px;
     }
-    .step p{
-      font-size:16px;
+    .step b::before{
+      content:"0" counter(steps) " ";
       color:var(--muted);
-      line-height:1.5;
     }
+    .step p{color:var(--muted); margin:0}
 
-    .grid-2{
+    .split{
       display:grid;
       grid-template-columns:1fr 1fr;
-      gap:40px;
+      gap:42px;
     }
+    .included-list{
+      display:grid;
+      gap:12px;
+      list-style:none;
+      margin:0;
+      padding:0;
+    }
+    .included-list li{
+      border:1px solid var(--line);
+      border-radius:8px;
+      padding:14px 16px;
+      background:#fff;
+    }
+    .store-panel{
+      border:1px solid var(--line);
+      border-radius:8px;
+      background:var(--surface);
+      padding:28px;
+    }
+    .store-panel ul{color:var(--muted); margin:18px 0 24px; padding-left:20px}
+    .privacy-band{
+      background:#101415;
+      color:#fff;
+    }
+    .privacy-band .muted, .privacy-band .section-intro{color:#c9d0d2}
+
+    .faq-grid{
+      display:grid;
+      grid-template-columns:repeat(2, minmax(0, 1fr));
+      gap:24px 34px;
+    }
+    .faq-grid p{color:var(--muted); margin:0}
 
     .footer{
-      border-top:1px solid var(--border);
-      margin-top:60px;
-      padding:32px 0;
+      border-top:1px solid var(--line);
+      padding:34px 0;
       color:var(--muted);
-      font-size:14px;
-      text-transform:uppercase;
-      letter-spacing:0.5px;
+      font-size:15px;
+    }
+    .footer-inner{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      flex-wrap:wrap;
     }
     .footer-links{
       display:flex;
-      gap:24px;
+      gap:20px;
       flex-wrap:wrap;
     }
 
-    @media (max-width: 960px){
-      .features{grid-template-columns:1fr 1fr}
-      .screenshots{grid-template-columns:1fr}
-      .screenshot-card img{height:auto}
-      .how{grid-template-columns:1fr 1fr}
-      .grid-2{grid-template-columns:1fr}
+    @media (max-width: 940px){
+      .value-grid,
+      .screenshots,
+      .how,
+      .proof-grid,
+      .split,
+      .faq-grid{grid-template-columns:1fr}
+      .screenshot-card img{height:auto; object-fit:contain}
+      .hero{min-height:660px}
+      h1{font-size:58px}
     }
-    @media (max-width: 640px){
-      .hero{min-height:620px; align-items:flex-end; padding:220px 0 48px}
+    @media (max-width: 680px){
+      body{font-size:16px}
+      .container{padding:0 20px}
+      .nav{min-height:68px}
+      .nav-links{display:none}
+      .brand{font-size:22px}
+      .logo{width:32px; height:32px}
+      .btn{width:100%}
+      .nav .btn{display:none}
+      .hero{
+        min-height:720px;
+        align-items:flex-end;
+      }
       .hero-video{object-position:72% center}
       .hero::before{
-        background:linear-gradient(to bottom, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0.82) 40%, var(--bg) 64%);
+        background:linear-gradient(to bottom, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.78) 35%, #fff 62%);
       }
-      .hero-content{max-width:none; padding:0}
-      h1{font-size:36px}
-      .features,.how{grid-template-columns:1fr}
-      .nav-links{display:none}
+      .hero-content{padding:260px 0 50px}
+      h1{font-size:46px}
+      h2{font-size:36px}
+      .lead{font-size:19px}
+      .section{padding:58px 0}
+      .cta-row{align-items:stretch; flex-direction:column}
+      .testimonial-frame{padding:22px; min-height:auto}
+      .testimonial-quote{font-size:22px}
     }
   </style>
 
@@ -345,13 +507,13 @@
     <div class="container nav">
       <div class="brand"><div class="logo" aria-hidden="true"></div><span>YearMap</span></div>
       <nav class="nav-links">
-        <a href="#features">Features</a>
+        <a href="#why">Why YearMap</a>
+        <a href="#proof">Reviews</a>
         <a href="#how">How it works</a>
         <a href="/privacy/">Privacy</a>
-        <a href="#faq">FAQ</a>
       </nav>
       <div>
-        <a class="btn" href="https://chromewebstore.google.com/detail/yearmap/mhjlipallhabmljhgibfiadncacficao" target="_blank" rel="noopener noreferrer">Add to Chrome</a>
+        <a class="btn" href="https://chromewebstore.google.com/detail/yearmap/mhjlipallhabmljhgibfiadncacficao" target="_blank" rel="noopener noreferrer">Add to Chrome - Free, no account</a>
       </div>
     </div>
   </header>
@@ -363,40 +525,74 @@
       </video>
       <div class="container hero-grid">
         <div class="hero-content">
-          <h1>Plan your year at a glance</h1>
-          <p class="lead">YearMap brings the beloved <a href="https://neatnik.net/calendar/" target="_blank" rel="noreferrer noopener">Neatnik</a> layout to Chrome with smooth range selection, layered category lanes, notes, and local ICS export. Keep the analog clarity — gain just enough digital structure.</p>
-          <a class="btn" href="https://chromewebstore.google.com/detail/yearmap/mhjlipallhabmljhgibfiadncacficao" target="_blank" rel="noopener noreferrer">Add to Chrome — It’s free</a>
+          <p class="eyebrow">Now on the Chrome Web Store</p>
+          <h1>See your whole year at once.</h1>
+          <p class="lead">Digital calendars show you a week. YearMap helps you plan the seasons: trips, school breaks, projects, habits, and family schedules on one clean year-at-a-glance view.</p>
+          <div class="cta-row">
+            <a class="btn" href="https://chromewebstore.google.com/detail/yearmap/mhjlipallhabmljhgibfiadncacficao" target="_blank" rel="noopener noreferrer">Add to Chrome - Free, no account</a>
+            <a class="btn secondary" href="#how">See how it works</a>
+          </div>
+          <p class="hero-note">Use it as your new tab, open it as a normal tab, or turn new-tab replacement off anytime.</p>
+          <div class="trust-row" aria-label="Product highlights">
+            <span class="trust-pill">Local browser storage</span>
+            <span class="trust-pill">No extension analytics</span>
+            <span class="trust-pill">ICS export</span>
+          </div>
         </div>
       </div>
     </section>
 
-    <section class="section" id="features">
+    <section class="section" id="why">
       <div class="container">
-        <h2>Features</h2>
-        <div class="features">
-          <div class="feature">
-            <h3>Authentic layout</h3>
-            <p>Exact 12‑column vertical view with clean typography and optional weekday alignment.</p>
+        <p class="eyebrow">Why it works</p>
+        <h2>Paper-planner clarity, with just enough structure.</h2>
+        <p class="section-intro">YearMap keeps the beloved <a href="https://neatnik.net/calendar/" target="_blank" rel="noreferrer noopener">Neatnik</a> year layout, then adds the parts that make it useful on a computer: drag selection, overlapping category lanes, range notes, day totals, and export.</p>
+        <div class="value-grid">
+          <div class="value-card">
+            <div class="swatches" aria-hidden="true">
+              <span class="swatch red"></span>
+              <span class="swatch teal"></span>
+              <span class="swatch blue"></span>
+            </div>
+            <h3>Plan in lanes</h3>
+            <p>Multiple categories can sit side by side on the same day, so travel, school, work, and family plans stay visible without hiding each other.</p>
           </div>
-          <div class="feature">
-            <h3>Interactive planning</h3>
-            <p>Click‑and‑drag to create ranges, assign them to category lanes, and undo recent changes with a shortcut.</p>
+          <div class="value-card">
+            <div class="swatches" aria-hidden="true">
+              <span class="swatch teal"></span>
+              <span class="swatch orange"></span>
+            </div>
+            <h3>Label what matters</h3>
+            <p>Add notes to ranges, edit their dates in the sidebar, and keep the details close without turning your year view into a dense calendar app.</p>
           </div>
-          <div class="feature">
-            <h3>Categories & notes</h3>
-            <p>Create up to 5 categories with matching day lanes, lane-specific notes, and optional day totals in the sidebar.</p>
+          <div class="value-card">
+            <div class="swatches" aria-hidden="true">
+              <span class="swatch blue"></span>
+              <span class="swatch red"></span>
+              <span class="swatch orange"></span>
+            </div>
+            <h3>Take it with you</h3>
+            <p>Export your ranges as tidy all-day ICS events for Google Calendar, Apple Calendar, Outlook, or another calendar app.</p>
           </div>
-          <div class="feature">
-            <h3>ICS export</h3>
-            <p>Export ranges, categories, and notes to Google, Outlook, or Apple Calendar as tidy all-day events.</p>
-          </div>
-          <div class="feature">
-            <h3>Quick command help</h3>
-            <p>Keep common commands close at hand, with in-app help and keyboard support for navigation and editing.</p>
-          </div>
-          <div class="feature">
-            <h3>Privacy‑first</h3>
-            <p>Runs entirely in your browser with Chrome storage sync. No accounts. No extension tracking.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section proof" id="proof" aria-labelledby="proof-title">
+      <div class="container proof-grid">
+        <div>
+          <p class="eyebrow">Early user notes</p>
+          <h2 id="proof-title">People are already finding their own reasons to keep it open.</h2>
+          <p class="section-intro">The common thread: seeing the whole year changes what people notice.</p>
+          <a class="btn" href="https://chromewebstore.google.com/detail/yearmap/mhjlipallhabmljhgibfiadncacficao" target="_blank" rel="noopener noreferrer">Add to Chrome - Free, no account</a>
+        </div>
+        <div class="testimonial-frame" aria-live="polite">
+          <blockquote>
+            <p class="testimonial-quote" id="testimonial-quote">ok the thing that actually got me was the day totals in the sidebar. didn't even notice the feature until I'd been using it a while and now I check it constantly.</p>
+          </blockquote>
+          <div>
+            <p class="testimonial-author" id="testimonial-author">Jenna L.</p>
+            <div class="testimonial-controls" id="testimonial-controls" aria-label="Choose testimonial"></div>
           </div>
         </div>
       </div>
@@ -404,7 +600,9 @@
 
     <section class="section" id="screenshots">
       <div class="container">
-        <h2>See it in use</h2>
+        <p class="eyebrow">Product views</p>
+        <h2>Small controls, big picture.</h2>
+        <p class="section-intro">The year view stays central. Details, help, and settings appear only when you need them.</p>
         <div class="screenshots">
           <figure class="screenshot-card">
             <img src="/assets/yearmap-range-details.png" alt="YearMap Range details editor with category, start and end dates, and note field" loading="lazy">
@@ -433,6 +631,7 @@
 
     <section class="section" id="how">
       <div class="container">
+        <p class="eyebrow">Workflow</p>
         <h2>How it works</h2>
         <div class="how">
           <div class="step">
@@ -451,56 +650,61 @@
       </div>
     </section>
 
-    <section class="section" id="get-yearmap">
-      <div class="container grid-2">
+    <section class="section" id="details">
+      <div class="container split">
         <div>
-          <h2>Export to your calendar</h2>
-          <p class="muted">Turn your selections into clean, all-day events in the calendar you already use.</p>
-          <ul>
-            <li>One-click ICS for Google, Outlook, and Apple Calendar</li>
-            <li>Keeps your categories, date ranges, and notes</li>
-            <li>Displays as tidy all-day blocks—no time clutter</li>
+          <p class="eyebrow">Also included</p>
+          <h2>Useful without getting heavy.</h2>
+          <ul class="included-list">
+            <li>Weekend highlighting</li>
+            <li>Optional weekday-aligned layout</li>
+            <li>Category day totals</li>
+            <li>Built-in command help</li>
+            <li>Undo for recent assignments, edits, and deletions</li>
           </ul>
         </div>
-        <div>
+        <div class="store-panel">
+          <p class="eyebrow">Install</p>
           <h2>Available now for Chrome</h2>
-          <p class="muted">Install YearMap from the Chrome Web Store and start planning immediately. It’s free, requires no account, and keeps your calendar data in Chrome storage.</p>
+          <p class="muted">Install YearMap from the Chrome Web Store and start planning immediately. It is free, requires no account, and keeps your calendar data in Chrome storage.</p>
           <ul>
             <li>See the entire year on one screen</li>
             <li>Plan with up to five color-coded categories</li>
             <li>Add notes and export ranges to your calendar</li>
           </ul>
-          <p><a class="btn" href="https://chromewebstore.google.com/detail/yearmap/mhjlipallhabmljhgibfiadncacficao" target="_blank" rel="noopener noreferrer">Install YearMap</a></p>
+          <a class="btn" href="https://chromewebstore.google.com/detail/yearmap/mhjlipallhabmljhgibfiadncacficao" target="_blank" rel="noopener noreferrer">Add to Chrome - Free, no account</a>
         </div>
       </div>
     </section>
 
-    <section class="section" id="privacy">
+    <section class="section privacy-band" id="privacy">
       <div class="container">
+        <p class="eyebrow">Privacy</p>
         <h2>Privacy</h2>
-        <p class="muted">YearMap runs entirely within your Chrome profile. Data is stored using Chrome storage (with optional sync across your devices). The extension contains no analytics and does not sell or share personal data. ICS export files are generated locally in your browser.</p>
+        <p class="section-intro">YearMap runs entirely within your Chrome profile. Data is stored using Chrome storage, with optional sync across your devices. The extension contains no analytics and does not sell or share personal data. ICS export files are generated locally in your browser.</p>
+        <a class="btn secondary" href="/privacy/">Read the privacy policy</a>
       </div>
     </section>
 
     <section class="section" id="faq">
       <div class="container">
         <h2>FAQ</h2>
-        <div class="grid-2">
+        <div class="faq-grid">
           <div>
             <h3>Does it replace my new tab?</h3>
-            <p class="muted">Yes. YearMap becomes your new-tab calendar while the extension is enabled. You can also open it in a regular tab from the extension icon.</p>
+            <p>It can. YearMap is designed to greet you when you open a tab, but you can turn new-tab replacement off and open the calendar in a regular tab from the extension icon.</p>
           </div>
           <div>
             <h3>Can I align weekdays vertically?</h3>
-            <p class="muted">Yes. Toggle the weekday‑aligned layout in Settings. Changes apply instantly.</p>
+            <p>Yes. Toggle the weekday-aligned layout in Settings. Changes apply instantly.</p>
           </div>
           <div>
             <h3>How do notes work?</h3>
-            <p class="muted">Right‑click a range lane to edit its dates and note together. Saved notes appear in the sidebar preview, hover tooltips, and ICS event descriptions.</p>
+            <p>Right-click a range lane to edit its dates and note together. Saved notes appear in the sidebar preview, hover tooltips, and ICS event descriptions.</p>
           </div>
           <div>
             <h3>What about deletions?</h3>
-            <p class="muted">Hold Shift and click any day in a range to remove it. Use Ctrl/Cmd+Z within 30 seconds to undo an assignment, edit, or deletion.</p>
+            <p>Hold Shift and click any day in a range to remove it. Use Ctrl/Cmd+Z within 30 seconds to undo an assignment, edit, or deletion.</p>
           </div>
         </div>
       </div>
@@ -508,10 +712,10 @@
   </main>
 
   <footer class="footer">
-    <div class="container" style="display:flex; align-items:center; justify-content:space-between; gap:14px; flex-wrap:wrap">
+    <div class="container footer-inner">
       <div>© <span id="year"></span> YearMap • Inspired by Neatnik</div>
       <div class="footer-links">
-        <a href="https://chromewebstore.google.com/detail/yearmap/mhjlipallhabmljhgibfiadncacficao" target="_blank" rel="noopener noreferrer">Install YearMap</a>
+        <a href="https://chromewebstore.google.com/detail/yearmap/mhjlipallhabmljhgibfiadncacficao" target="_blank" rel="noopener noreferrer">Add to Chrome - Free, no account</a>
         <a href="/support/">Support</a>
         <a href="/changelog/">Changelog</a>
         <a href="/privacy/">Privacy</a>
@@ -522,6 +726,95 @@
 
   <script>
     const y = document.getElementById('year'); if (y) y.textContent = new Date().getFullYear();
+
+    const testimonials = [
+      {
+        quote: "ok the thing that actually got me was the day totals in the sidebar. didn't even notice the feature until I'd been using it a while and now I check it constantly.",
+        author: "Jenna L."
+      },
+      {
+        quote: "Bit of a learning curve with the keyboard shortcuts but once it clicked I got fast. Undo within 30 seconds has saved me more than once.",
+        author: "Andre W."
+      },
+      {
+        quote: "Took me a day to get used to it replacing my new tab but now I'd be annoyed if it didn't. The drag-to-select is weirdly satisfying.",
+        author: "Marcus T."
+      },
+      {
+        quote: "I mostly use it to keep track of when I'm traveling for work vs. when my kids are off school. Being able to see both at once on one screen is the thing I didn't know I needed.",
+        author: "Priya R."
+      },
+      {
+        quote: "honestly installed it expecting to uninstall it in a week. still here two months later.",
+        author: "Dan K."
+      },
+      {
+        quote: "I was a Neatnik holdout for ages and was skeptical anyone could port it without wrecking what made it good. This is the closest I've found. Wish I could have more than 5 categories but the export makes up for it.",
+        author: "Sofia M."
+      },
+      {
+        quote: "Not the prettiest thing I've ever installed but it does exactly one thing and does it well. Exported my whole year to Google Calendar in like two clicks.",
+        author: "Tom B."
+      },
+      {
+        quote: "I'm not really a planning person but seeing the year laid out flat made me realize I'd double-booked two trips. Caught it in like ten seconds.",
+        author: "Ravi N."
+      },
+      {
+        quote: "Wanted something offline that wasn't going to harvest my calendar. This just sits in the browser and doesn't phone home, which is rare these days.",
+        author: "Elena K."
+      },
+      {
+        quote: "My only real gripe is I wish it synced to my phone, but for desktop planning it's become part of my routine. Open a tab, glance at the year, move on.",
+        author: "Chris D."
+      },
+      {
+        quote: "Set up four categories for different freelance clients and it basically replaced the messy spreadsheet I was using. Export to Apple Calendar worked first try.",
+        author: "Mara P."
+      }
+    ];
+
+    const quoteEl = document.getElementById('testimonial-quote');
+    const authorEl = document.getElementById('testimonial-author');
+    const controlsEl = document.getElementById('testimonial-controls');
+
+    if (quoteEl && authorEl && controlsEl) {
+      let activeTestimonial = 0;
+      let testimonialTimer;
+      const shouldRotate = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      const showTestimonial = (index) => {
+        activeTestimonial = index;
+        quoteEl.textContent = testimonials[index].quote;
+        authorEl.textContent = testimonials[index].author;
+        controlsEl.querySelectorAll('button').forEach((button, buttonIndex) => {
+          button.setAttribute('aria-current', buttonIndex === index ? 'true' : 'false');
+        });
+      };
+
+      const queueNextTestimonial = () => {
+        window.clearInterval(testimonialTimer);
+        if (!shouldRotate) return;
+        testimonialTimer = window.setInterval(() => {
+          showTestimonial((activeTestimonial + 1) % testimonials.length);
+        }, 7000);
+      };
+
+      testimonials.forEach((testimonial, index) => {
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.className = 'testimonial-dot';
+        button.setAttribute('aria-label', `Show testimonial from ${testimonial.author}`);
+        button.setAttribute('aria-current', index === 0 ? 'true' : 'false');
+        button.addEventListener('click', () => {
+          showTestimonial(index);
+          queueNextTestimonial();
+        });
+        controlsEl.appendChild(button);
+      });
+
+      queueNextTestimonial();
+    }
   </script>
 </body>
 </html>
