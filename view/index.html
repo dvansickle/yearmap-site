@@ -21,6 +21,9 @@
       --weekend: #ececec;
       --highlight: #e4f2ff;
       --accent: #111111;
+      --share: #2f9f95;
+      --share-hover: #257f78;
+      --share-surface: #e9f7f5;
     }
 
     * { box-sizing: border-box; }
@@ -76,21 +79,42 @@
 
     .button {
       align-items: center;
-      background: var(--accent);
-      border: 1px solid var(--accent);
+      background: var(--share);
+      border: 1px solid var(--share);
       border-radius: 8px;
       color: #fff;
       display: inline-flex;
+      gap: 8px;
       font-weight: 600;
       justify-content: center;
       min-height: 42px;
       padding: 9px 14px;
       text-decoration: none;
+      transition: background-color 0.12s ease, border-color 0.12s ease, transform 0.12s ease;
       white-space: nowrap;
     }
 
     .button:hover {
-      background: #333;
+      background: var(--share-hover);
+      border-color: var(--share-hover);
+      transform: translateY(-1px);
+    }
+
+    .button-icon {
+      align-items: center;
+      background: color-mix(in srgb, var(--share-surface) 28%, transparent);
+      border-radius: 999px;
+      display: inline-flex;
+      height: 22px;
+      justify-content: center;
+      width: 22px;
+    }
+
+    .button-icon svg {
+      display: block;
+      height: 15px;
+      stroke-width: 2.3;
+      width: 15px;
     }
 
     main {
@@ -394,7 +418,15 @@
         <div id="page-subhead" class="subhead">Read-only calendar shared from YearMap</div>
       </div>
     </div>
-    <a class="button" href="https://chromewebstore.google.com/detail/yearmap/mhjlipallhabmljhgibfiadncacficao?utm_source=shared_calendar&utm_medium=referral&utm_campaign=yearmap_sharing">Create your own YearMap</a>
+    <a class="button" href="https://chromewebstore.google.com/detail/yearmap/mhjlipallhabmljhgibfiadncacficao?utm_source=shared_calendar&utm_medium=referral&utm_campaign=yearmap_sharing">
+      <span class="button-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+          <path d="M12 5v14"></path>
+          <path d="M5 12h14"></path>
+        </svg>
+      </span>
+      Create your own YearMap
+    </a>
   </header>
 
   <main id="app">
