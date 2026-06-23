@@ -95,26 +95,27 @@
 
     main {
       display: grid;
-      grid-template-columns: minmax(0, 1fr) 320px;
+      grid-template-columns: minmax(0, 1fr) 300px;
       min-height: calc(100vh - 80px);
     }
 
     .calendar-shell {
-      overflow: auto;
-      padding: 22px 20px 30px;
+      overflow-x: auto;
+      overflow-y: visible;
+      padding: 22px 14px 30px;
     }
 
     .calendar-grid {
       display: grid;
-      grid-template-columns: repeat(12, minmax(132px, 1fr));
-      gap: 12px;
-      min-width: 1560px;
+      grid-template-columns: repeat(12, minmax(72px, 1fr));
+      gap: 8px;
+      min-width: 0;
     }
 
     .month-title {
       border-bottom: 1px solid var(--text);
       font-family: Oswald, Impact, sans-serif;
-      font-size: 18px;
+      font-size: 16px;
       font-weight: 500;
       margin-bottom: 6px;
       padding-bottom: 3px;
@@ -125,7 +126,7 @@
       align-items: stretch;
       border-bottom: 1px solid #8d8d8d;
       display: flex;
-      height: 22px;
+      height: 20px;
       position: relative;
     }
 
@@ -140,18 +141,18 @@
     .day-label {
       align-items: center;
       display: flex;
-      flex: 0 0 54px;
+      flex: 0 0 36px;
       font-family: Oswald, Impact, sans-serif;
-      font-size: 11px;
-      gap: 6px;
-      padding-left: 4px;
+      font-size: 10px;
+      gap: 4px;
+      padding-left: 3px;
       position: relative;
       z-index: 2;
     }
 
     .date-number {
       font-weight: 500;
-      min-width: 14px;
+      min-width: 12px;
     }
 
     .weekday {
@@ -167,6 +168,16 @@
 
     .lane {
       position: relative;
+    }
+
+    .lane.has-range {
+      cursor: default;
+    }
+
+    .lane.has-range:focus-visible {
+      outline: 1.5px solid var(--accent);
+      outline-offset: -1.5px;
+      z-index: 3;
     }
 
     .lane.has-range {
@@ -289,6 +300,72 @@
     footer a {
       color: var(--text);
       font-weight: 600;
+    }
+
+    .range-popover {
+      background: #fff;
+      border: 1px solid #9a9a9a;
+      border-radius: 10px;
+      box-shadow: 0 14px 32px rgba(0, 0, 0, 0.16);
+      color: var(--text);
+      left: 0;
+      max-width: 280px;
+      opacity: 0;
+      padding: 14px;
+      pointer-events: none;
+      position: fixed;
+      top: 0;
+      transform: translate(-9999px, -9999px);
+      transition: opacity 0.1s ease;
+      z-index: 50;
+    }
+
+    .range-popover.visible {
+      opacity: 1;
+    }
+
+    .range-popover-header {
+      align-items: center;
+      display: grid;
+      gap: 10px;
+      grid-template-columns: 14px minmax(0, 1fr);
+      margin-bottom: 8px;
+    }
+
+    .range-popover-swatch {
+      background: var(--category-color);
+      border: 0.5px solid rgba(0, 0, 0, 0.18);
+      border-radius: 4px;
+      height: 14px;
+      width: 14px;
+    }
+
+    .range-popover-title {
+      font-family: Oswald, Impact, sans-serif;
+      font-size: 20px;
+      font-weight: 500;
+      overflow-wrap: anywhere;
+    }
+
+    .range-popover-range {
+      color: var(--muted);
+      font-family: Oswald, Impact, sans-serif;
+      font-size: 15px;
+      margin: 0 0 8px;
+    }
+
+    .range-popover-note {
+      border-top: 1px solid var(--line);
+      color: #333;
+      font-size: 14px;
+      margin: 8px 0 0;
+      padding-top: 8px;
+      white-space: pre-wrap;
+    }
+
+    .range-popover-list {
+      display: grid;
+      gap: 10px;
     }
 
     @media (max-width: 900px) {
@@ -426,6 +503,7 @@
 
         renderCalendar(snapshot);
         renderCategories(snapshot);
+        setupRangePopover();
       }
 
       function renderCalendar(snapshot) {
@@ -492,13 +570,115 @@
           lane.style.setProperty('--category-color', category.color);
 
           if (matches.length) {
-            lane.title = buildRangeTooltip(category, matches);
+            lane.tabIndex = 0;
+            lane.setAttribute('role', 'button');
+            lane.setAttribute('aria-label', buildRangeAriaLabel(category, matches));
+            lane._rangeDetails = { category, ranges: matches };
           }
 
           lanes.appendChild(lane);
         });
 
         return row;
+      }
+
+      function setupRangePopover() {
+        const popover = document.createElement('div');
+        popover.className = 'range-popover';
+        popover.setAttribute('role', 'status');
+        document.body.appendChild(popover);
+
+        let activeLane = null;
+
+        document.addEventListener('mouseover', (event) => {
+          const lane = event.target.closest?.('.lane.has-range');
+          if (!lane?._rangeDetails) return;
+
+          activeLane = lane;
+          renderRangePopover(popover, lane._rangeDetails);
+          positionPopover(popover, event.clientX, event.clientY);
+          popover.classList.add('visible');
+        });
+
+        document.addEventListener('mousemove', (event) => {
+          if (!activeLane || !popover.classList.contains('visible')) return;
+          positionPopover(popover, event.clientX, event.clientY);
+        });
+
+        document.addEventListener('mouseout', (event) => {
+          const lane = event.target.closest?.('.lane.has-range');
+          if (!lane || lane.contains(event.relatedTarget)) return;
+          hideRangePopover(popover);
+          activeLane = null;
+        });
+
+        document.addEventListener('focusin', (event) => {
+          const lane = event.target.closest?.('.lane.has-range');
+          if (!lane?._rangeDetails) return;
+
+          activeLane = lane;
+          renderRangePopover(popover, lane._rangeDetails);
+          const rect = lane.getBoundingClientRect();
+          positionPopover(popover, rect.left + rect.width / 2, rect.top + rect.height / 2);
+          popover.classList.add('visible');
+        });
+
+        document.addEventListener('focusout', (event) => {
+          const lane = event.target.closest?.('.lane.has-range');
+          if (!lane) return;
+          hideRangePopover(popover);
+          activeLane = null;
+        });
+      }
+
+      function renderRangePopover(popover, details) {
+        const { category, ranges } = details;
+        const rangeMarkup = ranges.length === 1
+          ? renderSingleRangeDetails(ranges[0])
+          : `<div class="range-popover-list">${ranges.map(renderSingleRangeDetails).join('')}</div>`;
+
+        popover.style.setProperty('--category-color', category.color);
+        popover.innerHTML = `
+          <div class="range-popover-header">
+            <span class="range-popover-swatch" aria-hidden="true"></span>
+            <div class="range-popover-title">${escapeHtml(category.label)}</div>
+          </div>
+          ${rangeMarkup}
+        `;
+      }
+
+      function renderSingleRangeDetails(range) {
+        const note = range.note ? `<p class="range-popover-note">${escapeHtml(range.note)}</p>` : '';
+        return `
+          <div>
+            <p class="range-popover-range">${escapeHtml(formatRange(range))}</p>
+            ${note}
+          </div>
+        `;
+      }
+
+      function positionPopover(popover, x, y) {
+        const offset = 14;
+        const rect = popover.getBoundingClientRect();
+        const viewportWidth = window.innerWidth;
+        const viewportHeight = window.innerHeight;
+        let left = x + offset;
+        let top = y + offset;
+
+        if (left + rect.width > viewportWidth - offset) {
+          left = x - rect.width - offset;
+        }
+
+        if (top + rect.height > viewportHeight - offset) {
+          top = y - rect.height - offset;
+        }
+
+        popover.style.transform = `translate(${Math.max(offset, left)}px, ${Math.max(offset, top)}px)`;
+      }
+
+      function hideRangePopover(popover) {
+        popover.classList.remove('visible');
+        popover.style.transform = 'translate(-9999px, -9999px)';
       }
 
       function renderCategories(snapshot) {
@@ -555,6 +735,10 @@
         }
 
         return `${ranges.length} ${category.label} ranges on this date\n${ranges.map(formatRange).join('\n')}`;
+      }
+
+      function buildRangeAriaLabel(category, ranges) {
+        return buildRangeTooltip(category, ranges).replace(/\n/g, '. ');
       }
 
       function formatRange(range) {
