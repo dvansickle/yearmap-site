@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex" />
+  <title>Shared YearMap</title>
+  <meta name="description" content="A read-only YearMap shared as a private link." />
+  <link rel="icon" href="/favicon.ico" />
+  <link rel="icon" type="image/png" sizes="64x64" href="/assets/favicon64.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Oswald:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #ffffff;
+      --surface: #f6f7f8;
+      --text: #171717;
+      --muted: #777777;
+      --line: #d9dcdf;
+      --weekend: #ececec;
+      --highlight: #e4f2ff;
+      --accent: #111111;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font: 16px/1.45 Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    header {
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 18px 22px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo {
+      width: 34px;
+      height: 34px;
+      background: url("/assets/logo256.png") center / contain no-repeat;
+      flex: 0 0 auto;
+    }
+
+    h1,
+    h2,
+    h3 {
+      font-family: Oswald, Impact, sans-serif;
+      font-weight: 500;
+      line-height: 1.05;
+      margin: 0;
+    }
+
+    h1 {
+      font-size: clamp(28px, 4vw, 46px);
+    }
+
+    .subhead {
+      color: var(--muted);
+      font-size: 14px;
+      margin-top: 4px;
+    }
+
+    .button {
+      align-items: center;
+      background: var(--accent);
+      border: 1px solid var(--accent);
+      border-radius: 8px;
+      color: #fff;
+      display: inline-flex;
+      font-weight: 600;
+      justify-content: center;
+      min-height: 42px;
+      padding: 9px 14px;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .button:hover {
+      background: #333;
+    }
+
+    main {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 320px;
+      min-height: calc(100vh - 80px);
+    }
+
+    .calendar-shell {
+      overflow: auto;
+      padding: 22px 20px 30px;
+    }
+
+    .calendar-grid {
+      display: grid;
+      grid-template-columns: repeat(12, minmax(132px, 1fr));
+      gap: 12px;
+      min-width: 1560px;
+    }
+
+    .month-title {
+      border-bottom: 1px solid var(--text);
+      font-family: Oswald, Impact, sans-serif;
+      font-size: 18px;
+      font-weight: 500;
+      margin-bottom: 6px;
+      padding-bottom: 3px;
+      text-align: center;
+    }
+
+    .day-row {
+      align-items: stretch;
+      border-bottom: 1px solid #8d8d8d;
+      display: flex;
+      height: 22px;
+      position: relative;
+    }
+
+    .day-row.weekend {
+      background: var(--weekend);
+    }
+
+    .day-row.today {
+      background: var(--highlight);
+    }
+
+    .day-label {
+      align-items: center;
+      display: flex;
+      flex: 0 0 54px;
+      font-family: Oswald, Impact, sans-serif;
+      font-size: 11px;
+      gap: 6px;
+      padding-left: 4px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .date-number {
+      font-weight: 500;
+      min-width: 14px;
+    }
+
+    .weekday {
+      color: #555;
+      font-weight: 400;
+    }
+
+    .lanes {
+      display: grid;
+      flex: 1 1 auto;
+      min-width: 0;
+    }
+
+    .lane {
+      position: relative;
+    }
+
+    .lane.has-range {
+      background: var(--category-color);
+      opacity: 0.95;
+    }
+
+    .lane.stack-2::after,
+    .lane.stack-3::after {
+      background: rgba(0, 0, 0, 0.14);
+      content: "";
+      inset: 0 0 0 50%;
+      position: absolute;
+    }
+
+    .lane.stack-3::before {
+      background: rgba(255, 255, 255, 0.18);
+      content: "";
+      inset: 0 66% 0 0;
+      position: absolute;
+    }
+
+    .sidebar {
+      background: var(--surface);
+      border-left: 1px solid #9a9a9a;
+      padding: 32px 28px;
+    }
+
+    .section {
+      border-bottom: 1px solid #969696;
+      margin-bottom: 28px;
+      padding-bottom: 28px;
+    }
+
+    .sidebar-heading {
+      align-items: baseline;
+      display: flex;
+      gap: 10px;
+      margin-bottom: 22px;
+    }
+
+    .sidebar-heading h2 {
+      font-size: 32px;
+    }
+
+    .count {
+      color: var(--muted);
+      font-family: Oswald, Impact, sans-serif;
+      font-size: 20px;
+      font-weight: 400;
+    }
+
+    .category-list {
+      display: grid;
+      gap: 14px;
+    }
+
+    .category {
+      align-items: center;
+      display: grid;
+      grid-template-columns: 16px minmax(0, 1fr) auto;
+      gap: 14px;
+      min-height: 42px;
+    }
+
+    .swatch {
+      background: var(--category-color);
+      border: 0.5px solid rgba(0, 0, 0, 0.18);
+      border-radius: 4px;
+      height: 14px;
+      width: 14px;
+    }
+
+    .category-name,
+    .category-total {
+      font-family: Oswald, Impact, sans-serif;
+      font-size: 19px;
+    }
+
+    .category-total {
+      color: var(--muted);
+    }
+
+    .note {
+      color: var(--muted);
+      font-size: 14px;
+      margin: 0;
+    }
+
+    .shared-info {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      padding: 14px;
+    }
+
+    .shared-info h3 {
+      font-size: 22px;
+      margin-bottom: 8px;
+    }
+
+    .error-card {
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      margin: 48px auto;
+      max-width: 620px;
+      padding: 28px;
+    }
+
+    .error-card p {
+      color: var(--muted);
+    }
+
+    footer {
+      color: var(--muted);
+      font-size: 13px;
+      margin-top: 24px;
+    }
+
+    footer a {
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    @media (max-width: 900px) {
+      header {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      main {
+        display: block;
+      }
+
+      .sidebar {
+        border-left: 0;
+        border-top: 1px solid #9a9a9a;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="brand">
+      <span class="logo" aria-hidden="true"></span>
+      <div>
+        <h1 id="page-title">Shared YearMap</h1>
+        <div id="page-subhead" class="subhead">Read-only calendar shared from YearMap</div>
+      </div>
+    </div>
+    <a class="button" href="https://chromewebstore.google.com/detail/yearmap/mhjlipallhabmljhgibfiadncacficao?utm_source=shared_calendar&utm_medium=referral&utm_campaign=yearmap_sharing">Create your own YearMap</a>
+  </header>
+
+  <main id="app">
+    <section class="calendar-shell" aria-live="polite">
+      <div class="error-card">
+        <h2>Loading shared calendar...</h2>
+        <p>If this stays visible, the share link may be incomplete.</p>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    (() => {
+      const MONTHS = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
+      const MONTH_NAMES = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+      const WEEKDAYS = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
+
+      init().catch((error) => {
+        console.error(error);
+        renderError('This shared YearMap could not be opened.', 'The link may be damaged, incomplete, or from a newer version of YearMap.');
+      });
+
+      async function init() {
+        const snapshot = await decodeSnapshot(window.location.hash);
+        validateSnapshot(snapshot);
+        renderSnapshot(snapshot);
+      }
+
+      async function decodeSnapshot(hash) {
+        const value = hash.replace(/^#/, '');
+        if (!value) throw new Error('Missing share data');
+
+        const [signature, encoding, data] = value.split('.');
+        if (signature !== 'ym1' || !encoding || !data) {
+          throw new Error('Unsupported share data');
+        }
+
+        const bytes = base64UrlDecode(data);
+        let jsonBytes = bytes;
+
+        if (encoding === 'gzip') {
+          jsonBytes = await gunzip(bytes);
+        } else if (encoding !== 'json') {
+          throw new Error('Unsupported share encoding');
+        }
+
+        return JSON.parse(new TextDecoder().decode(jsonBytes));
+      }
+
+      function validateSnapshot(snapshot) {
+        if (!snapshot || snapshot.v !== 1) throw new Error('Unsupported snapshot');
+        if (!Number.isInteger(snapshot.year)) throw new Error('Missing year');
+        if (!Array.isArray(snapshot.categories)) throw new Error('Missing categories');
+        if (!Array.isArray(snapshot.ranges)) throw new Error('Missing ranges');
+      }
+
+      async function gunzip(bytes) {
+        if (!('DecompressionStream' in window)) {
+          throw new Error('This browser cannot open compressed share links');
+        }
+        const stream = new Blob([bytes]).stream().pipeThrough(new DecompressionStream('gzip'));
+        return new Uint8Array(await new Response(stream).arrayBuffer());
+      }
+
+      function base64UrlDecode(value) {
+        const base64 = value.replace(/-/g, '+').replace(/_/g, '/').padEnd(Math.ceil(value.length / 4) * 4, '=');
+        const binary = atob(base64);
+        const bytes = new Uint8Array(binary.length);
+        for (let index = 0; index < binary.length; index += 1) {
+          bytes[index] = binary.charCodeAt(index);
+        }
+        return bytes;
+      }
+
+      function renderSnapshot(snapshot) {
+        document.title = `YearMap ${snapshot.year}`;
+        document.getElementById('page-title').textContent = `YearMap ${snapshot.year}`;
+        document.getElementById('page-subhead').textContent = snapshot.createdAt
+          ? `Read-only calendar shared ${formatCreatedDate(snapshot.createdAt)}`
+          : 'Read-only calendar shared from YearMap';
+
+        const app = document.getElementById('app');
+        app.innerHTML = `
+          <section class="calendar-shell">
+            <div class="calendar-grid" id="calendar-grid"></div>
+          </section>
+          <aside class="sidebar">
+            <section class="section">
+              <div class="sidebar-heading">
+                <h2>Categories</h2>
+                <span class="count">${snapshot.categories.length} of 5</span>
+              </div>
+              <div class="category-list" id="category-list"></div>
+            </section>
+            <section class="section">
+              <div class="shared-info">
+                <h3>Shared view</h3>
+                <p class="note">This is a read-only snapshot. Changes made by the owner after this link was created will not appear here.</p>
+              </div>
+            </section>
+            <footer>
+              Shared with YearMap. <a href="https://chromewebstore.google.com/detail/yearmap/mhjlipallhabmljhgibfiadncacficao?utm_source=shared_calendar&utm_medium=referral&utm_campaign=yearmap_sharing">Create your own year-at-a-glance calendar</a>.
+            </footer>
+          </aside>
+        `;
+
+        renderCalendar(snapshot);
+        renderCategories(snapshot);
+      }
+
+      function renderCalendar(snapshot) {
+        const grid = document.getElementById('calendar-grid');
+        const categoryById = new Map(snapshot.categories.map((category, index) => [category.id, { ...category, index }]));
+
+        MONTHS.forEach((monthName, monthIndex) => {
+          const month = document.createElement('section');
+          month.className = 'month';
+          month.innerHTML = `<div class="month-title">${monthName}</div>`;
+
+          const padding = snapshot.settings?.alignWeekdays === true
+            ? new Date(snapshot.year, monthIndex, 1).getDay()
+            : 0;
+          for (let i = 0; i < padding; i += 1) {
+            month.appendChild(createSpacerRow());
+          }
+
+          const daysInMonth = new Date(snapshot.year, monthIndex + 1, 0).getDate();
+          for (let day = 1; day <= daysInMonth; day += 1) {
+            const date = toDateKey(snapshot.year, monthIndex, day);
+            month.appendChild(createDayRow(snapshot, date, day, categoryById));
+          }
+
+          grid.appendChild(month);
+        });
+      }
+
+      function createSpacerRow() {
+        const row = document.createElement('div');
+        row.className = 'day-row spacer';
+        row.setAttribute('aria-hidden', 'true');
+        return row;
+      }
+
+      function createDayRow(snapshot, date, day, categoryById) {
+        const parsed = parseDateKey(date);
+        const row = document.createElement('div');
+        row.className = 'day-row';
+
+        if (isWeekend(parsed) && snapshot.settings?.weekendHighlight !== false) {
+          row.classList.add('weekend');
+        }
+
+        if (date === toDateKey(new Date().getFullYear(), new Date().getMonth(), new Date().getDate())) {
+          row.classList.add('today');
+        }
+
+        row.innerHTML = `
+          <div class="day-label">
+            <span class="date-number">${day}</span>
+            <span class="weekday">${WEEKDAYS[parsed.getDay()]}</span>
+          </div>
+          <div class="lanes" style="grid-template-columns: repeat(${Math.max(snapshot.categories.length, 1)}, minmax(0, 1fr));"></div>
+        `;
+
+        const rangesByCategory = getRangesForDate(snapshot.ranges, date);
+        const lanes = row.querySelector('.lanes');
+
+        snapshot.categories.forEach((category) => {
+          const lane = document.createElement('div');
+          const matches = rangesByCategory.get(category.id) || [];
+          lane.className = `lane${matches.length ? ' has-range' : ''}${matches.length > 1 ? ` stack-${Math.min(matches.length, 3)}` : ''}`;
+          lane.style.setProperty('--category-color', category.color);
+
+          if (matches.length) {
+            lane.title = buildRangeTooltip(category, matches);
+          }
+
+          lanes.appendChild(lane);
+        });
+
+        return row;
+      }
+
+      function renderCategories(snapshot) {
+        const list = document.getElementById('category-list');
+        const totals = calculateCategoryTotals(snapshot);
+
+        snapshot.categories.forEach((category) => {
+          const row = document.createElement('div');
+          row.className = 'category';
+          row.style.setProperty('--category-color', category.color);
+          row.innerHTML = `
+            <span class="swatch" aria-hidden="true"></span>
+            <span class="category-name"></span>
+            <span class="category-total">${totals.get(category.id) || 0}d</span>
+          `;
+          row.querySelector('.category-name').textContent = category.label;
+          list.appendChild(row);
+        });
+      }
+
+      function getRangesForDate(ranges, date) {
+        const matches = new Map();
+        ranges.forEach((range) => {
+          if (range.startDate <= date && range.endDate >= date) {
+            if (!matches.has(range.categoryId)) matches.set(range.categoryId, []);
+            matches.get(range.categoryId).push(range);
+          }
+        });
+        return matches;
+      }
+
+      function calculateCategoryTotals(snapshot) {
+        const totals = new Map(snapshot.categories.map(category => [category.id, new Set()]));
+
+        snapshot.ranges.forEach((range) => {
+          const dates = totals.get(range.categoryId);
+          if (!dates) return;
+
+          walkDates(
+            maxDate(range.startDate, `${snapshot.year}-01-01`),
+            minDate(range.endDate, `${snapshot.year}-12-31`),
+            date => dates.add(date)
+          );
+        });
+
+        return new Map([...totals.entries()].map(([categoryId, dates]) => [categoryId, dates.size]));
+      }
+
+      function buildRangeTooltip(category, ranges) {
+        if (ranges.length === 1) {
+          const range = ranges[0];
+          const note = range.note ? `\n${range.note}` : '';
+          return `${category.label}: ${formatRange(range)}${note}`;
+        }
+
+        return `${ranges.length} ${category.label} ranges on this date\n${ranges.map(formatRange).join('\n')}`;
+      }
+
+      function formatRange(range) {
+        return `${formatDate(range.startDate)} - ${formatDate(range.endDate)}`;
+      }
+
+      function formatDate(dateKey) {
+        const date = parseDateKey(dateKey);
+        return `${date.getDate()} ${MONTH_NAMES[date.getMonth()]}`;
+      }
+
+      function formatCreatedDate(value) {
+        const date = new Date(value);
+        if (Number.isNaN(date.getTime())) return 'from YearMap';
+        return date.toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' });
+      }
+
+      function walkDates(startDate, endDate, callback) {
+        const current = parseDateKey(startDate);
+        const end = parseDateKey(endDate);
+
+        while (current <= end) {
+          callback(toDateKey(current.getFullYear(), current.getMonth(), current.getDate()));
+          current.setDate(current.getDate() + 1);
+        }
+      }
+
+      function toDateKey(year, monthIndex, day) {
+        return `${year}-${String(monthIndex + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+      }
+
+      function parseDateKey(dateKey) {
+        const [year, month, day] = dateKey.split('-').map(Number);
+        return new Date(year, month - 1, day);
+      }
+
+      function isWeekend(date) {
+        return date.getDay() === 0 || date.getDay() === 6;
+      }
+
+      function minDate(a, b) {
+        return a <= b ? a : b;
+      }
+
+      function maxDate(a, b) {
+        return a >= b ? a : b;
+      }
+
+      function renderError(title, message) {
+        document.getElementById('app').innerHTML = `
+          <section class="calendar-shell">
+            <div class="error-card">
+              <h2>${escapeHtml(title)}</h2>
+              <p>${escapeHtml(message)}</p>
+              <a class="button" href="/">Go to YearMap</a>
+            </div>
+          </section>
+        `;
+      }
+
+      function escapeHtml(value) {
+        return String(value)
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;')
+          .replace(/'/g, '&#039;');
+      }
+    })();
+  </script>
+</body>
+</html>
