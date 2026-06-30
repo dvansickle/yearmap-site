@@ -5,6 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="robots" content="noindex" />
   <title>Shared YearMap</title>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-290HM1TX70"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-290HM1TX70');
+  </script>
+  <script defer src="/assets/analytics.js"></script>
   <meta name="description" content="A read-only YearMap shared as a private link." />
   <link rel="icon" href="/favicon.ico" />
   <link rel="icon" type="image/png" sizes="64x64" href="/assets/favicon64.png" />
@@ -402,8 +413,8 @@
     }
   </style>
 </head>
-<body>
-  <header>
+<body data-analytics-page="shared-view">
+  <header data-analytics-section="shared-view-header">
     <div class="brand">
       <span class="logo" aria-hidden="true"></span>
       <div>
@@ -411,7 +422,7 @@
         <div id="page-subhead" class="subhead">Read-only calendar shared from YearMap</div>
       </div>
     </div>
-    <a class="button" href="https://chromewebstore.google.com/detail/yearmap/mhjlipallhabmljhgibfiadncacficao?utm_source=shared_calendar&utm_medium=referral&utm_campaign=yearmap_sharing">
+    <a class="button" data-analytics-event="shared_calendar_create_cta_clicked" data-analytics-location="shared-view-header" href="https://chromewebstore.google.com/detail/yearmap/mhjlipallhabmljhgibfiadncacficao?utm_source=shared_calendar&utm_medium=referral&utm_campaign=yearmap_sharing">
       <span class="button-icon" aria-hidden="true">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
           <path d="M12 5v14"></path>
@@ -422,7 +433,7 @@
     </a>
   </header>
 
-  <main id="app">
+  <main id="app" data-analytics-section="shared-view-calendar">
     <section class="calendar-shell" aria-live="polite">
       <div class="error-card">
         <h2>Loading shared calendar...</h2>

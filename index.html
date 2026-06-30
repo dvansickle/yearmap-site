@@ -14,6 +14,8 @@
 
     gtag('config', 'G-290HM1TX70');
   </script>
+  <script defer src="/assets/analytics.js"></script>
+
   <meta name="description" content="Install YearMap for Chrome and plan the whole year on one screen with category lanes, range notes, read-only sharing, and local ICS export." />
   <link rel="canonical" href="https://yearmap.app/" />
 
@@ -514,8 +516,8 @@
   }
   </script>
 </head>
-<body>
-  <header>
+<body data-analytics-page="home">
+  <header data-analytics-section="site-header">
     <div class="container nav">
       <div class="brand"><div class="logo" aria-hidden="true"></div><span>YearMap</span></div>
       <nav class="nav-links">
@@ -531,8 +533,8 @@
   </header>
 
   <main>
-    <section class="hero">
-      <video class="hero-video" autoplay muted loop playsinline preload="metadata" poster="/assets/yearmap-demo-poster.png" aria-hidden="true">
+    <section class="hero" data-analytics-section="hero">
+      <video id="hero-video" class="hero-video" autoplay muted loop playsinline preload="metadata" poster="/assets/yearmap-demo-poster.png" aria-hidden="true">
         <source src="/assets/yearmap-demo.mp4" type="video/mp4">
       </video>
       <div class="container hero-grid">
@@ -555,7 +557,7 @@
       </div>
     </section>
 
-    <section class="section" id="why">
+    <section class="section" id="why" data-analytics-section="why">
       <div class="container">
         <p class="eyebrow">Why it works</p>
         <h2>Paper-planner clarity, with just enough structure.</h2>
@@ -591,7 +593,7 @@
       </div>
     </section>
 
-    <section class="section proof" id="proof" aria-labelledby="proof-title">
+    <section class="section proof" id="proof" aria-labelledby="proof-title" data-analytics-section="reviews">
       <div class="container proof-grid">
         <div class="proof-header">
           <div class="proof-copy">
@@ -624,7 +626,7 @@
       </div>
     </section>
 
-    <section class="section" id="screenshots">
+    <section class="section" id="screenshots" data-analytics-section="screenshots">
       <div class="container">
         <p class="eyebrow">Product views</p>
         <h2>Small controls, big picture.</h2>
@@ -655,7 +657,7 @@
       </div>
     </section>
 
-    <section class="section" id="how">
+    <section class="section" id="how" data-analytics-section="how-it-works">
       <div class="container">
         <p class="eyebrow">Workflow</p>
         <h2>How it works</h2>
@@ -676,7 +678,7 @@
       </div>
     </section>
 
-    <section class="section" id="details">
+    <section class="section" id="details" data-analytics-section="details">
       <div class="container split">
         <div>
           <p class="eyebrow">Also included</p>
@@ -704,7 +706,7 @@
       </div>
     </section>
 
-    <section class="section privacy-band" id="privacy">
+    <section class="section privacy-band" id="privacy" data-analytics-section="privacy">
       <div class="container">
         <p class="eyebrow">Privacy</p>
         <h2>Privacy</h2>
@@ -713,7 +715,7 @@
       </div>
     </section>
 
-    <section class="section" id="faq">
+    <section class="section" id="faq" data-analytics-section="faq">
       <div class="container">
         <h2>FAQ</h2>
         <div class="faq-grid">
@@ -738,7 +740,7 @@
     </section>
   </main>
 
-  <footer class="footer">
+  <footer class="footer" data-analytics-section="footer">
     <div class="container footer-inner">
       <div>© <span id="year"></span> YearMap • Inspired by Neatnik</div>
       <div class="footer-links">

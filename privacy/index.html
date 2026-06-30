@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <title>Privacy Policy — YearMap</title>
-  
+
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-290HM1TX70"></script>
   <script>
@@ -13,6 +13,8 @@
 
     gtag('config', 'G-290HM1TX70');
   </script>
+  <script defer src="/assets/analytics.js"></script>
+  
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="description" content="Privacy Policy for YearMap, a Chrome extension by Spring Harbor Studios." />
   <style>
@@ -34,7 +36,7 @@
     }
   </style>
 </head>
-<body>
+<body data-analytics-page="privacy">
   <header class="site-header">
     <nav class="site-nav" aria-label="Site navigation">
       <a class="home-link" href="/"><img src="/assets/logo256.png" alt=""><span>YearMap</span></a>
@@ -58,7 +60,7 @@
     <p>The YearMap extension does not embed analytics, trackers, cookies, or third-party monitoring scripts. The extension does not collect web browsing activity, page content, or personal identifiers.</p>
 
     <h2>Website Data</h2>
-    <p>This website uses Google Analytics to understand aggregate site traffic and page usage. If you email support or use an external donation link, the information you provide is handled by that service according to its own privacy policy.</p>
+    <p>This website uses Google Analytics and PostHog to understand aggregate site traffic, page usage, and interactions such as clicks on install, support, changelog, or shared-calendar links. The YearMap extension itself does not include analytics. If you email support or use an external donation link, the information you provide is handled by that service according to its own privacy policy.</p>
 
     <h2>Chrome Web Store Limited Use</h2>
     <p>The use of information received from Google APIs will adhere to the Chrome Web Store User Data Policy, including the Limited Use requirements. We use extension permissions only to provide YearMap’s user-facing calendar, settings, storage, and export features.</p>
