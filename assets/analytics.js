@@ -11,7 +11,6 @@
     capture_pageview: true,
     capture_pageleave: true,
     autocapture: false,
-    disable_session_recording: true,
     loaded(instance) {
       instance.register({
         site: 'yearmap.app',
