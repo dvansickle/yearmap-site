@@ -19,6 +19,22 @@
     }
   });
 
+  function track(eventName, properties = {}) {
+    if (window.posthog) {
+      posthog.capture(eventName, properties);
+    }
+
+    if (typeof window.gtag === 'function') {
+      const { href, ...eventParams } = properties;
+      window.gtag('event', eventName, {
+        ...eventParams,
+        link_url: href || undefined
+      });
+    }
+  }
+
+  window.YearMapAnalytics = { track };
+
   function eventNameForLink(link) {
     const label = link.dataset.analyticsEvent;
     if (label) return label;
@@ -44,14 +60,14 @@
 
   document.addEventListener('click', (event) => {
     const link = event.target.closest?.('a[href]');
-    if (link && window.posthog) {
-      posthog.capture(eventNameForLink(link), linkProperties(link));
+    if (link) {
+      track(eventNameForLink(link), linkProperties(link));
       return;
     }
 
     const button = event.target.closest?.('button[data-analytics-event]');
-    if (button && window.posthog) {
-      posthog.capture(button.dataset.analyticsEvent, {
+    if (button) {
+      track(button.dataset.analyticsEvent, {
         button_text: button.textContent.trim().replace(/\s+/g, ' ').slice(0, 120),
         button_location: button.dataset.analyticsLocation || null
       });
@@ -59,16 +75,16 @@
   });
 
   document.addEventListener('toggle', (event) => {
-    if (event.target.tagName !== 'DETAILS' || !window.posthog) return;
-    posthog.capture('faq_item_toggled', {
+    if (event.target.tagName !== 'DETAILS') return;
+    track('faq_item_toggled', {
       open: event.target.open,
       summary: event.target.querySelector('summary')?.textContent.trim().slice(0, 120) || null
     });
   }, true);
 
   document.addEventListener('play', (event) => {
-    if (event.target.tagName !== 'VIDEO' || !window.posthog) return;
-    posthog.capture('video_played', {
+    if (event.target.tagName !== 'VIDEO') return;
+    track('video_played', {
       video_id: event.target.id || null,
       video_src: event.target.currentSrc || event.target.getAttribute('src') || null
     });
@@ -82,7 +98,7 @@
         const section = entry.target.dataset.analyticsSection;
         if (!section || seenSections.has(section)) return;
         seenSections.add(section);
-        posthog.capture('section_viewed', {
+        track('section_viewed', {
           section,
           page_kind: document.body?.dataset.analyticsPage || 'page'
         });
@@ -96,14 +112,13 @@
   const scrollMarks = [25, 50, 75, 90];
   const reachedScrollMarks = new Set();
   function captureScrollDepth() {
-    if (!window.posthog) return;
     const scrollable = document.documentElement.scrollHeight - window.innerHeight;
     if (scrollable <= 0) return;
     const depth = Math.round((window.scrollY / scrollable) * 100);
     scrollMarks.forEach((mark) => {
       if (depth < mark || reachedScrollMarks.has(mark)) return;
       reachedScrollMarks.add(mark);
-      posthog.capture('scroll_depth_reached', {
+      track('scroll_depth_reached', {
         depth_percent: mark,
         page_kind: document.body?.dataset.analyticsPage || 'page'
       });

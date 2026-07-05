@@ -576,6 +576,15 @@
           </aside>
         `;
 
+        window.YearMapAnalytics?.track?.('shared_calendar_viewed', {
+          is_sample: document.body.classList.contains('sample-view'),
+          shared_year: snapshot.year,
+          category_count: snapshot.categories.length,
+          range_count: snapshot.ranges.length,
+          align_weekdays: Boolean(snapshot.settings?.alignWeekdays),
+          weekend_highlight: Boolean(snapshot.settings?.weekendHighlight)
+        });
+
         renderCalendar(snapshot);
         renderCategories(snapshot);
         setupRangePopover();
