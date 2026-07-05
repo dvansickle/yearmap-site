@@ -204,6 +204,22 @@
       margin:16px 0 0;
       max-width:520px;
     }
+    .use-case-row{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      margin:24px 0 0;
+      max-width:620px;
+    }
+    .use-case-pill{
+      background:rgba(255,255,255,0.88);
+      border:1px solid var(--line);
+      border-radius:999px;
+      color:#373737;
+      font-size:14px;
+      font-weight:600;
+      padding:6px 10px;
+    }
     .cta-row{
       display:flex;
       align-items:center;
@@ -389,6 +405,23 @@
       color:var(--muted);
     }
     .step p{color:var(--muted); margin:0}
+    .sample-panel{
+      align-items:center;
+      background:var(--surface);
+      border:1px solid var(--line);
+      border-radius:10px;
+      display:flex;
+      gap:24px;
+      justify-content:space-between;
+      margin-top:28px;
+      padding:22px;
+    }
+    .sample-panel h3{margin-bottom:6px}
+    .sample-panel p{
+      color:var(--muted);
+      margin:0;
+      max-width:680px;
+    }
 
     .split{
       display:grid;
@@ -457,6 +490,7 @@
       .faq-grid{grid-template-columns:1fr}
       .proof-header{grid-template-columns:1fr}
       .screenshot-card img{height:auto; object-fit:contain}
+      .sample-panel{align-items:flex-start; flex-direction:column}
       .hero{min-height:660px}
       h1{font-size:58px}
     }
@@ -481,6 +515,8 @@
       h1{font-size:46px}
       h2{font-size:36px}
       .lead{font-size:19px}
+      .use-case-row{gap:7px; margin-top:18px}
+      .use-case-pill{font-size:13px}
       .section{padding:58px 0}
       .proof{padding:54px 0}
       .cta-row{align-items:stretch; flex-direction:column}
@@ -540,18 +576,26 @@
       <div class="container hero-grid">
         <div class="hero-content">
           <p class="eyebrow">Now on the Chrome Web Store</p>
-          <h1>See your whole year at once.</h1>
-          <p class="lead">Digital calendars show you a week. YearMap helps you plan the seasons: trips, school breaks, projects, habits, and family schedules on one clean year-at-a-glance view you can share.</p>
+          <h1>Plan your whole year on one screen.</h1>
+          <p class="lead">Drag across dates to mark trips, school breaks, projects, habits, and family schedules. Add category lanes, notes, read-only sharing, and calendar export without losing the simple year-at-a-glance view.</p>
+          <div class="use-case-row" aria-label="Common YearMap uses">
+            <span class="use-case-pill">Travel</span>
+            <span class="use-case-pill">School breaks</span>
+            <span class="use-case-pill">Projects</span>
+            <span class="use-case-pill">Sports schedules</span>
+            <span class="use-case-pill">Freelance clients</span>
+          </div>
           <div class="cta-row">
             <a class="btn" href="https://chromewebstore.google.com/detail/yearmap/mhjlipallhabmljhgibfiadncacficao" target="_blank" rel="noopener noreferrer">Add to Chrome - Free, no account</a>
-            <a class="btn secondary" href="#how">See how it works</a>
+            <a class="btn secondary" data-analytics-event="sample_calendar_cta_clicked" data-analytics-location="hero" href="/sample/">View sample calendar</a>
           </div>
-          <p class="hero-note">YearMap is designed as a new-tab calendar. You can also open it in a regular tab from the extension icon.</p>
+          <p class="hero-note">Available on the Chrome Web Store. YearMap works as a new-tab calendar and can also open from the extension icon.</p>
           <div class="trust-row" aria-label="Product highlights">
+            <span class="trust-pill">Chrome Web Store</span>
+            <span class="trust-pill">Free</span>
+            <span class="trust-pill">No account</span>
             <span class="trust-pill">Local browser storage</span>
             <span class="trust-pill">No extension analytics</span>
-            <span class="trust-pill">Read-only sharing</span>
-            <span class="trust-pill">ICS export</span>
           </div>
         </div>
       </div>
@@ -674,6 +718,13 @@
             <b>Share or Export</b>
             <p>Copy a read-only YearMap link for someone else, or download an ICS file for Google Calendar, Apple Calendar, or another calendar app.</p>
           </div>
+        </div>
+        <div class="sample-panel">
+          <div>
+            <h3>Want to see it before installing?</h3>
+            <p>Open a sample read-only YearMap with categories, notes, weekend highlighting, and shared-calendar behavior already filled in.</p>
+          </div>
+          <a class="btn secondary" data-analytics-event="sample_calendar_cta_clicked" data-analytics-location="workflow" href="/sample/">View sample calendar</a>
         </div>
       </div>
     </section>
