@@ -483,6 +483,8 @@
       const MONTHS = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
       const MONTH_NAMES = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
       const WEEKDAYS = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
+      const MAX_ENCODED_CHARS = 60000;
+      const MAX_DECODED_BYTES = 50000;
 
       init().catch((error) => {
         console.error(error);
@@ -502,10 +504,17 @@
       async function decodeSnapshot(hash) {
         const value = hash.replace(/^#/, '');
         if (!value) throw new Error('Missing share data');
+        if (value.length > MAX_ENCODED_CHARS) {
+          throw new Error('Share data is too large');
+        }
 
         const [signature, encoding, data] = value.split('.');
         if (signature !== 'ym1' || !encoding || !data) {
           throw new Error('Unsupported share data');
+        }
+
+        if (data.length > MAX_ENCODED_CHARS) {
+          throw new Error('Share payload is too large');
         }
 
         const bytes = base64UrlDecode(data);
@@ -515,6 +524,10 @@
           jsonBytes = await gunzip(bytes);
         } else if (encoding !== 'json') {
           throw new Error('Unsupported share encoding');
+        }
+
+        if (jsonBytes.length > MAX_DECODED_BYTES) {
+          throw new Error('Share snapshot is too large');
         }
 
         return JSON.parse(new TextDecoder().decode(jsonBytes));
@@ -537,6 +550,9 @@
 
       function base64UrlDecode(value) {
         const base64 = value.replace(/-/g, '+').replace(/_/g, '/').padEnd(Math.ceil(value.length / 4) * 4, '=');
+        if (!/^[A-Za-z0-9_-]+$/.test(value)) {
+          throw new Error('Invalid share payload');
+        }
         const binary = atob(base64);
         const bytes = new Uint8Array(binary.length);
         for (let index = 0; index < binary.length; index += 1) {
