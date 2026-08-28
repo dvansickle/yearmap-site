@@ -485,11 +485,27 @@
       const WEEKDAYS = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
       const MAX_ENCODED_CHARS = 60000;
       const MAX_DECODED_BYTES = 50000;
+      const MAX_CATEGORIES = 5;
+      const MAX_NOTE_CHARS = 500;
 
-      init().catch((error) => {
-        console.error(error);
-        renderError('This shared YearMap could not be opened.', 'The link may be damaged, incomplete, or from a newer version of YearMap.');
-      });
+      function start() {
+        init().catch((error) => {
+          console.error(error);
+
+          if (error?.code === 'unsupported-compression') {
+            renderError('This browser cannot open this shared YearMap.', 'Try opening the link in a current version of Chrome, Edge, Firefox, or Safari.');
+            return;
+          }
+
+          renderError('This shared YearMap could not be opened.', 'The link may be damaged, incomplete, or from a newer version of YearMap.');
+        });
+      }
+
+      if (document.readyState === 'loading') {
+        window.addEventListener('DOMContentLoaded', start, { once: true });
+      } else {
+        start();
+      }
 
       async function init() {
         if (new URLSearchParams(window.location.search).get('sample') === '1') {
@@ -535,17 +551,120 @@
 
       function validateSnapshot(snapshot) {
         if (!snapshot || snapshot.v !== 1) throw new Error('Unsupported snapshot');
-        if (!Number.isInteger(snapshot.year)) throw new Error('Missing year');
+        if (!Number.isInteger(snapshot.year) || snapshot.year < 1900 || snapshot.year > 2200) {
+          throw new Error('Invalid year');
+        }
         if (!Array.isArray(snapshot.categories)) throw new Error('Missing categories');
         if (!Array.isArray(snapshot.ranges)) throw new Error('Missing ranges');
+        if (snapshot.categories.length === 0 || snapshot.categories.length > MAX_CATEGORIES) {
+          throw new Error('Invalid category count');
+        }
+        if (snapshot.createdAt !== undefined && (
+          typeof snapshot.createdAt !== 'string' ||
+          Number.isNaN(new Date(snapshot.createdAt).getTime())
+        )) {
+          throw new Error('Invalid creation date');
+        }
+
+        validateSettings(snapshot.settings);
+
+        const categoryIds = new Set();
+        snapshot.categories.forEach((category, index) => {
+          if (!isPlainObject(category)) throw new Error(`Invalid category at index ${index}`);
+          if (!isNonEmptyString(category.id)) throw new Error(`Invalid category id at index ${index}`);
+          if (categoryIds.has(category.id)) throw new Error(`Duplicate category id at index ${index}`);
+          if (!isNonEmptyString(category.label)) throw new Error(`Invalid category label at index ${index}`);
+          if (typeof category.color !== 'string' || !/^#[0-9a-f]{6}$/i.test(category.color)) {
+            throw new Error(`Invalid category color at index ${index}`);
+          }
+          categoryIds.add(category.id);
+        });
+
+        const rangeIds = new Set();
+        snapshot.ranges.forEach((range, index) => {
+          if (!isPlainObject(range)) throw new Error(`Invalid range at index ${index}`);
+          if (!isNonEmptyString(range.id)) throw new Error(`Invalid range id at index ${index}`);
+          if (rangeIds.has(range.id)) throw new Error(`Duplicate range id at index ${index}`);
+          if (!isNonEmptyString(range.categoryId) || !categoryIds.has(range.categoryId)) {
+            throw new Error(`Invalid range category at index ${index}`);
+          }
+          if (!isValidDateKey(range.startDate) || !isValidDateKey(range.endDate)) {
+            throw new Error(`Invalid range date at index ${index}`);
+          }
+          if (range.startDate > range.endDate) throw new Error(`Invalid range order at index ${index}`);
+          if (range.startDate > `${snapshot.year}-12-31` || range.endDate < `${snapshot.year}-01-01`) {
+            throw new Error(`Range does not intersect shared year at index ${index}`);
+          }
+          if (range.note !== undefined && (
+            typeof range.note !== 'string' ||
+            range.note.length > MAX_NOTE_CHARS
+          )) {
+            throw new Error(`Invalid range note at index ${index}`);
+          }
+          rangeIds.add(range.id);
+        });
+      }
+
+      function validateSettings(settings) {
+        if (settings === undefined) return;
+        if (!isPlainObject(settings)) throw new Error('Invalid settings');
+
+        ['alignWeekdays', 'weekendHighlight', 'showCategoryTotals'].forEach((property) => {
+          if (settings[property] !== undefined && typeof settings[property] !== 'boolean') {
+            throw new Error(`Invalid ${property} setting`);
+          }
+        });
+      }
+
+      function isPlainObject(value) {
+        return Boolean(value) && typeof value === 'object' && !Array.isArray(value);
+      }
+
+      function isNonEmptyString(value) {
+        return typeof value === 'string' && value.length > 0;
+      }
+
+      function isValidDateKey(value) {
+        if (typeof value !== 'string' || !/^\d{4}-\d{2}-\d{2}$/.test(value)) return false;
+        const [year, month, day] = value.split('-').map(Number);
+        const date = new Date(year, month - 1, day);
+        return date.getFullYear() === year && date.getMonth() === month - 1 && date.getDate() === day;
       }
 
       async function gunzip(bytes) {
         if (!('DecompressionStream' in window)) {
-          throw new Error('This browser cannot open compressed share links');
+          const error = new Error('This browser cannot open compressed share links');
+          error.code = 'unsupported-compression';
+          throw error;
         }
         const stream = new Blob([bytes]).stream().pipeThrough(new DecompressionStream('gzip'));
-        return new Uint8Array(await new Response(stream).arrayBuffer());
+        const reader = stream.getReader();
+        const chunks = [];
+        let totalBytes = 0;
+
+        try {
+          while (true) {
+            const { done, value } = await reader.read();
+            if (done) break;
+
+            totalBytes += value.byteLength;
+            if (totalBytes > MAX_DECODED_BYTES) {
+              await reader.cancel();
+              throw new Error('Share snapshot is too large');
+            }
+            chunks.push(value);
+          }
+        } finally {
+          reader.releaseLock();
+        }
+
+        const output = new Uint8Array(totalBytes);
+        let offset = 0;
+        chunks.forEach((chunk) => {
+          output.set(chunk, offset);
+          offset += chunk.byteLength;
+        });
+        return output;
       }
 
       function base64UrlDecode(value) {
@@ -593,12 +712,7 @@
         `;
 
         window.YearMapAnalytics?.track?.('shared_calendar_viewed', {
-          is_sample: document.body.classList.contains('sample-view'),
-          shared_year: snapshot.year,
-          category_count: snapshot.categories.length,
-          range_count: snapshot.ranges.length,
-          align_weekdays: Boolean(snapshot.settings?.alignWeekdays),
-          weekend_highlight: Boolean(snapshot.settings?.weekendHighlight)
+          is_sample: document.body.classList.contains('sample-view')
         });
 
         renderCalendar(snapshot);

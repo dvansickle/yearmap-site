@@ -62,13 +62,21 @@
     const url = encodeSnapshot(snapshot);
     document.getElementById('sample-link').href = url;
 
-    window.YearMapAnalytics?.track?.('sample_calendar_opened', {
-      category_count: snapshot.categories.length,
-      range_count: snapshot.ranges.length,
-      sample_year: snapshot.year
-    });
+    function openSampleCalendar() {
+      window.YearMapAnalytics?.track?.('sample_calendar_opened', {
+        category_count: snapshot.categories.length,
+        range_count: snapshot.ranges.length,
+        sample_year: snapshot.year
+      });
 
-    window.setTimeout(() => window.location.replace(url), 180);
+      window.setTimeout(() => window.location.replace(url), 180);
+    }
+
+    if (document.readyState === 'loading') {
+      window.addEventListener('DOMContentLoaded', openSampleCalendar, { once: true });
+    } else {
+      openSampleCalendar();
+    }
   </script>
 </body>
 </html>

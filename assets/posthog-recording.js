@@ -11,6 +11,25 @@
     capture_pageview: true,
     capture_pageleave: true,
     autocapture: false,
+    disable_capture_url_hashes: true,
+    before_send(event) {
+      if (!event?.properties) return event;
+
+      [
+        '$current_url',
+        '$initial_current_url',
+        '$session_entry_url',
+        '$referrer',
+        '$initial_referrer'
+      ].forEach((property) => {
+        const value = event.properties[property];
+        if (typeof value === 'string') {
+          event.properties[property] = value.split('#', 1)[0];
+        }
+      });
+
+      return event;
+    },
     loaded(instance) {
       instance.register({
         site: 'yearmap.app',
@@ -28,7 +47,8 @@
       const { href, ...eventParams } = properties;
       window.gtag('event', eventName, {
         ...eventParams,
-        link_url: href || undefined
+        link_url: href || undefined,
+        page_location: `${window.location.origin}${window.location.pathname}${window.location.search}`
       });
     }
   }
