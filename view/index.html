@@ -13,7 +13,7 @@
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
 
-    gtag('config', 'G-290HM1TX70');
+    gtag('config', 'G-290HM1TX70', { page_title: 'Shared YearMap' });
   </script>
   <script defer src="/assets/posthog.js"></script>
   <meta name="description" content="A read-only YearMap shared as a private link." />
@@ -478,6 +478,7 @@
     </section>
   </main>
 
+  <script src="/view/snapshot-title.js"></script>
   <script>
     (() => {
       const MONTHS = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
@@ -554,6 +555,7 @@
         if (!Number.isInteger(snapshot.year) || snapshot.year < 1900 || snapshot.year > 2200) {
           throw new Error('Invalid year');
         }
+        window.YearMapSnapshotTitle.validateSnapshotTitle(snapshot);
         if (!Array.isArray(snapshot.categories)) throw new Error('Missing categories');
         if (!Array.isArray(snapshot.ranges)) throw new Error('Missing ranges');
         if (snapshot.categories.length === 0 || snapshot.categories.length > MAX_CATEGORIES) {
@@ -681,11 +683,7 @@
       }
 
       function renderSnapshot(snapshot) {
-        document.title = `YearMap ${snapshot.year}`;
-        document.getElementById('page-title').textContent = `YearMap ${snapshot.year}`;
-        document.getElementById('page-subhead').textContent = snapshot.createdAt
-          ? `Read-only calendar shared ${formatCreatedDate(snapshot.createdAt)}`
-          : 'Read-only calendar shared from YearMap';
+        window.YearMapSnapshotTitle.renderSnapshotHeader(document, snapshot, formatCreatedDate);
 
         const app = document.getElementById('app');
         app.innerHTML = `

@@ -11,6 +11,7 @@
     capture_pageview: true,
     capture_pageleave: true,
     autocapture: false,
+    disable_session_recording: document.body?.dataset.analyticsPage === 'shared-view',
     disable_capture_url_hashes: true,
     before_send(event) {
       if (!event?.properties) return event;
@@ -27,6 +28,10 @@
           event.properties[property] = value.split('#', 1)[0];
         }
       });
+
+      if (document.body?.dataset.analyticsPage === 'shared-view') {
+        delete event.properties.$title;
+      }
 
       return event;
     },
@@ -48,7 +53,10 @@
       window.gtag('event', eventName, {
         ...eventParams,
         link_url: href || undefined,
-        page_location: `${window.location.origin}${window.location.pathname}${window.location.search}`
+        page_location: `${window.location.origin}${window.location.pathname}${window.location.search}`,
+        page_title: document.body?.dataset.analyticsPage === 'shared-view'
+          ? 'Shared YearMap'
+          : undefined
       });
     }
   }
