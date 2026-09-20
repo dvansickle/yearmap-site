@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>2026 Night Sky Planner — YearMap</title>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-290HM1TX70"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-290HM1TX70');
+  </script>
+  <script defer src="/assets/posthog.js"></script>
+  <meta name="description" content="Open a layered YearMap of meteor-shower peak nights, dark-sky windows, Moon phases, planet oppositions, and season markers for the rest of 2026." />
+  <meta property="og:title" content="2026 Night Sky Planner — YearMap" />
+  <meta property="og:description" content="See the rest of 2026's meteor showers, dark-sky windows, full moons, planet oppositions, and season markers together on one calendar." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://yearmap.app/night-sky/" />
+  <meta name="twitter:card" content="summary" />
+  <link rel="canonical" href="https://yearmap.app/night-sky/" />
+  <link rel="icon" href="/favicon.ico" />
+  <style>
+    :root {
+      color-scheme: light;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: #171717;
+      background: #f6f7f8;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+    }
+
+    main {
+      width: min(100%, 620px);
+      padding: 36px;
+      border: 1px solid #d9dddf;
+      border-radius: 18px;
+      background: #fff;
+      box-shadow: 0 18px 50px rgba(23, 23, 23, 0.08);
+    }
+
+    .eyebrow {
+      margin: 0 0 10px;
+      color: #257f78;
+      font-size: 0.78rem;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(2rem, 8vw, 3.4rem);
+      line-height: 0.98;
+      letter-spacing: -0.04em;
+    }
+
+    .lede {
+      margin: 20px 0 0;
+      color: #4e5558;
+      font-size: 1.05rem;
+      line-height: 1.6;
+    }
+
+    .layers {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 22px 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .layers li {
+      padding: 7px 10px;
+      border-radius: 999px;
+      background: #edf5f4;
+      color: #1f625d;
+      font-size: 0.82rem;
+      font-weight: 700;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 46px;
+      padding: 0 18px;
+      border-radius: 10px;
+      background: #257f78;
+      color: #fff;
+      font-weight: 800;
+      text-decoration: none;
+    }
+
+    .scope,
+    footer {
+      color: #737b7e;
+      font-size: 0.8rem;
+      line-height: 1.5;
+    }
+
+    .scope { margin: 16px 0 0; }
+
+    footer {
+      margin-top: 28px;
+      padding-top: 20px;
+      border-top: 1px solid #e5e7e8;
+    }
+
+    footer a { color: inherit; }
+
+    @media (max-width: 520px) {
+      body { padding: 14px; }
+      main { padding: 26px 22px; }
+    }
+  </style>
+</head>
+<body data-analytics-page="night-sky-planner">
+  <main data-analytics-section="night-sky-loader">
+    <p class="eyebrow">A public YearMap</p>
+    <h1>Night Sky Planner</h1>
+    <p class="lede">Opening a layered view of the best skywatching dates left in 2026.</p>
+    <ul class="layers" aria-label="Calendar layers">
+      <li>Meteor showers</li>
+      <li>Dark-sky windows</li>
+      <li>Full moons</li>
+      <li>Planet oppositions</li>
+      <li>Season markers</li>
+    </ul>
+    <a class="button" id="planner-link" data-analytics-location="night-sky-loader" href="/view/">Open the Night Sky Planner</a>
+    <p class="scope">Dates use UTC. Local visibility varies with time zone, latitude, weather, horizon, and light pollution.</p>
+    <footer>
+      Dates checked against the
+      <a href="https://www.imo.net/files/meteor-shower/cal2026.pdf">International Meteor Organization</a>,
+      <a href="https://aa.usno.navy.mil/data/">U.S. Naval Observatory</a>, and
+      <a href="https://www.nasa.gov/blogs/watch-the-skies/2026/01/16/most-notable-2026-astronomical-events-a-year-of-watching-the-skies/">NASA</a>.
+    </footer>
+    <noscript><p class="scope">JavaScript is required to create this local, read-only calendar link.</p></noscript>
+  </main>
+
+  <script src="/night-sky/planner.js"></script>
+  <script>
+    const sharePath = window.YearMapNightSkyPlanner.createSharePath();
+    document.getElementById('planner-link').href = sharePath;
+    window.setTimeout(() => window.location.replace(sharePath), 220);
+  </script>
+</body>
+</html>
