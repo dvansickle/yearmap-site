@@ -53,6 +53,7 @@
       --red:#ff6b6b;
       --orange:#f5a623;
       --blue:#4d9be6;
+      --purple:#9b6bce;
     }
     *,*::before,*::after{box-sizing:border-box}
     html{scroll-behavior:smooth}
@@ -381,6 +382,124 @@
     .screenshot-caption h3{font-size:24px}
     .screenshot-caption p{color:var(--muted); margin:0}
 
+    .featured-calendar{
+      background:#101415;
+      color:#fff;
+    }
+    .featured-calendar-card{
+      display:grid;
+      grid-template-columns:minmax(0, 0.9fr) minmax(520px, 1.1fr);
+      overflow:hidden;
+      border:1px solid #384043;
+      border-radius:12px;
+      background:#fff;
+      color:var(--text);
+    }
+    .featured-calendar-copy{
+      align-self:center;
+      padding:42px;
+    }
+    .featured-calendar-copy .section-intro{margin-bottom:24px}
+    .featured-layer-list{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      margin:0 0 28px;
+    }
+    .featured-layer{
+      align-items:center;
+      border:1px solid var(--line);
+      border-radius:999px;
+      display:inline-flex;
+      font-size:13px;
+      font-weight:600;
+      gap:7px;
+      padding:6px 10px;
+    }
+    .featured-layer::before{
+      background:var(--layer-color);
+      border-radius:999px;
+      content:"";
+      height:9px;
+      width:9px;
+    }
+    .featured-calendar-note{
+      color:var(--muted);
+      font-size:13px;
+      margin:14px 0 0;
+    }
+    .featured-calendar-preview{
+      background:var(--surface);
+      border-left:1px solid var(--line);
+      padding:28px;
+    }
+    .preview-header{
+      align-items:end;
+      display:flex;
+      justify-content:space-between;
+      gap:18px;
+      margin-bottom:22px;
+    }
+    .preview-header strong{
+      display:block;
+      font-family:Oswald, Impact, sans-serif;
+      font-size:24px;
+      line-height:1.05;
+    }
+    .preview-header span{
+      color:var(--muted);
+      font-size:11px;
+      font-weight:700;
+      letter-spacing:0.08em;
+      text-transform:uppercase;
+    }
+    .preview-months{
+      display:grid;
+      grid-template-columns:repeat(4, minmax(0, 1fr));
+      gap:10px;
+    }
+    .preview-month{
+      min-width:0;
+    }
+    .preview-month h3{
+      border-bottom:1px solid var(--text);
+      font-size:16px;
+      margin:0 0 4px;
+      padding-bottom:4px;
+      text-align:center;
+    }
+    .preview-row{
+      align-items:stretch;
+      border-bottom:1px solid #b7bdc0;
+      display:grid;
+      grid-template-columns:24px minmax(0, 1fr);
+      min-height:22px;
+    }
+    .preview-day{
+      align-self:center;
+      color:#555;
+      font-family:Oswald, Impact, sans-serif;
+      font-size:12px;
+      padding-left:3px;
+    }
+    .preview-lanes{
+      display:grid;
+      gap:2px;
+      grid-template-columns:repeat(5, minmax(0, 1fr));
+      padding:2px 0;
+    }
+    .preview-marker{
+      background:var(--marker-color);
+      border-radius:2px;
+      grid-column:var(--lane);
+    }
+    .preview-caption{
+      color:var(--muted);
+      font-size:12px;
+      margin:16px 0 0;
+      text-align:right;
+    }
+
     .how{
       display:grid;
       grid-template-columns:repeat(3, minmax(0, 1fr));
@@ -490,6 +609,8 @@
       .faq-grid{grid-template-columns:1fr}
       .proof-header{grid-template-columns:1fr}
       .screenshot-card img{height:auto; object-fit:contain}
+      .featured-calendar-card{grid-template-columns:1fr}
+      .featured-calendar-preview{border-left:0; border-top:1px solid var(--line)}
       .sample-panel{align-items:flex-start; flex-direction:column}
       .hero{min-height:660px}
       h1{font-size:58px}
@@ -519,6 +640,9 @@
       .use-case-pill{font-size:13px}
       .section{padding:58px 0}
       .proof{padding:54px 0}
+      .featured-calendar-copy,
+      .featured-calendar-preview{padding:24px}
+      .preview-months{grid-template-columns:repeat(2, minmax(0, 1fr))}
       .cta-row{align-items:stretch; flex-direction:column}
       .testimonial-card{padding:22px; min-height:auto}
       .testimonial-quote{font-size:19px}
@@ -697,6 +821,80 @@
               <p>Tune the display and note workflow, show category totals, and export your ranges when you need them elsewhere.</p>
             </figcaption>
           </figure>
+        </div>
+      </div>
+    </section>
+
+    <section class="section featured-calendar" id="featured-calendar" data-analytics-section="featured-calendar">
+      <div class="container">
+        <div class="featured-calendar-card">
+          <div class="featured-calendar-copy">
+            <p class="eyebrow">Made with YearMap</p>
+            <h2>One calendar, five layers of the night sky.</h2>
+            <p class="section-intro">See meteor-shower peak nights, dark-sky windows, full moons, planet oppositions, and season markers together for the rest of 2026.</p>
+            <div class="featured-layer-list" aria-label="Night Sky Planner layers">
+              <span class="featured-layer" style="--layer-color:var(--red)">Meteor showers</span>
+              <span class="featured-layer" style="--layer-color:var(--blue)">Dark-sky windows</span>
+              <span class="featured-layer" style="--layer-color:var(--orange)">Full moons</span>
+              <span class="featured-layer" style="--layer-color:var(--teal)">Planet oppositions</span>
+              <span class="featured-layer" style="--layer-color:var(--purple)">Season markers</span>
+            </div>
+            <a class="btn" data-analytics-event="sample_calendar_cta_clicked" data-analytics-location="featured-calendar-night-sky" href="/night-sky/">Open the Night Sky Planner</a>
+            <p class="featured-calendar-note">Read-only public example. Dates use UTC, and local visibility varies.</p>
+          </div>
+          <div class="featured-calendar-preview" role="img" aria-label="Calendar excerpt showing five overlapping Night Sky Planner categories from September through December 2026">
+            <div class="preview-header">
+              <strong>Night Sky Planner</strong>
+              <span>Sep–Dec 2026 excerpt</span>
+            </div>
+            <div class="preview-months" aria-hidden="true">
+              <div class="preview-month">
+                <h3>SEP</h3>
+                <div class="preview-row"><span class="preview-day">20</span><span class="preview-lanes"><i class="preview-marker" style="--lane:5;--marker-color:var(--purple)"></i></span></div>
+                <div class="preview-row"><span class="preview-day">23</span><span class="preview-lanes"><i class="preview-marker" style="--lane:5;--marker-color:var(--purple)"></i></span></div>
+                <div class="preview-row"><span class="preview-day">25</span><span class="preview-lanes"><i class="preview-marker" style="--lane:4;--marker-color:var(--teal)"></i></span></div>
+                <div class="preview-row"><span class="preview-day">26</span><span class="preview-lanes"><i class="preview-marker" style="--lane:3;--marker-color:var(--orange)"></i></span></div>
+                <div class="preview-row"><span class="preview-day">27</span><span class="preview-lanes"></span></div>
+                <div class="preview-row"><span class="preview-day">28</span><span class="preview-lanes"></span></div>
+                <div class="preview-row"><span class="preview-day">29</span><span class="preview-lanes"></span></div>
+                <div class="preview-row"><span class="preview-day">30</span><span class="preview-lanes"></span></div>
+              </div>
+              <div class="preview-month">
+                <h3>OCT</h3>
+                <div class="preview-row"><span class="preview-day">4</span><span class="preview-lanes"><i class="preview-marker" style="--lane:4;--marker-color:var(--teal)"></i></span></div>
+                <div class="preview-row"><span class="preview-day">8</span><span class="preview-lanes"><i class="preview-marker" style="--lane:1;--marker-color:var(--red)"></i><i class="preview-marker" style="--lane:2;--marker-color:var(--blue)"></i></span></div>
+                <div class="preview-row"><span class="preview-day">9</span><span class="preview-lanes"><i class="preview-marker" style="--lane:1;--marker-color:var(--red)"></i><i class="preview-marker" style="--lane:2;--marker-color:var(--blue)"></i></span></div>
+                <div class="preview-row"><span class="preview-day">10</span><span class="preview-lanes"><i class="preview-marker" style="--lane:2;--marker-color:var(--blue)"></i></span></div>
+                <div class="preview-row"><span class="preview-day">12</span><span class="preview-lanes"><i class="preview-marker" style="--lane:2;--marker-color:var(--blue)"></i></span></div>
+                <div class="preview-row"><span class="preview-day">21</span><span class="preview-lanes"><i class="preview-marker" style="--lane:1;--marker-color:var(--red)"></i></span></div>
+                <div class="preview-row"><span class="preview-day">22</span><span class="preview-lanes"><i class="preview-marker" style="--lane:1;--marker-color:var(--red)"></i></span></div>
+                <div class="preview-row"><span class="preview-day">26</span><span class="preview-lanes"><i class="preview-marker" style="--lane:3;--marker-color:var(--orange)"></i></span></div>
+              </div>
+              <div class="preview-month">
+                <h3>NOV</h3>
+                <div class="preview-row"><span class="preview-day">4</span><span class="preview-lanes"><i class="preview-marker" style="--lane:1;--marker-color:var(--red)"></i></span></div>
+                <div class="preview-row"><span class="preview-day">7</span><span class="preview-lanes"><i class="preview-marker" style="--lane:2;--marker-color:var(--blue)"></i></span></div>
+                <div class="preview-row"><span class="preview-day">9</span><span class="preview-lanes"><i class="preview-marker" style="--lane:2;--marker-color:var(--blue)"></i></span></div>
+                <div class="preview-row"><span class="preview-day">11</span><span class="preview-lanes"><i class="preview-marker" style="--lane:1;--marker-color:var(--red)"></i><i class="preview-marker" style="--lane:2;--marker-color:var(--blue)"></i></span></div>
+                <div class="preview-row"><span class="preview-day">12</span><span class="preview-lanes"><i class="preview-marker" style="--lane:1;--marker-color:var(--red)"></i></span></div>
+                <div class="preview-row"><span class="preview-day">17</span><span class="preview-lanes"><i class="preview-marker" style="--lane:1;--marker-color:var(--red)"></i></span></div>
+                <div class="preview-row"><span class="preview-day">24</span><span class="preview-lanes"><i class="preview-marker" style="--lane:3;--marker-color:var(--orange)"></i></span></div>
+                <div class="preview-row"><span class="preview-day">25</span><span class="preview-lanes"><i class="preview-marker" style="--lane:4;--marker-color:var(--teal)"></i></span></div>
+              </div>
+              <div class="preview-month">
+                <h3>DEC</h3>
+                <div class="preview-row"><span class="preview-day">7</span><span class="preview-lanes"><i class="preview-marker" style="--lane:2;--marker-color:var(--blue)"></i></span></div>
+                <div class="preview-row"><span class="preview-day">9</span><span class="preview-lanes"><i class="preview-marker" style="--lane:2;--marker-color:var(--blue)"></i></span></div>
+                <div class="preview-row"><span class="preview-day">11</span><span class="preview-lanes"><i class="preview-marker" style="--lane:2;--marker-color:var(--blue)"></i></span></div>
+                <div class="preview-row"><span class="preview-day">13</span><span class="preview-lanes"><i class="preview-marker" style="--lane:1;--marker-color:var(--red)"></i></span></div>
+                <div class="preview-row"><span class="preview-day">14</span><span class="preview-lanes"><i class="preview-marker" style="--lane:1;--marker-color:var(--red)"></i></span></div>
+                <div class="preview-row"><span class="preview-day">21</span><span class="preview-lanes"><i class="preview-marker" style="--lane:1;--marker-color:var(--red)"></i><i class="preview-marker" style="--lane:5;--marker-color:var(--purple)"></i></span></div>
+                <div class="preview-row"><span class="preview-day">22</span><span class="preview-lanes"><i class="preview-marker" style="--lane:1;--marker-color:var(--red)"></i></span></div>
+                <div class="preview-row"><span class="preview-day">24</span><span class="preview-lanes"><i class="preview-marker" style="--lane:3;--marker-color:var(--orange)"></i></span></div>
+              </div>
+            </div>
+            <p class="preview-caption">Color lanes show overlapping plans without hiding one another.</p>
+          </div>
         </div>
       </div>
     </section>
