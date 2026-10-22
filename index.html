@@ -382,6 +382,11 @@
     .screenshot-caption h3{font-size:24px}
     .screenshot-caption p{color:var(--muted); margin:0}
 
+    .habit-example{background:var(--surface)}
+    .habit-example .split{align-items:center}
+    .habit-example figure{margin:0; min-width:0}
+    .habit-example img{display:block; width:100%; height:auto; border:1px solid var(--line); border-radius:12px}
+    .habit-example figcaption{font-size:13px; color:var(--muted); margin-top:12px}
     .featured-calendar{
       background:#101415 url('/assets/night-sky-background.jpg') center / cover no-repeat;
       color:#fff;
@@ -822,6 +827,22 @@
             </figcaption>
           </figure>
         </div>
+      </div>
+    </section>
+
+    <section class="section habit-example" id="habits" aria-labelledby="habits-title">
+      <div class="container split">
+        <div>
+          <p class="eyebrow">Everyday uses · Habit tracking</p>
+          <h2 id="habits-title">Small habits. A whole year of progress.</h2>
+          <p class="section-intro">Mark the days you read, exercise, practice, or make time for something you care about. See your patterns and count the days over the year.</p>
+          <p>Choose a color for each activity and mark a day after you do it. Your category totals show how many days you recorded, while the year view reveals busy stretches, gaps, and changing routines.</p>
+          <p>No perfect streak required. Keep planned activities separate from the days you actually completed.</p>
+        </div>
+        <figure>
+          <img src="/assets/habit-tracking-example.svg" width="720" height="520" loading="lazy" alt="Illustrative 2026 YearMap habit calendar with completed days through September: reading 108 days, exercise 85 days, and music practice 60 days. Gaps appear throughout, including a break in July; October through December are blank.">
+          <figcaption>Example totals: reading 108 days · exercise 85 days · music practice 60 days. This illustration shows completed activities; totals count days, not sessions or minutes.</figcaption>
+        </figure>
       </div>
     </section>
 
