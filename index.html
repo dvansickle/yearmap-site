@@ -157,25 +157,6 @@
       border-bottom:1px solid var(--line);
       background:#f8f9fa;
     }
-    .hero-video{
-      position:absolute;
-      inset:0;
-      width:100%;
-      height:100%;
-      object-fit:cover;
-      object-position:center;
-      z-index:0;
-    }
-    .hero::before{
-      content:"";
-      position:absolute;
-      inset:0;
-      background:
-        linear-gradient(to right, rgba(255,255,255,0.99) 0%, rgba(255,255,255,0.96) 35%, rgba(255,255,255,0.72) 53%, rgba(255,255,255,0.06) 82%),
-        linear-gradient(to bottom, rgba(255,255,255,0.25), rgba(255,255,255,0.08) 45%, rgba(255,255,255,0.28));
-      pointer-events:none;
-      z-index:1;
-    }
     .hero .container{
       position:relative;
       z-index:2;
@@ -205,42 +186,12 @@
       margin:16px 0 0;
       max-width:520px;
     }
-    .use-case-row{
-      display:flex;
-      flex-wrap:wrap;
-      gap:8px;
-      margin:24px 0 0;
-      max-width:620px;
-    }
-    .use-case-pill{
-      background:rgba(255,255,255,0.88);
-      border:1px solid var(--line);
-      border-radius:999px;
-      color:#373737;
-      font-size:14px;
-      font-weight:600;
-      padding:6px 10px;
-    }
     .cta-row{
       display:flex;
       align-items:center;
       flex-wrap:wrap;
       gap:12px;
       margin-top:28px;
-    }
-    .trust-row{
-      display:flex;
-      flex-wrap:wrap;
-      gap:10px;
-      margin-top:22px;
-    }
-    .trust-pill{
-      border:1px solid var(--line);
-      border-radius:999px;
-      background:rgba(255,255,255,0.82);
-      color:var(--muted);
-      font-size:14px;
-      padding:6px 10px;
     }
 
     .section{
@@ -322,10 +273,6 @@
       grid-template-columns:repeat(3, minmax(0, 1fr));
       gap:18px;
       opacity:1;
-      transition:opacity 0.18s ease;
-    }
-    .testimonial-grid.is-changing{
-      opacity:0;
     }
     .testimonial-card{
       border:1px solid var(--line);
@@ -633,16 +580,9 @@
         min-height:720px;
         align-items:flex-end;
       }
-      .hero-video{object-position:72% center}
-      .hero::before{
-        background:linear-gradient(to bottom, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.78) 35%, #fff 62%);
-      }
-      .hero-content{padding:260px 0 50px}
       h1{font-size:46px}
       h2{font-size:36px}
       .lead{font-size:19px}
-      .use-case-row{gap:7px; margin-top:18px}
-      .use-case-pill{font-size:13px}
       .section{padding:58px 0}
       .proof{padding:54px 0}
       .featured-calendar-copy,
@@ -652,6 +592,50 @@
       .testimonial-card{padding:22px; min-height:auto}
       .testimonial-quote{font-size:19px}
     }
+    .hero{min-height:0;background:var(--surface);padding:48px 0}
+    .hero-grid{display:grid;grid-template-columns:minmax(0, 0.85fr) minmax(0, 1.15fr);gap:32px;align-items:center}
+    .hero-content{max-width:none;padding:0}
+    h1{font-size:60px;line-height:1.05;text-wrap:balance}
+    .lead{font-size:20px;line-height:1.4}
+    .hero-note{font-size:14px;line-height:1.5}
+    .sample-note{font-size:14px;color:var(--muted);margin:12px 0 0}
+    .hero-proof{font-size:14px;color:var(--muted);margin:24px 0 0;max-width:480px}
+    .hero-proof cite{display:block;font-style:normal;margin-top:8px;font-size:12px}
+    .product-demo{margin:0 0 32px;max-width:880px}
+    .product-demo video{display:block;width:100%;border:1px solid var(--line);border-radius:8px}
+    .product-demo figcaption{font-size:14px;color:var(--muted);margin-top:12px}
+    .hero-product{margin:0;min-width:0}
+    .hero-product img{display:block;width:100%;height:auto;border:1px solid var(--line);border-radius:8px}
+    .hero-product figcaption{font-size:14px;color:var(--muted);margin-top:12px}
+    h2,h3{text-wrap:balance}
+    .faq-grid details{border:1px solid var(--line);border-radius:8px;padding:16px}
+    .faq-grid summary{font-size:18px;font-weight:600;cursor:pointer}
+    .faq-grid details p{margin-top:12px}
+    .final-cta{background:var(--surface)}
+    .final-cta .section-intro{margin-bottom:24px}
+    a:focus-visible,summary:focus-visible{outline:3px solid var(--accent);outline-offset:4px}
+    .btn:active{transform:translateY(1px)}
+    .skip-link{position:fixed;top:8px;left:16px;z-index:100;background:#fff;padding:12px;transform:translateY(-160%)}
+    .skip-link:focus{transform:translateY(0)}
+    @media(max-width:940px){.hero-grid{grid-template-columns:1fr}.hero-content{max-width:680px}.hero-product{max-width:760px}h1{font-size:48px}}
+    @media(max-width:680px){.hero{padding:32px 0;min-height:0}.hero-content{padding:0}h1{font-size:40px}.lead{font-size:18px}.cta-row{margin-top:24px}.hero-grid{gap:24px}.hero .btn.secondary{background:transparent}.hero .eyebrow{font-size:12px}}
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.btn{transition:none}.btn:hover{transform:none}}
+    .product-demo{margin-top:32px}
+    .optional-content{border-bottom:1px solid var(--line)}
+    .optional-content>summary{max-width:1180px;margin:auto;padding:24px;cursor:pointer;font-weight:600;font-size:18px}
+    .optional-content[open]>summary{padding-bottom:0}
+    .optional-content .section{border-bottom:0;padding-top:32px}
+    .screenshot-zoom{display:block;width:100%;padding:0;border:0;border-radius:8px;background:transparent;cursor:zoom-in}
+    .screenshot-zoom:focus-visible,button:focus-visible,.calendar-image-scroll:focus-visible{outline:3px solid var(--accent);outline-offset:4px}
+    .hero-product figcaption a,#calendar-preview a{text-decoration:underline}
+    #calendar-preview{width:calc(100% - 32px);max-width:1360px;max-height:90dvh;padding:24px;border:1px solid var(--line);border-radius:8px;color:var(--text)}
+    #calendar-preview::backdrop{background:rgba(0,0,0,.65)}
+    .preview-toolbar{display:flex;gap:16px;align-items:center;justify-content:space-between}
+    .preview-toolbar h2{font-size:24px;margin:0}
+    .preview-toolbar .btn{width:auto}
+    .calendar-image-scroll{overflow:auto;max-height:65dvh}
+    .calendar-image-scroll img{display:block;width:1280px;max-width:none;height:auto}
+    @media(max-width:680px){#calendar-preview{padding:16px}.preview-toolbar{align-items:flex-start}.preview-toolbar h2{font-size:20px}}
   </style>
 
   <script type="application/ld+json">
@@ -682,6 +666,7 @@
   </script>
 </head>
 <body data-analytics-page="home">
+  <a class="skip-link" href="#main">Skip to content</a>
   <header data-analytics-section="site-header">
     <div class="container nav">
       <div class="brand"><div class="logo" aria-hidden="true"></div><span>YearMap</span></div>
@@ -692,49 +677,51 @@
         <a href="/privacy/">Privacy</a>
       </nav>
       <div>
-        <a class="btn" href="https://chromewebstore.google.com/detail/yearmap/mhjlipallhabmljhgibfiadncacficao?utm_source=yearmap_site&utm_medium=landing_page&utm_campaign=website_cta" target="_blank" rel="noopener noreferrer">Add to Chrome - Free, no account</a>
+        <a class="btn" href="https://chromewebstore.google.com/detail/yearmap/mhjlipallhabmljhgibfiadncacficao?utm_source=yearmap_site&utm_medium=landing_page&utm_campaign=website_cta" target="_blank" rel="noopener noreferrer">Add to Chrome</a>
       </div>
     </div>
   </header>
 
-  <main>
+  <main id="main">
     <section class="hero" data-analytics-section="hero">
-      <video id="hero-video" class="hero-video" autoplay muted loop playsinline preload="metadata" poster="/assets/yearmap-demo-poster.png" aria-hidden="true">
-        <source src="/assets/yearmap-demo.mp4" type="video/mp4">
-      </video>
       <div class="container hero-grid">
         <div class="hero-content">
-          <p class="eyebrow">Now on the Chrome Web Store</p>
+          <p class="eyebrow">A year planner for Chrome</p>
           <h1>Plan your whole year on one screen.</h1>
-          <p class="lead">Drag across dates to plan trips, school breaks, projects, and family time. Organize your plans by color, add notes, and see how everything fits together. Share your year or export plans to your calendar.</p>
-          <div class="use-case-row" aria-label="Common YearMap uses">
-            <span class="use-case-pill">Travel</span>
-            <span class="use-case-pill">School breaks</span>
-            <span class="use-case-pill">Projects</span>
-            <span class="use-case-pill">Sports schedules</span>
-            <span class="use-case-pill">Freelance clients</span>
-          </div>
+          <p class="lead">See trips, school breaks, and work plans together in one year view. Drag across dates and use color to spot overlaps.</p>
           <div class="cta-row">
-            <a class="btn" href="https://chromewebstore.google.com/detail/yearmap/mhjlipallhabmljhgibfiadncacficao?utm_source=yearmap_site&utm_medium=landing_page&utm_campaign=website_cta" target="_blank" rel="noopener noreferrer">Add to Chrome - Free, no account</a>
+            <a class="btn" href="https://chromewebstore.google.com/detail/yearmap/mhjlipallhabmljhgibfiadncacficao?utm_source=yearmap_site&utm_medium=landing_page&utm_campaign=website_cta" target="_blank" rel="noopener noreferrer">Add to Chrome</a>
             <a class="btn secondary" data-analytics-event="sample_calendar_cta_clicked" data-analytics-location="hero" href="/sample/">View sample calendar</a>
           </div>
-          <p class="hero-note">Available on the Chrome Web Store. YearMap works as a new-tab calendar and can also open from the extension icon.</p>
-          <div class="trust-row" aria-label="Product highlights">
-            <span class="trust-pill">Chrome Web Store</span>
-            <span class="trust-pill">Free</span>
-            <span class="trust-pill">No account</span>
-            <span class="trust-pill">Local browser storage</span>
-            <span class="trust-pill">Optional anonymous analytics</span>
-          </div>
+          <p class="hero-note">Free · No account required. For Chrome on a computer. Opens in your new tab, or from the extension icon.</p>
+          <p class="sample-note">The sample is read-only. Install YearMap to make your own plans.</p>
+          <blockquote class="hero-proof">“Being able to see both at once on one screen is the thing I didn't know I needed.”<cite>Priya R., on work travel and school breaks</cite></blockquote>
         </div>
+        <figure class="hero-product">
+          <button class="screenshot-zoom" type="button" aria-label="Enlarge YearMap calendar screenshot" aria-haspopup="dialog" aria-controls="calendar-preview">
+            <img src="/assets/yearmap_full.png" width="1280" alt="YearMap showing all twelve months together with colored category lanes for overlapping plans" fetchpriority="high">
+          </button>
+          <figcaption>Tap the calendar to see it full size, or <a href="/sample/" data-analytics-event="sample_calendar_cta_clicked" data-analytics-location="hero">explore the read-only sample</a>.</figcaption>
+        </figure>
       </div>
     </section>
+
+    <dialog id="calendar-preview" aria-labelledby="calendar-preview-title">
+      <div class="preview-toolbar">
+        <h2 id="calendar-preview-title">Your year at a glance</h2>
+        <form method="dialog"><button class="btn secondary" autofocus>Close preview</button></form>
+      </div>
+      <p class="muted">Scroll to inspect the calendar. This is a screenshot; <a href="/sample/" data-analytics-event="sample_calendar_cta_clicked" data-analytics-location="hero">open the sample</a> to explore a read-only calendar.</p>
+      <div class="calendar-image-scroll" tabindex="0" role="region" aria-label="Full size calendar screenshot, scroll horizontally to explore">
+        <img src="/assets/yearmap_full.png" width="1280" alt="Full size YearMap calendar showing twelve months and colored category lanes">
+      </div>
+    </dialog>
 
     <section class="section" id="why" data-analytics-section="why">
       <div class="container">
         <p class="eyebrow">Why it works</p>
-        <h2>Paper-planner clarity, with just enough structure.</h2>
-        <p class="section-intro">YearMap keeps the beloved <a href="https://neatnik.net/calendar/" target="_blank" rel="noreferrer noopener">Neatnik</a> year layout, then adds the parts that make it useful on a computer: drag selection, overlapping category lanes, range notes, day totals, sharing, and export.</p>
+        <h2>Spot overlaps before they become conflicts.</h2>
+        <p class="section-intro">See when work trips overlap school holidays, where projects fill your schedule, and which weeks are still open. Keep the details close without losing the big picture.</p>
         <div class="value-grid">
           <div class="value-card">
             <div class="swatches" aria-hidden="true">
@@ -742,7 +729,7 @@
               <span class="swatch teal"></span>
               <span class="swatch blue"></span>
             </div>
-            <h3>Plan in lanes</h3>
+            <h3>See plans side by side</h3>
             <p>Multiple categories can sit side by side on the same day, so travel, school, work, and family plans stay visible without hiding each other.</p>
           </div>
           <div class="value-card">
@@ -750,7 +737,7 @@
               <span class="swatch teal"></span>
               <span class="swatch orange"></span>
             </div>
-            <h3>Label what matters</h3>
+            <h3>Keep the details close</h3>
             <p>Add notes to ranges, edit their dates in the sidebar, and keep the details close without turning your year view into a dense calendar app.</p>
           </div>
           <div class="value-card">
@@ -759,9 +746,44 @@
               <span class="swatch red"></span>
               <span class="swatch orange"></span>
             </div>
-            <h3>Share or export</h3>
+            <h3>Bring others into the plan</h3>
             <p>Copy a read-only link when someone needs to see the plan, or export ranges as tidy all-day ICS events for another calendar app.</p>
           </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="how" data-analytics-section="how-it-works">
+      <div class="container">
+        <p class="eyebrow">Workflow</p>
+        <h2>How it works</h2>
+        <div class="how">
+          <div class="step">
+            <b>Mark your dates</b>
+            <p>Click and drag to select one or more days on the calendar. Mark travel, projects, habits, or any custom span.</p>
+          </div>
+          <div class="step">
+            <b>Add a category and note</b>
+            <p>Assign the range to a category lane, then add a note or adjust its dates in the Range details editor.</p>
+          </div>
+          <div class="step">
+            <b>Share or export</b>
+            <p>Copy a read-only YearMap link for someone else, or download an ICS file for Google Calendar, Apple Calendar, or another calendar app.</p>
+          </div>
+        </div>
+        <figure class="product-demo">
+          <video id="hero-video" controls playsinline preload="none" poster="/assets/yearmap-demo-poster.png" aria-label="YearMap product demonstration">
+            <source src="/assets/yearmap-demo.mp4" type="video/mp4">
+            Your browser does not support this video. <a href="/assets/yearmap-demo.mp4">Watch the YearMap demonstration</a>.
+          </video>
+          <figcaption>Watch how date selection and category lanes work in the actual extension.</figcaption>
+        </figure>
+        <div class="sample-panel">
+          <div>
+            <h3>Want to see it before installing?</h3>
+            <p>Open a sample read-only YearMap with categories, notes, weekend highlighting, and shared-calendar behavior already filled in.</p>
+          </div>
+          <a class="btn secondary" data-analytics-event="sample_calendar_cta_clicked" data-analytics-location="workflow" href="/sample/">View sample calendar</a>
         </div>
       </div>
     </section>
@@ -771,10 +793,10 @@
         <div class="proof-header">
           <div class="proof-copy">
             <p class="eyebrow">Early user notes</p>
-            <h2 id="proof-title">People are already finding their own reasons to keep it open.</h2>
+            <h2 id="proof-title">See what a whole year makes visible.</h2>
             <p class="section-intro">The common thread: seeing the whole year changes what people notice.</p>
           </div>
-          <a class="btn" href="https://chromewebstore.google.com/detail/yearmap/mhjlipallhabmljhgibfiadncacficao?utm_source=yearmap_site&utm_medium=landing_page&utm_campaign=website_cta" target="_blank" rel="noopener noreferrer">Add to Chrome - Free, no account</a>
+          <a class="btn" href="https://chromewebstore.google.com/detail/yearmap/mhjlipallhabmljhgibfiadncacficao?utm_source=yearmap_site&utm_medium=landing_page&utm_campaign=website_cta" target="_blank" rel="noopener noreferrer">Add to Chrome</a>
         </div>
         <div class="testimonial-grid" id="testimonial-grid" aria-label="User testimonials">
           <article class="testimonial-card">
@@ -791,46 +813,17 @@
           </article>
           <article class="testimonial-card">
             <blockquote>
-              <p class="testimonial-quote">Wanted something offline that wasn't going to harvest my calendar. This just sits in the browser and doesn't phone home, which is rare these days.</p>
+              <p class="testimonial-quote">I'm not really a planning person but seeing the year laid out flat made me realize I'd double-booked two trips. Caught it in like ten seconds.</p>
             </blockquote>
-            <p class="testimonial-author">Elena K.</p>
+            <p class="testimonial-author">Ravi N.</p>
           </article>
         </div>
       </div>
     </section>
 
-    <section class="section" id="screenshots" data-analytics-section="screenshots">
-      <div class="container">
-        <p class="eyebrow">Product views</p>
-        <h2>Small controls, big picture.</h2>
-        <p class="section-intro">The year view stays central. Details, help, and settings appear only when you need them.</p>
-        <div class="screenshots">
-          <figure class="screenshot-card">
-            <img src="/assets/yearmap-range-details.png" alt="YearMap Range details editor with category, start and end dates, and note field" loading="lazy">
-            <figcaption class="screenshot-caption">
-              <h3>Edit range details</h3>
-              <p>Adjust a range’s dates and note together, then undo the edit if you change your mind.</p>
-            </figcaption>
-          </figure>
-          <figure class="screenshot-card">
-            <img src="/assets/yearmap-commands.png" alt="YearMap command help panel showing selection, assignment, deletion, undo, and range editing commands" loading="lazy">
-            <figcaption class="screenshot-caption">
-              <h3>Command help</h3>
-              <p>Common actions stay close by, including range deletion, undo, and detail editing.</p>
-            </figcaption>
-          </figure>
-          <figure class="screenshot-card">
-            <img src="/assets/yearmap-settings.png" alt="YearMap settings popup with weekend highlighting, weekday alignment, category totals, automatic note editing, and export controls" loading="lazy">
-            <figcaption class="screenshot-caption">
-              <h3>Settings and export</h3>
-              <p>Tune the display and note workflow, show category totals, and export your ranges when you need them elsewhere.</p>
-            </figcaption>
-          </figure>
-        </div>
-      </div>
-    </section>
-
-    <section class="section habit-example" id="habits" aria-labelledby="habits-title">
+    <details class="optional-content" data-disclosure="habits">
+      <summary>Explore another use: habit tracking</summary>
+    <section class="section habit-example" data-analytics-section="habits" id="habits" aria-labelledby="habits-title">
       <div class="container split">
         <div>
           <p class="eyebrow">Everyday uses · Habit tracking</p>
@@ -845,6 +838,7 @@
         </figure>
       </div>
     </section>
+    </details>
 
     <section class="section featured-calendar" id="featured-calendar" data-analytics-section="featured-calendar">
       <div class="container">
@@ -920,61 +914,39 @@
       </div>
     </section>
 
-    <section class="section" id="how" data-analytics-section="how-it-works">
+    <details class="optional-content" data-disclosure="screenshots">
+      <summary>Explore the controls and settings</summary>
+    <section class="section" id="screenshots" data-analytics-section="screenshots">
       <div class="container">
-        <p class="eyebrow">Workflow</p>
-        <h2>How it works</h2>
-        <div class="how">
-          <div class="step">
-            <b>Mark Your Dates</b>
-            <p>Click and drag to select one or more days on the calendar. Mark travel, projects, habits, or any custom span.</p>
-          </div>
-          <div class="step">
-            <b>Add Meaning</b>
-            <p>Assign the range to a category lane, then add a note or adjust its dates in the Range details editor.</p>
-          </div>
-          <div class="step">
-            <b>Share or Export</b>
-            <p>Copy a read-only YearMap link for someone else, or download an ICS file for Google Calendar, Apple Calendar, or another calendar app.</p>
-          </div>
-        </div>
-        <div class="sample-panel">
-          <div>
-            <h3>Want to see it before installing?</h3>
-            <p>Open a sample read-only YearMap with categories, notes, weekend highlighting, and shared-calendar behavior already filled in.</p>
-          </div>
-          <a class="btn secondary" data-analytics-event="sample_calendar_cta_clicked" data-analytics-location="workflow" href="/sample/">View sample calendar</a>
-        </div>
-      </div>
-    </section>
-
-    <section class="section" id="details" data-analytics-section="details">
-      <div class="container split">
-        <div>
-          <p class="eyebrow">Also included</p>
-          <h2>Useful without getting heavy.</h2>
-          <ul class="included-list">
-            <li>Weekend highlighting</li>
-            <li>Optional weekday-aligned layout</li>
-            <li>Category day totals</li>
-            <li>Read-only share links</li>
-            <li>Built-in command help</li>
-            <li>Undo for recent assignments, edits, and deletions</li>
-          </ul>
-        </div>
-        <div class="store-panel">
-          <p class="eyebrow">Install</p>
-          <h2>Available now for Chrome</h2>
-          <p class="muted">Install YearMap from the Chrome Web Store and start planning immediately. It is free, requires no account, and keeps your calendar data in Chrome storage.</p>
-          <ul>
-            <li>See the entire year on one screen</li>
-            <li>Plan with up to five color-coded categories</li>
-            <li>Share a read-only view or export ranges to your calendar</li>
-          </ul>
-          <a class="btn" href="https://chromewebstore.google.com/detail/yearmap/mhjlipallhabmljhgibfiadncacficao?utm_source=yearmap_site&utm_medium=landing_page&utm_campaign=website_cta" target="_blank" rel="noopener noreferrer">Add to Chrome - Free, no account</a>
+        <p class="eyebrow">Product views</p>
+        <h2>Small controls, big picture.</h2>
+        <p class="section-intro">The year view stays central. Details, help, and settings appear only when you need them.</p>
+        <div class="screenshots">
+          <figure class="screenshot-card">
+            <img src="/assets/yearmap-range-details.png" alt="YearMap Range details editor with category, start and end dates, and note field" loading="lazy">
+            <figcaption class="screenshot-caption">
+              <h3>Edit range details</h3>
+              <p>Adjust a range’s dates and note together, then undo the edit if you change your mind.</p>
+            </figcaption>
+          </figure>
+          <figure class="screenshot-card">
+            <img src="/assets/yearmap-commands.png" alt="YearMap command help panel showing selection, assignment, deletion, undo, and range editing commands" loading="lazy">
+            <figcaption class="screenshot-caption">
+              <h3>Command help</h3>
+              <p>Common actions stay close by, including range deletion, undo, and detail editing.</p>
+            </figcaption>
+          </figure>
+          <figure class="screenshot-card">
+            <img src="/assets/yearmap-settings.png" alt="YearMap settings popup with weekend highlighting, weekday alignment, category totals, automatic note editing, and export controls" loading="lazy">
+            <figcaption class="screenshot-caption">
+              <h3>Settings and export</h3>
+              <p>Tune the display and note workflow, show category totals, and export your ranges when you need them elsewhere.</p>
+            </figcaption>
+          </figure>
         </div>
       </div>
     </section>
+    </details>
 
     <section class="section privacy-band" id="privacy" data-analytics-section="privacy">
       <div class="container">
@@ -989,23 +961,23 @@
       <div class="container">
         <h2>FAQ</h2>
         <div class="faq-grid">
-          <div>
-            <h3>Does it replace my new tab?</h3>
-            <p>Yes. YearMap is a new-tab extension, so it opens when you create a new tab while the extension is enabled. You can also open the calendar in a regular tab from the extension icon.</p>
-          </div>
-          <div>
-            <h3>Can I align weekdays vertically?</h3>
-            <p>Yes. Toggle the weekday-aligned layout in Settings. Changes apply instantly.</p>
-          </div>
-          <div>
-            <h3>How do notes work?</h3>
-            <p>Right-click a range lane to edit its dates and note together. Saved notes appear in the sidebar preview, hover tooltips, and ICS event descriptions.</p>
-          </div>
-          <div>
-            <h3>What about deletions?</h3>
-            <p>Hold Shift and click any day in a range to remove it. Use Ctrl/Cmd+Z within 30 seconds to undo an assignment, edit, or deletion.</p>
-          </div>
+          <details><summary>Can I use YearMap on my phone?</summary><p>Creating and editing plans requires the extension in Chrome on a computer. Chrome on phones does not run the extension. You can open the read-only sample and shared calendar links in your phone’s browser.</p></details>
+          <details><summary>Does it replace my new tab?</summary><p>Yes. YearMap opens when you create a new Chrome tab while the extension is enabled. You can also open the calendar in a regular tab from the extension icon.</p></details>
+          <details><summary>Is it free? Do I need an account?</summary><p>YearMap is free and requires no account. You can organize plans with up to five color categories.</p></details>
+          <details><summary>Does it connect to Google or Apple Calendar?</summary><p>You can export your ranges as an ICS file for Google Calendar, Apple Calendar, or another calendar app. Export is a file download, not a live calendar connection.</p></details>
+          <details><summary>Where is my calendar stored?</summary><p>Your calendar content stays in Chrome storage, with optional sync across your devices. Extension usage analytics are off unless you choose to allow them.</p></details>
+          <details><summary>What can someone see through a shared link?</summary><p>A shared link opens a read-only snapshot of your calendar. It does not update when you change your plans. Anyone with the link can view the snapshot, so share it only with people you intend to see it.</p></details>
+          <details><summary>Can I preview it before installing?</summary><p>Yes. Open the sample calendar to explore a filled-in, read-only year view. Creating and editing your own plans requires the Chrome extension.</p></details>
         </div>
+      </div>
+    </section>
+
+    <section class="section final-cta" id="details" data-analytics-section="details">
+      <div class="container">
+        <h2>Make room for the year ahead.</h2>
+        <p class="section-intro">See your plans together and find the weeks that are still yours.</p>
+        <a class="btn" href="https://chromewebstore.google.com/detail/yearmap/mhjlipallhabmljhgibfiadncacficao?utm_source=yearmap_site&utm_medium=landing_page&utm_campaign=website_cta" target="_blank" rel="noopener noreferrer">Add to Chrome</a>
+        <p class="hero-note">Free · No account required · Chrome new tab extension</p>
       </div>
     </section>
   </main>
@@ -1014,7 +986,7 @@
     <div class="container footer-inner">
       <div>© <span id="year"></span> YearMap • Inspired by Neatnik</div>
       <div class="footer-links">
-        <a href="https://chromewebstore.google.com/detail/yearmap/mhjlipallhabmljhgibfiadncacficao?utm_source=yearmap_site&utm_medium=landing_page&utm_campaign=website_cta" target="_blank" rel="noopener noreferrer">Add to Chrome - Free, no account</a>
+        <a href="https://chromewebstore.google.com/detail/yearmap/mhjlipallhabmljhgibfiadncacficao?utm_source=yearmap_site&utm_medium=landing_page&utm_campaign=website_cta" target="_blank" rel="noopener noreferrer">Add to Chrome</a>
         <a href="/support/">Support</a>
         <a href="/changelog/">Changelog</a>
         <a href="/privacy/">Privacy</a>
@@ -1024,103 +996,14 @@
   </footer>
 
   <script>
+    const preview = document.getElementById('calendar-preview');
+    const zoomButton = document.querySelector('.screenshot-zoom');
+    zoomButton.addEventListener('click', () => preview.showModal());
+    preview.addEventListener('close', () => zoomButton.focus());
+
     const y = document.getElementById('year'); if (y) y.textContent = new Date().getFullYear();
 
-    const testimonials = [
-      {
-        quote: "ok the thing that actually got me was the day totals in the sidebar. didn't even notice the feature until I'd been using it a while and now I check it constantly.",
-        author: "Jenna L."
-      },
-      {
-        quote: "Bit of a learning curve with the keyboard shortcuts but once it clicked I got fast. Undo within 30 seconds has saved me more than once.",
-        author: "Andre W."
-      },
-      {
-        quote: "Took me a day to get used to it replacing my new tab but now I'd be annoyed if it didn't. The drag-to-select is weirdly satisfying.",
-        author: "Marcus T."
-      },
-      {
-        quote: "I mostly use it to keep track of when I'm traveling for work vs. when my kids are off school. Being able to see both at once on one screen is the thing I didn't know I needed.",
-        author: "Priya R."
-      },
-      {
-        quote: "honestly installed it expecting to uninstall it in a week. still here two months later.",
-        author: "Dan K."
-      },
-      {
-        quote: "I was a Neatnik holdout for ages and was skeptical anyone could port it without wrecking what made it good. This is the closest I've found. Wish I could have more than 5 categories but the export makes up for it.",
-        author: "Sofia M."
-      },
-      {
-        quote: "Not the prettiest thing I've ever installed but it does exactly one thing and does it well. Exported my whole year to Google Calendar in like two clicks.",
-        author: "Tom B."
-      },
-      {
-        quote: "I'm not really a planning person but seeing the year laid out flat made me realize I'd double-booked two trips. Caught it in like ten seconds.",
-        author: "Ravi N."
-      },
-      {
-        quote: "Wanted something offline that wasn't going to harvest my calendar. This just sits in the browser and doesn't phone home, which is rare these days.",
-        author: "Elena K."
-      },
-      {
-        quote: "My only real gripe is I wish it synced to my phone, but for desktop planning it's become part of my routine. Open a tab, glance at the year, move on.",
-        author: "Chris D."
-      },
-      {
-        quote: "Set up four categories for different freelance clients and it basically replaced the messy spreadsheet I was using. Export to Apple Calendar worked first try.",
-        author: "Mara P."
-      }
-    ];
 
-    const testimonialGrid = document.getElementById('testimonial-grid');
-
-    if (testimonialGrid) {
-      let cursor = 0;
-      let orderedTestimonials = [...testimonials].sort(() => Math.random() - 0.5);
-      const shouldCycle = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-      const nextTestimonials = () => {
-        if (cursor + 3 > orderedTestimonials.length) {
-          orderedTestimonials = [...testimonials].sort(() => Math.random() - 0.5);
-          cursor = 0;
-        }
-        const selected = orderedTestimonials.slice(cursor, cursor + 3);
-        cursor += 3;
-        return selected;
-      };
-
-      const renderTestimonials = (selected) => {
-        testimonialGrid.innerHTML = selected.map(() => `
-          <article class="testimonial-card">
-            <blockquote>
-              <p class="testimonial-quote"></p>
-            </blockquote>
-            <p class="testimonial-author"></p>
-          </article>
-        `).join('');
-
-        testimonialGrid.querySelectorAll('.testimonial-card').forEach((card, index) => {
-          card.querySelector('.testimonial-quote').textContent = selected[index].quote;
-          card.querySelector('.testimonial-author').textContent = selected[index].author;
-        });
-      };
-
-      const cycleTestimonials = () => {
-        if (!shouldCycle) return;
-        testimonialGrid.classList.add('is-changing');
-        window.setTimeout(() => {
-          renderTestimonials(nextTestimonials());
-          testimonialGrid.classList.remove('is-changing');
-          window.setTimeout(cycleTestimonials, 9000);
-        }, 180);
-      };
-
-      renderTestimonials(nextTestimonials());
-      if (shouldCycle) {
-        window.setTimeout(cycleTestimonials, 9000);
-      }
-    }
   </script>
 </body>
 </html>

@@ -104,6 +104,7 @@
 
   document.addEventListener('toggle', (event) => {
     if (event.target.tagName !== 'DETAILS') return;
+    if (event.target.hasAttribute('data-disclosure')) return;
     track('faq_item_toggled', {
       open: event.target.open,
       summary: event.target.querySelector('summary')?.textContent.trim().slice(0, 120) || null
@@ -132,7 +133,7 @@
         });
         observer.unobserve(entry.target);
       });
-    }, { threshold: 0.45 });
+    }, { threshold: 0 });
 
     document.querySelectorAll('[data-analytics-section]').forEach((element) => observer.observe(element));
   }
