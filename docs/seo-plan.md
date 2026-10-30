@@ -52,7 +52,7 @@ Reference results inspected in search:
 
 ## First page brief: vacation planning
 
-Status: draft brief. No new public page yet.
+Status: implemented locally October 30, 2026; not committed or deployed. Public editorial route: /vacation-planner/. Fictional example launcher: /vacation-planner/example/ (noindex), opening the existing viewer.
 
 - Proposed URL: /vacation-planner/.
 - Working title: Vacation Planning Calendar for Your Year | YearMap.
@@ -91,3 +91,14 @@ Review weekly; compare 28-day periods and retain a 90-day view. Record productio
 For a new page: verify response/canonical/indexability first, then indexing, then query impressions and relevance, then clicks and store intent. Lack of impressions can reflect indexing, demand, or competition; low clicks can reflect position or presentation. Diagnose before rewriting. No automatic page deletion, link purchases, bulk generation, or rigid waiting rules.
 
 The next page is chosen from evidence about demand, fit, distinctive content, and realistic competing results, not from a mandatory publishing quota.
+
+
+## Vacation page implementation and verification
+
+- Added /vacation-planner/ with a worked 2027 school/work/trip comparison, actual viewer screenshot (1800 × 1229 JPEG, about 199 KB), setup workflow, sharing/export limitations, and FAQs.
+- Added /vacation-planner/example/ as a noindex launcher. Its snapshot is generated locally using the existing version-1 UTF-8 JSON/base64url format; the schema and viewer code are unchanged. The existing viewer preserves sample-home and store CTAs.
+- All guide example links use sample_calendar_cta_clicked with vacation-specific locations. Store links use chrome_store_cta_clicked and utm_campaign=vacation_planner. Existing event names and locations are unchanged.
+- The launcher intentionally has no analytics script, so its dynamically generated fragment-bearing fallback link cannot be captured as a raw href. The destination viewer records the established shared_calendar_viewed event with source=vacation-planner in the sanitized query string. There is no new sample_calendar_opened event for this route; use guide click → shared view → create intent, not the generic sample-open funnel.
+- Added one contextual homepage link and the editorial URL to the sitemap. The noindex launcher/viewer are excluded from the sitemap.
+- Verification: all 15 repository tests pass, including UTF-8 snapshot round-trip/limits and both PostHog and gtag click paths for every guide example/store link. Browser checks on a local HTTP origin cover desktop, 390px mobile layout, loaded images, FAQ expansion, and example navigation. Mobile primary CTA is fully visible in the first viewport; no horizontal overflow on the guide and no console errors observed. Screenshot captured from the working viewer, not synthesized media.
+- Publishing still requires the user's commit/push instruction. Record the actual release date, then verify the public editorial URL and sitemap and request indexing in Search Console. Keyword demand remains unquantified; no ranking or conversion uplift claimed.

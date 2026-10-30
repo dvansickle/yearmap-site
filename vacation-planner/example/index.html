@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>Vacation planning example — YearMap</title>
+  <style>body{font:18px/1.6 system-ui,sans-serif;max-width:560px;margin:12vh auto;padding:24px;color:#171717}a{color:#257f78}</style>
+</head>
+<body>
+  <h1>A fictional year of family plans</h1>
+  <p>Opening a read-only example with school breaks, work travel, and possible vacations. These dates are illustrative.</p>
+  <p><a id="open-example" href="/vacation-planner/">Back to the planning guide</a></p>
+  <noscript><p>JavaScript is needed to open the example. The <a href="/vacation-planner/">planning guide</a> explains it in text.</p></noscript>
+  <script src="/vacation-planner/example/snapshot.js"></script>
+  <script>
+    const exampleUrl = window.YearMapVacationExample.createPath();
+    const exampleLink = document.getElementById('open-example');
+    exampleLink.href = exampleUrl;
+    exampleLink.textContent = 'Open the read-only vacation calendar';
+    window.location.replace(exampleUrl);
+  </script>
+</body>
+</html>
